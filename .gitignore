@@ -27,3 +27,4 @@ replay_pid*
 /api-experi-machina/.mvn/
 /design/.$model.drawio.dtmp
 /design/.$model.drawio.bkp
+client-experi-machina/node_modules/

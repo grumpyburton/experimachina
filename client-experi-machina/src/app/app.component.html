@@ -1,0 +1,17 @@
+<p>
+  <mat-toolbar>
+    <button mat-icon-button [matMenuTriggerFor]="menu" class="example-icon" aria-label="Example icon-button with menu icon">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <a routerLink="home"><button mat-menu-item>Home</button></a>
+      <a routerLink="customers"><button mat-menu-item>Customers</button></a>
+      <a routerLink="controls"><button mat-menu-item>Controls</button></a>
+      <a routerLink="experiments"><button mat-menu-item>Experiments</button></a>
+      <a routerLink="segments"><button mat-menu-item>Segments</button></a>
+      <a routerLink="surveys"><button mat-menu-item>Surveys</button></a>
+    </mat-menu>
+    <span>Experi Machina - Experiment Management System</span>
+  </mat-toolbar>
+</p>
+<router-outlet></router-outlet>
