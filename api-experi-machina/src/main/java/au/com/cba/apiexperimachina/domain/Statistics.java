@@ -7,6 +7,8 @@ public class Statistics {
     private long surveys;
     private long controls;
 
+    private long eligibilities;
+
     public long getCustomers() {
         return customers;
     }
@@ -45,5 +47,13 @@ public class Statistics {
 
     public void setControls(long controls) {
         this.controls = controls;
+    }
+
+    public long getEligibilities() {
+        return eligibilities;
+    }
+
+    public void setEligibilities(long eligibilities) {
+        this.eligibilities = eligibilities;
     }
 }

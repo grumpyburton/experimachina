@@ -7,14 +7,14 @@ import jakarta.persistence.Id;
 import java.util.Date;
 
 @Entity
-public class Experiment {
+public class Survey {
     @Id
     @GeneratedValue
     private Long id;
     private String name;
     private String description;
-    private java.util.Date createDate;
-    private java.util.Date expireDate;
+    private Date createDate;
+    private Date expireDate;
 
     public Long getId() {
         return id;

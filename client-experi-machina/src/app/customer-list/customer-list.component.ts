@@ -1,10 +1,10 @@
 import {AfterViewInit, Component, inject, ViewChild} from '@angular/core';
-import {CustomerService} from "../customer.service";
 import {HttpClient} from "@angular/common/http";
 import {Customer} from "../customer";
 import {MatTableDataSource, MatTableModule} from "@angular/material/table";
 import {MatPaginator, MatPaginatorModule} from "@angular/material/paginator";
 import {animate, state, style, transition, trigger} from "@angular/animations";
+import {ApiService} from "../api.service";
 
 @Component({
   selector: 'app-customer-list',
@@ -19,7 +19,7 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
 })
 export class CustomerListComponent  implements AfterViewInit {
 
-  customerService: CustomerService = inject(CustomerService);
+  apiService: ApiService = inject(ApiService);
 
   displayedColumns: string[] = ['id', 'firstName','surname'];
   dataSource = new MatTableDataSource<Customer>([]);
@@ -27,7 +27,7 @@ export class CustomerListComponent  implements AfterViewInit {
 
   constructor(private http: HttpClient) {
 
-    this.customerService.getAllCustomersPage().subscribe( paging =>
+    this.apiService.getAllCustomersPage().subscribe( paging =>
       this.dataSource.data = paging.content as Customer[]);
       //console.log(paging);
   }

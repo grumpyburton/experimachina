@@ -1,9 +1,7 @@
 package au.com.cba.apiexperimachina.controller;
 
-import au.com.cba.apiexperimachina.domain.Customer;
-import au.com.cba.apiexperimachina.domain.Segment;
-import au.com.cba.apiexperimachina.repo.CustomerRepo;
-import au.com.cba.apiexperimachina.repo.SegmentRepo;
+import au.com.cba.apiexperimachina.domain.*;
+import au.com.cba.apiexperimachina.repo.*;
 import com.github.javafaker.Faker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,12 +14,24 @@ public class BootstrapController {
 
     private static final Logger logger = LoggerFactory.getLogger(BootstrapController.class);
 
+    private final ControlGroupRepo controlGroupRepo;
     private final CustomerRepo customerRepo;
+    private final EligibilityRepo eligibilityRepo;
+    private final ExperimentRepo experimentRepo;
+    private final OutcomeRepo outcomeRepo;
     private final SegmentRepo segmentRepo;
+    private final SurveyRepo surveyRepo;
 
-    public BootstrapController(CustomerRepo customerRepo, SegmentRepo segmentRepo) {
+    public BootstrapController(ControlGroupRepo controlGroupRepo, CustomerRepo customerRepo,
+                               EligibilityRepo eligibilityRepo, ExperimentRepo experimentRepo,
+                               OutcomeRepo outcomeRepo, SegmentRepo segmentRepo, SurveyRepo surveyRepo) {
+        this.controlGroupRepo = controlGroupRepo;
         this.customerRepo = customerRepo;
+        this.eligibilityRepo = eligibilityRepo;
+        this.experimentRepo = experimentRepo;
+        this.outcomeRepo = outcomeRepo;
         this.segmentRepo = segmentRepo;
+        this.surveyRepo = surveyRepo;
     }
 
     public void init(){
@@ -30,6 +40,12 @@ public class BootstrapController {
         createCustomers();
         logger.info("segments");
         createSegments();
+        createExperiments();
+        createControlGroups();
+        createOutcomes();
+        createEligibilities();
+        createSurveys();
+        
         logger.info("end init");
     }
 
@@ -46,6 +62,63 @@ public class BootstrapController {
         }
     }
 
+    public void createControlGroups()
+    {
+        ControlGroup c = new ControlGroup();
+        c.setName("Campaign1");
+        c.setDescription("Marketing campaign 1");
+        c.setCreateDate(new Date(System.currentTimeMillis()));
+        this.controlGroupRepo.save(c);
+
+        c = new ControlGroup();
+        c.setName("Campaign2");
+        c.setDescription("Marketing campaign 2");
+        c.setCreateDate(new Date(System.currentTimeMillis()));
+        this.controlGroupRepo.save(c);
+    }
+
+    public void createEligibilities()
+    {
+        Eligibility e = new Eligibility();
+        e.setName("Over18");
+        e.setDescription("Customer is over 18");
+        e.setCreateDate(new Date(System.currentTimeMillis()));
+        this.eligibilityRepo.save(e);
+
+        e = new Eligibility();
+        e.setName("Product1");
+        e.setDescription("Customer has product 1");
+        e.setCreateDate(new Date(System.currentTimeMillis()));
+        this.eligibilityRepo.save(e);
+    }
+
+    public void createExperiments()
+    {
+        Experiment e = new Experiment();
+        e.setName("Experiment1");
+        e.setDescription("Customers like green better than brown");
+        e.setCreateDate(new Date(System.currentTimeMillis()));
+        this.experimentRepo.save(e);
+    }
+
+    public void createOutcomes()
+    {
+        Outcome o = new Outcome();
+        o.setName("Green is best");
+        o.setDescription("Customers liked green better than brown");
+        o.setCreateDate(new Date(System.currentTimeMillis()));
+        this.outcomeRepo.save(o);
+    }
+
+    public void createSurveys()
+    {
+        Survey o = new Survey();
+        o.setName("Green is best");
+        o.setDescription("Customers liked green better than brown");
+        o.setCreateDate(new Date(System.currentTimeMillis()));
+        this.surveyRepo.save(o);
+    }
+    
     public void createSegments()
     {
         Segment s = new Segment();

@@ -5,6 +5,8 @@ import {Customer} from "../customer";
 import {MatPaginator} from "@angular/material/paginator";
 import {HttpClient} from "@angular/common/http";
 import {animate, state, style, transition, trigger} from "@angular/animations";
+import {ApiService} from "../api.service";
+import {Statistics} from "../statistics";
 
 @Component({
   selector: 'app-home',
@@ -17,22 +19,15 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))
     ])]
 })
-export class HomeComponent implements AfterViewInit {
+export class HomeComponent{
 
-  customerService: CustomerService = inject(CustomerService);
-
-  displayedColumns: string[] = ['id', 'firstName', 'surname'];
-  dataSource = new MatTableDataSource<Customer>([]);
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  apiService: ApiService = inject(ApiService);
+  statistics: Statistics;
 
   constructor(private http: HttpClient) {
 
-    this.customerService.getAllCustomersPage().subscribe(paging =>
-      this.dataSource.data = paging.content as Customer[]);
+    this.apiService.getStatistics().subscribe(statistics =>
+      this.statistics = statistics);
     //console.log(paging);
-  }
-
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
   }
 }

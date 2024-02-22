@@ -1,10 +1,7 @@
 package au.com.cba.apiexperimachina.controller;
 
-import au.com.cba.apiexperimachina.domain.Customer;
-import au.com.cba.apiexperimachina.domain.Segment;
-import au.com.cba.apiexperimachina.domain.Statistics;
-import au.com.cba.apiexperimachina.repo.CustomerRepo;
-import au.com.cba.apiexperimachina.repo.SegmentRepo;
+import au.com.cba.apiexperimachina.domain.*;
+import au.com.cba.apiexperimachina.repo.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -22,14 +19,30 @@ import java.util.List;
 @RequestMapping("/api")
 public class APIController {
     private static final Logger logger = LoggerFactory.getLogger(APIController.class);
+    private final ControlGroupRepo controlGroupRepo;
     private final CustomerRepo customerRepo;
+    private final EligibilityRepo eligibilityRepo;
+    private final ExperimentRepo experimentRepo;
+    private final OutcomeRepo outcomeRepo;
     private final SegmentRepo segmentRepo;
+    private final SurveyRepo surveyRepo;
 
-    public APIController(CustomerRepo customerRepo, SegmentRepo segmentRepo) {
+    public APIController(ControlGroupRepo controlGroupRepo, CustomerRepo customerRepo, EligibilityRepo eligibilityRepo, ExperimentRepo experimentRepo, OutcomeRepo outcomeRepo, SegmentRepo segmentRepo, SurveyRepo surveyRepo) {
+        this.controlGroupRepo = controlGroupRepo;
         this.customerRepo = customerRepo;
+        this.eligibilityRepo = eligibilityRepo;
+        this.experimentRepo = experimentRepo;
+        this.outcomeRepo = outcomeRepo;
         this.segmentRepo = segmentRepo;
+        this.surveyRepo = surveyRepo;
     }
 
+    @GetMapping("/controlGroups")
+    public List<ControlGroup> getControlGroups()
+    {
+        return controlGroupRepo.findAll();
+    }
+    
     @GetMapping("/customers")
     public List<Customer> getCustomers()
     {
@@ -52,6 +65,25 @@ public class APIController {
         return p;
     }
 
+    // ELIGIBILITY
+    @GetMapping("/eligibilities")
+    public List<Eligibility> getEligibilities()
+    {
+        return eligibilityRepo.findAll();
+    }
+
+    @GetMapping("/experiments")
+    public List<Experiment> getExperiments()
+    {
+        return experimentRepo.findAll();
+    }
+
+    @GetMapping("/outcomes")
+    public List<Outcome> getOutcomes()
+    {
+        return outcomeRepo.findAll();
+    }
+    
     // SEGMENTS ------------
     // ---------------------
     @GetMapping("/segments")
@@ -69,10 +101,12 @@ public class APIController {
     public Statistics getStatistics()
     {
         Statistics s = new Statistics();
-        s.setControls(0);
+        s.setControls(controlGroupRepo.count());
         s.setSegments(segmentRepo.count());
         s.setCustomers(customerRepo.count());
-        s.setSurveys(0);
+        s.setSurveys(surveyRepo.count());
+        s.setExperiments(experimentRepo.count());
+        s.setEligibilities(eligibilityRepo.count());
         return s;
     }
 
