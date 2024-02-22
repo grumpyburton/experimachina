@@ -28,3 +28,6 @@ replay_pid*
 /design/.$model.drawio.dtmp
 /design/.$model.drawio.bkp
 client-experi-machina/node_modules/
+/client-experi-machina/node/
+/client-experi-machina/dist/
+/client-experi-machina/.angular/**
