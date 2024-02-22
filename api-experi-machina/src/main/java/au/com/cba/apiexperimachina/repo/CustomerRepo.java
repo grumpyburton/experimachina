@@ -10,5 +10,4 @@ import java.util.List;
 
 public interface CustomerRepo extends JpaRepository<Customer, Long> {
 
-    //List<Customer> findAllCustomers(Pageable pageable);
 }
