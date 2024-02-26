@@ -18,6 +18,7 @@ import { SurveyListComponent } from './survey-list/survey-list.component';
 import { HomeComponent } from './home/home.component';
 import {MatDialog, MatDialogModule} from "@angular/material/dialog";
 import {MatButtonModule} from "@angular/material/button";
+import {MatInputModule} from "@angular/material/input";
 
 @NgModule({
   declarations: [
@@ -29,19 +30,20 @@ import {MatButtonModule} from "@angular/material/button";
     SurveyListComponent,
     HomeComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatMenuModule,
-    MatPaginatorModule,
-    MatTableModule,
-    MatDialogModule,
-    MatButtonModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatMenuModule,
+        MatPaginatorModule,
+        MatTableModule,
+        MatDialogModule,
+        MatButtonModule,
+        MatInputModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

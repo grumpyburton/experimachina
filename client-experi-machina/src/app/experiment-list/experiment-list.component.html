@@ -1,6 +1,9 @@
 <h1>Experiments</h1>
 <p>
     <button mat-flat-button color="primary" (click)="openDialog()">Add Experiment</button>
+    <mat-form-field appearance="outline" class="filter">
+        <input matInput (keyup)="applyFilter($event)" placeholder="Filter results...">
+    </mat-form-field>
 </p>
 
 

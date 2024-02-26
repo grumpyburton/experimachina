@@ -5,3 +5,9 @@ body {
 .example-full-width {
     width: 100%;
 }
+
+.filter {
+    width: 200px;
+    font-size: 12px;
+    padding-left: 10px;
+}
