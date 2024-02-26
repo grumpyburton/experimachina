@@ -16,6 +16,8 @@ import { ExperimentListComponent } from './experiment-list/experiment-list.compo
 import { ControlListComponent } from './control-list/control-list.component';
 import { SurveyListComponent } from './survey-list/survey-list.component';
 import { HomeComponent } from './home/home.component';
+import {MatDialog, MatDialogModule} from "@angular/material/dialog";
+import {MatButtonModule} from "@angular/material/button";
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import { HomeComponent } from './home/home.component';
     MatIconModule,
     MatMenuModule,
     MatPaginatorModule,
-    MatTableModule
+    MatTableModule,
+    MatDialogModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -5,6 +5,7 @@ import {Customer} from "./customer";
 import {AppSetting} from "./app-settings";
 import {Paging} from "./paging";
 import {Statistics} from "./statistics";
+import {Experiment} from "./experiment";
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,12 @@ export class ApiService {
 
   getAllCustomers(): Observable<Customer[]> {
     var r = this.http.get<Customer[]>("/api/customers",
+        AppSetting.httpOptions);
+    return r;
+  }
+
+  getExperiments(): Observable<Experiment[]> {
+    var r = this.http.get<Experiment[]>("/api/experiments",
         AppSetting.httpOptions);
     return r;
   }

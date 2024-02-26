@@ -99,6 +99,18 @@ public class BootstrapController {
         e.setDescription("Customers like green better than brown");
         e.setCreateDate(new Date(System.currentTimeMillis()));
         this.experimentRepo.save(e);
+
+        e = new Experiment();
+        e.setName("Experiment2");
+        e.setDescription("Customers like apples better than oranges");
+        e.setCreateDate(new Date(System.currentTimeMillis()));
+        this.experimentRepo.save(e);
+
+        e = new Experiment();
+        e.setName("Experiment3");
+        e.setDescription("Model X predicts rain better than model Y");
+        e.setCreateDate(new Date(System.currentTimeMillis()));
+        this.experimentRepo.save(e);
     }
 
     public void createOutcomes()

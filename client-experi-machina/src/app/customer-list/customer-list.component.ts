@@ -17,7 +17,7 @@ import {ApiService} from "../api.service";
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))
     ])]
 })
-export class CustomerListComponent  implements AfterViewInit {
+export class CustomerListComponent implements AfterViewInit {
 
   apiService: ApiService = inject(ApiService);
 
