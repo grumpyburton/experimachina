@@ -11,3 +11,12 @@ body {
     font-size: 12px;
     padding-left: 10px;
 }
+
+.pad-left {
+    padding-left: 10px;
+}
+
+.pad-top-bottom {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}

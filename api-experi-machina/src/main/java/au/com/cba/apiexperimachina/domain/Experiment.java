@@ -19,7 +19,10 @@ public class Experiment {
     private String hypothesis;
     private java.util.Date createDate;
     private java.util.Date updateDate;
+    private java.util.Date startDate;
+    private java.util.Date endDate;
     private java.util.Date expireDate;
+    private boolean active;
 
     public Long getId() {
         return id;
@@ -99,5 +102,29 @@ public class Experiment {
 
     public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 }

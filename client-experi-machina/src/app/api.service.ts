@@ -38,10 +38,19 @@ export class ApiService {
     return r;
   }
 
-  getExperiments(): Observable<Experiment[]> {
-    var r = this.http.get<Experiment[]>("/api/experiments",
-        AppSetting.httpOptions);
-    return r;
+  getExperiments(activeOnly: boolean): Observable<Experiment[]> {
+    if (activeOnly == true) {
+      console.log("active");
+      var r = this.http.get<Experiment[]>("/api/experiments?activeOnly=true",
+          AppSetting.httpOptions);
+      return r;
+    }
+    else {
+      console.log("all");
+      var r = this.http.get<Experiment[]>("/api/experiments",
+          AppSetting.httpOptions);
+      return r;
+    }
   }
 
   getAllCustomersPage(): Observable<Paging> {

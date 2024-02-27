@@ -5,12 +5,13 @@ import {MatInputModule} from "@angular/material/input";
 import {MatIconModule} from "@angular/material/icon";
 import {ApiService} from "../api.service";
 import {MatTableDataSource} from "@angular/material/table";
-import {Customer} from "../customer";
 import {MatPaginator} from "@angular/material/paginator";
 import {Experiment} from "../experiment";
 import {MatCardModule} from "@angular/material/card";
 import {FormsModule} from "@angular/forms";
 import {ConfirmDialogComponent, ConfirmDialogModel} from "../confirm-dialog/confirm-dialog.component";
+import {MatSlideToggleModule} from "@angular/material/slide-toggle";
+import {MatDatepickerModule} from "@angular/material/datepicker";
 
 
 @Component({
@@ -21,7 +22,7 @@ import {ConfirmDialogComponent, ConfirmDialogModel} from "../confirm-dialog/conf
 export class ExperimentListComponent implements AfterViewInit{
 
   constructor(public dialog: MatDialog) {
-    this.apiService.getExperiments().subscribe( experiments =>
+    this.apiService.getExperiments(this.activeOnly).subscribe( experiments =>
         this.dataSource.data = experiments);
 
     this.newExperiment = this.getNewExperiment();
@@ -29,11 +30,12 @@ export class ExperimentListComponent implements AfterViewInit{
 
   apiService: ApiService = inject(ApiService);
 
-  displayedColumns: string[] = ['id', 'name','description','actions'];
+  displayedColumns: string[] = ['id', 'name','description','active','actions'];
   dataSource = new MatTableDataSource<Experiment>([]);
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   newExperiment: Experiment;
+  activeOnly: false;
 
   getNewExperiment(): Experiment
   {
@@ -44,9 +46,17 @@ export class ExperimentListComponent implements AfterViewInit{
       problem: '',
       objective: '',
       hypothesis: '',
-      outcome: ''
+      outcome: '',
+      active: false
     };
     return  e;
+  }
+
+  toggleActiveOnly()
+  {
+    console.log("toggle");
+    this.apiService.getExperiments(this.activeOnly).subscribe( experiments =>
+        this.dataSource.data = experiments);
   }
 
   deleteExperiment(exp: Experiment)
@@ -54,9 +64,6 @@ export class ExperimentListComponent implements AfterViewInit{
     this.apiService.deleteExperiment(exp).subscribe( experiments =>
         this.dataSource.data = experiments);
   }
-
-
-
   openNewExperimentDialog() {
     const dialogRef =
         this.dialog.open(DialogExperiment,{
@@ -136,7 +143,8 @@ export class ExperimentListComponent implements AfterViewInit{
   templateUrl: 'dialog-experiment.html',
   styleUrls: ['./experiment-list.component.css'],
   standalone: true,
-  imports: [MatDialogModule, MatButtonModule, MatInputModule, MatIconModule, MatCardModule, FormsModule],
+  imports: [MatDialogModule, MatButtonModule, MatInputModule, MatIconModule, MatCardModule, FormsModule, MatSlideToggleModule, MatDatepickerModule],
+
 })
 export class DialogExperiment {
 

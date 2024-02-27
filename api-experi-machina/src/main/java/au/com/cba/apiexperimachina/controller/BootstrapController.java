@@ -125,6 +125,7 @@ public class BootstrapController {
         e.setObjective("pick the best day to go to the beach");
         e.setOutcome("you're going to get wet any way! so just go");
         e.setProblem("sticky sand!");
+        e.setActive(true);
         this.experimentRepo.save(e);
 
         for(int i=4; i<100; i++)

@@ -69,13 +69,21 @@ public class APIController {
     @GetMapping("/eligibilities")
     public List<Eligibility> getEligibilities()
     {
+
         return eligibilityRepo.findAll();
     }
 
     @GetMapping("/experiments")
-    public List<Experiment> getExperiments()
+    public List<Experiment> getExperiments(@RequestParam(required = false) Boolean activeOnly)
     {
-        return experimentRepo.findAll();
+        logger.debug("activeOnly: "+ activeOnly);
+        if(activeOnly != null && activeOnly.booleanValue())
+        {
+            return experimentRepo.findAllByActive(true);
+        }
+        else {
+            return experimentRepo.findAll();
+        }
     }
 
     @PostMapping("/experiment")

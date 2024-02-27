@@ -6,5 +6,6 @@ export interface Experiment {
   objective: string;
   hypothesis: string;
   outcome: string;
+  active: boolean;
 }
 

@@ -20,6 +20,9 @@ import {MatDialog, MatDialogModule} from "@angular/material/dialog";
 import {MatButtonModule} from "@angular/material/button";
 import {MatInputModule} from "@angular/material/input";
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import {MatSlideToggleModule} from "@angular/material/slide-toggle";
+import {FormsModule} from "@angular/forms";
+import {MatNativeDateModule} from "@angular/material/core";
 
 @NgModule({
   declarations: [
@@ -44,7 +47,10 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
         MatTableModule,
         MatDialogModule,
         MatButtonModule,
-        MatInputModule
+        MatInputModule,
+        MatSlideToggleModule,
+        FormsModule,
+        MatNativeDateModule
     ],
   providers: [],
   bootstrap: [AppComponent]
