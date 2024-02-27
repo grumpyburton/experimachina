@@ -98,18 +98,33 @@ public class BootstrapController {
         e.setName("Experiment1");
         e.setDescription("Customers like green better than brown");
         e.setCreateDate(new Date(System.currentTimeMillis()));
+        e.setUpdateDate(e.getCreateDate());
+        e.setHypothesis("green is sexy");
+        e.setObjective("to prove once and for all what eye colour is the best");
+        e.setOutcome("it's blue silly!");
+        e.setProblem("eyes are all different colours");
         this.experimentRepo.save(e);
 
         e = new Experiment();
         e.setName("Experiment2");
         e.setDescription("Customers like apples better than oranges");
         e.setCreateDate(new Date(System.currentTimeMillis()));
+        e.setUpdateDate(e.getCreateDate());
+        e.setHypothesis("oranges rock");
+        e.setObjective("to prove once and for all what fruit is the best");
+        e.setOutcome("it's mango silly!");
+        e.setProblem("comparing apples and oranges is hard");
         this.experimentRepo.save(e);
 
         e = new Experiment();
         e.setName("Experiment3");
         e.setDescription("Model X predicts rain better than model Y");
         e.setCreateDate(new Date(System.currentTimeMillis()));
+        e.setUpdateDate(e.getCreateDate());
+        e.setHypothesis("we can predict the rain");
+        e.setObjective("pick the best day to go to the beach");
+        e.setOutcome("you're going to get wet any way! so just go");
+        e.setProblem("sticky sand!");
         this.experimentRepo.save(e);
     }
 

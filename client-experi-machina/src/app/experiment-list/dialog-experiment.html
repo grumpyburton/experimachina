@@ -8,52 +8,53 @@
         <p>
             <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Name</mat-label>
-                <input matInput placeholder="Name">
+                <input matInput [(ngModel)]="data.name" placeholder="Name">
                 <mat-hint>What do you want to call the experiment?</mat-hint>
             </mat-form-field>
         </p>
         <p>
             <mat-form-field appearance="outline" class="example-full-width">
+                <mat-label>Description</mat-label>
+                <textarea matInput [(ngModel)]="data.description"  placeholder="Description"></textarea>
+                <mat-hint>What is the Description?</mat-hint>
+            </mat-form-field>
+        </p>
+        <p>
+            <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Problem</mat-label>
-                <textarea matInput placeholder="Problem"></textarea>
+                <textarea matInput [(ngModel)]="data.problem"  placeholder="Problem"></textarea>
                 <mat-hint>What is the problem?</mat-hint>
             </mat-form-field>
         </p>
         <p>
             <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Objective</mat-label>
-                <textarea matInput placeholder="Objective"></textarea>
+                <textarea matInput  [(ngModel)]="data.objective" placeholder="Objective"></textarea>
                 <mat-hint>What is the Objective?</mat-hint>
             </mat-form-field>
         </p>
         <p>
             <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Hypothesis</mat-label>
-                <textarea matInput placeholder="Hypothesis"></textarea>
+                <textarea matInput  [(ngModel)]="data.hypothesis" placeholder="Hypothesis"></textarea>
                 <mat-hint>What is the Hypothesis?</mat-hint>
             </mat-form-field>
         </p>
         <p>
             <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Outcome</mat-label>
-                <textarea matInput placeholder="Outcome"></textarea>
+                <textarea matInput  [(ngModel)]="data.outcome" placeholder="Outcome"></textarea>
                 <mat-hint>What is the Outcome?</mat-hint>
             </mat-form-field>
         </p>
     </mat-card-content>
 
-
-
-
 </mat-card>
 
-    <!--
-
-     -->
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Cancel</button>
-    <button  mat-flat-button color="primary" [mat-dialog-close]="true" cdkFocusInitial>Save</button>
+    <button mat-button [mat-dialog-close]="">Cancel</button>
+    <button  mat-flat-button color="primary" [mat-dialog-close]="data" cdkFocusInitial>Save</button>
 </mat-dialog-actions>
 
 

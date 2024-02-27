@@ -7,12 +7,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Pageable;
+
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -78,6 +78,33 @@ public class APIController {
         return experimentRepo.findAll();
     }
 
+    @PostMapping("/experiment")
+    public List<Experiment> createExperiment(@RequestBody Experiment experiment)
+    {
+        experiment.setCreateDate(new Date(System.currentTimeMillis()));
+        experiment.setUpdateDate(new Date(System.currentTimeMillis()));
+        this.experimentRepo.save(experiment);
+        return experimentRepo.findAll();
+    }
+
+    @PutMapping(path = "/experiment/{id}")
+    public List<Experiment> saveExperiment(@PathVariable Integer id, @RequestBody Experiment experiment){
+        //logger.debug("save experiment ----------------");
+        experiment.setUpdateDate(new Date(System.currentTimeMillis()));
+        experimentRepo.save(experiment);
+        return (List<Experiment>) experimentRepo.findAll();
+    }
+
+    @DeleteMapping(path = "/experiment/{id}")
+    public List<Experiment> deleteExperiment(@PathVariable Long id){
+        Optional<Experiment> experiment = experimentRepo.findById(id);
+        if(experiment.isPresent())
+        {
+            experimentRepo.delete(experiment.get());
+        }
+        return (List<Experiment>) experimentRepo.findAll();
+    }
+    
     @GetMapping("/outcomes")
     public List<Outcome> getOutcomes()
     {

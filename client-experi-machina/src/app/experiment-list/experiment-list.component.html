@@ -1,11 +1,10 @@
 <h1>Experiments</h1>
 <p>
-    <button mat-flat-button color="primary" (click)="openDialog()">Add Experiment</button>
+    <button mat-flat-button color="primary" (click)="openNewExperimentDialog()">Add Experiment</button>
     <mat-form-field appearance="outline" class="filter">
         <input matInput (keyup)="applyFilter($event)" placeholder="Filter results...">
     </mat-form-field>
 </p>
-
 
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     <ng-container matColumnDef="id">
@@ -23,10 +22,10 @@
     <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef> Actions</th>
         <td mat-cell *matCellDef="let element">
-            <button mat-icon-button color="primary" aria-label="Example icon button with a heart icon">
+            <button mat-icon-button color="primary" (click)="openEditExperimentDialog(element)">
                 <mat-icon>edit_note</mat-icon>
             </button>
-            <button mat-icon-button color="warn" aria-label="Example icon button with a heart icon">
+            <button mat-icon-button color="warn" (click)="confirmDialog(element)">
                 <mat-icon>delete</mat-icon>
             </button>
         </td>

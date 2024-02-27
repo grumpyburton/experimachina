@@ -1,5 +1,5 @@
-import {AfterViewInit, Component, inject, ViewChild} from '@angular/core';
-import {MatDialog, MatDialogModule} from "@angular/material/dialog";
+import {AfterViewInit, Component, Inject, inject, OnInit, ViewChild} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 import {MatButtonModule} from "@angular/material/button";
 import {MatInputModule} from "@angular/material/input";
 import {MatIconModule} from "@angular/material/icon";
@@ -9,6 +9,9 @@ import {Customer} from "../customer";
 import {MatPaginator} from "@angular/material/paginator";
 import {Experiment} from "../experiment";
 import {MatCardModule} from "@angular/material/card";
+import {FormsModule} from "@angular/forms";
+import {ConfirmDialogComponent, ConfirmDialogModel} from "../confirm-dialog/confirm-dialog.component";
+
 
 @Component({
   selector: 'app-experiment-list',
@@ -20,6 +23,8 @@ export class ExperimentListComponent implements AfterViewInit{
   constructor(public dialog: MatDialog) {
     this.apiService.getExperiments().subscribe( experiments =>
         this.dataSource.data = experiments);
+
+    this.newExperiment = this.getNewExperiment();
   }
 
   apiService: ApiService = inject(ApiService);
@@ -28,11 +33,67 @@ export class ExperimentListComponent implements AfterViewInit{
   dataSource = new MatTableDataSource<Experiment>([]);
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  openDialog() {
-    const dialogRef = this.dialog.open(DialogExperiment,{width:'80%'});
+  newExperiment: Experiment;
+
+  getNewExperiment(): Experiment
+  {
+    var e: Experiment = {
+      id: -1,
+      name: '',
+      description: '',
+      problem: '',
+      objective: '',
+      hypothesis: '',
+      outcome: ''
+    };
+    return  e;
+  }
+
+  deleteExperiment(exp: Experiment)
+  {
+    this.apiService.deleteExperiment(exp).subscribe( experiments =>
+        this.dataSource.data = experiments);
+  }
+
+
+
+  openNewExperimentDialog() {
+    const dialogRef =
+        this.dialog.open(DialogExperiment,{
+          width:'80%',
+          data: this.newExperiment
+        });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+      console.log(result);
+      if(result != null)
+      {
+          console.log("Call createExperiment");
+          this.apiService.createExperiment(result).subscribe( experiments =>
+            this.dataSource.data = experiments);
+
+        this.newExperiment = this.getNewExperiment();
+      }
+    });
+  }
+
+  openEditExperimentDialog(exp: Experiment): void {
+    const dialogRef =
+        this.dialog.open(DialogExperiment,{
+          width:'80%',
+          data: exp
+        });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      if(result != null)
+      {
+        console.log("Call saveExperiment");
+        this.apiService.saveExperiment(result).subscribe( experiments =>
+            this.dataSource.data = experiments);
+
+        this.newExperiment = this.getNewExperiment();
+      }
     });
   }
 
@@ -48,13 +109,51 @@ export class ExperimentListComponent implements AfterViewInit{
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
+
+  // Confirmation dialog for deletes
+  confirmDialog(exp: Experiment): void {
+    const message = `Are you sure you want to delete experiment ` + exp.name + ' ?';
+    const dialogData = new ConfirmDialogModel("Confirm delete", message);
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      maxWidth: "600px",
+      data: dialogData
+    });
+
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      console.log('after close: ' + dialogResult);
+      if (dialogResult) {
+        this.deleteExperiment(exp);
+      }
+    });
+  }
 }
 
+// ------------------------------------------------
+// DialogExperiment Component
+// ------------------------------------------------
 @Component({
   selector: 'dialog-experiment',
   templateUrl: 'dialog-experiment.html',
   styleUrls: ['./experiment-list.component.css'],
   standalone: true,
-  imports: [MatDialogModule, MatButtonModule, MatInputModule, MatIconModule, MatCardModule],
+  imports: [MatDialogModule, MatButtonModule, MatInputModule, MatIconModule, MatCardModule, FormsModule],
 })
-export class DialogExperiment {}
+export class DialogExperiment {
+
+  constructor(
+      public dialogRef: MatDialogRef<DialogExperiment>,
+      @Inject(MAT_DIALOG_DATA) public data: Experiment,
+  ) {
+    console.log(data);
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  log(o:Object)
+  {
+    console.log(o);
+  }
+
+}

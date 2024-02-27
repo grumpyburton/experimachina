@@ -13,7 +13,12 @@ public class Experiment {
     private Long id;
     private String name;
     private String description;
+    private String problem;
+    private String outcome;
+    private String objective;
+    private String hypothesis;
     private java.util.Date createDate;
+    private java.util.Date updateDate;
     private java.util.Date expireDate;
 
     public Long getId() {
@@ -54,5 +59,45 @@ public class Experiment {
 
     public void setExpireDate(Date expireDate) {
         this.expireDate = expireDate;
+    }
+
+    public String getProblem() {
+        return problem;
+    }
+
+    public void setProblem(String problem) {
+        this.problem = problem;
+    }
+
+    public String getOutcome() {
+        return outcome;
+    }
+
+    public void setOutcome(String outcome) {
+        this.outcome = outcome;
+    }
+
+    public String getObjective() {
+        return objective;
+    }
+
+    public void setObjective(String objective) {
+        this.objective = objective;
+    }
+
+    public String getHypothesis() {
+        return hypothesis;
+    }
+
+    public void setHypothesis(String hypothesis) {
+        this.hypothesis = hypothesis;
+    }
+
+    public Date getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
     }
 }

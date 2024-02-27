@@ -20,6 +20,24 @@ export class ApiService {
     return r;
   }
 
+  createExperiment(experiment: Experiment): Observable<Experiment[]> {
+    var r = this.http.post<Experiment[]>(`/api/experiment`, experiment,
+        AppSetting.httpOptions);
+    return r;
+  }
+
+  saveExperiment(experiment: Experiment): Observable<Experiment[]> {
+    var r = this.http.put<Experiment[]>(`/api/experiment/` + experiment.id, experiment,
+        AppSetting.httpOptions);
+    return r;
+  }
+
+  deleteExperiment(experiment: Experiment): Observable<Experiment[]> {
+    var r = this.http.delete<Experiment[]>(`/api/experiment/` + experiment.id,
+        AppSetting.httpOptions);
+    return r;
+  }
+
   getExperiments(): Observable<Experiment[]> {
     var r = this.http.get<Experiment[]>("/api/experiments",
         AppSetting.httpOptions);

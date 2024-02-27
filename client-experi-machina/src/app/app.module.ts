@@ -19,6 +19,7 @@ import { HomeComponent } from './home/home.component';
 import {MatDialog, MatDialogModule} from "@angular/material/dialog";
 import {MatButtonModule} from "@angular/material/button";
 import {MatInputModule} from "@angular/material/input";
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import {MatInputModule} from "@angular/material/input";
     ExperimentListComponent,
     ControlListComponent,
     SurveyListComponent,
-    HomeComponent
+    HomeComponent,
+    ConfirmDialogComponent
   ],
     imports: [
         BrowserModule,
