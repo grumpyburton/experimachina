@@ -126,6 +126,16 @@ public class BootstrapController {
         e.setOutcome("you're going to get wet any way! so just go");
         e.setProblem("sticky sand!");
         this.experimentRepo.save(e);
+
+        for(int i=4; i<100; i++)
+        {
+            e = new Experiment();
+            e.setName("Experiment" + i);
+            e.setDescription("description");
+            e.setCreateDate(new Date(System.currentTimeMillis()));
+            e.setUpdateDate(e.getCreateDate());
+            this.experimentRepo.save(e);
+        }
     }
 
     public void createOutcomes()
