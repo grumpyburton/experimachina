@@ -1,12 +1,7 @@
-export interface Experiment {
+export interface Eligibility {
   id: number;
   name: string;
   description: string;
-  problem: string;
-  objective: string;
-  hypothesis: string;
-  outcome: string;
-  active: boolean;
   createDate: string;
   updateDate: string;
   startDate: string;

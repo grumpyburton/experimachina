@@ -13,8 +13,11 @@ public class Segment {
     private Long id;
     private String name;
     private String description;
+    private String code;
     private boolean shared;
+    private boolean active;
     private java.util.Date createDate;
+    private java.util.Date updateDate;
     private java.util.Date expireDate;
 
     public Long getId() {
@@ -63,5 +66,29 @@ public class Segment {
 
     public void setExpireDate(Date expireDate) {
         this.expireDate = expireDate;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public Date getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
     }
 }

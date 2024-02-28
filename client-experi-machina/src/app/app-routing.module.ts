@@ -6,18 +6,19 @@ import {ExperimentListComponent} from "./experiment-list/experiment-list.compone
 import {ControlListComponent} from "./control-list/control-list.component";
 import {SurveyListComponent} from "./survey-list/survey-list.component";
 import {HomeComponent} from "./home/home.component";
+import {EligibilityListComponent} from "./eligibility-list/eligibility-list.component";
 
 const routes: Routes = [
   { path: 'controls', component: ControlListComponent },
   { path: 'customers', component: CustomerListComponent },
   { path: 'experiments', component: ExperimentListComponent },
+  { path: 'eligibilies', component: EligibilityListComponent },
   { path: 'home', component: HomeComponent },
   { path: 'segments', component: SegmentListComponent },
   { path: 'surveys', component: SurveyListComponent },
   { path: '**', component: HomeComponent },
   { path: '404', component: HomeComponent }
 ];
-
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

@@ -58,6 +58,7 @@ public class BootstrapController {
             Customer c = new Customer();
             c.setFirstName(faker.name().firstName());
             c.setSurname(faker.name().lastName());
+            c.setActive(true);
             this.customerRepo.save(c);
         }
     }
@@ -164,6 +165,8 @@ public class BootstrapController {
         s.setDescription("Is a RBS segment customer");
         s.setShared(true);
         s.setCreateDate(new Date(System.currentTimeMillis()));
+        s.setActive(true);
+        s.setCode("SEG_RBS");
         this.segmentRepo.save(s);
 
         s = new Segment();
@@ -171,6 +174,8 @@ public class BootstrapController {
         s.setDescription("Is a BB segment customer");
         s.setShared(true);
         s.setCreateDate(new Date(System.currentTimeMillis()));
+        s.setActive(true);
+        s.setCode("SEG_BB");
         this.segmentRepo.save(s);
 
         s = new Segment();
@@ -178,6 +183,8 @@ public class BootstrapController {
         s.setDescription("Is a IBM segment customer");
         s.setShared(true);
         s.setCreateDate(new Date(System.currentTimeMillis()));
+        s.setActive(true);
+        s.setCode("SEG_IBM");
         this.segmentRepo.save(s);
 
         s = new Segment();
@@ -185,6 +192,8 @@ public class BootstrapController {
         s.setDescription("Is a in the age range of 20-30 year old customer");
         s.setShared(true);
         s.setCreateDate(new Date(System.currentTimeMillis()));
+        s.setActive(true);
+        s.setCode("SEG_20TO30");
         this.segmentRepo.save(s);
 
         s = new Segment();
@@ -192,6 +201,8 @@ public class BootstrapController {
         s.setDescription("Is a markting enabled segment customer");
         s.setShared(true);
         s.setCreateDate(new Date(System.currentTimeMillis()));
+        s.setActive(false);
+        s.setCode("SEG_MKT");
         this.segmentRepo.save(s);
     }
 }

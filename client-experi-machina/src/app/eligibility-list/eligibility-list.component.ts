@@ -6,48 +6,43 @@ import {MatIconModule} from "@angular/material/icon";
 import {ApiService} from "../api.service";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
-import {Experiment} from "../experiment";
 import {MatCardModule} from "@angular/material/card";
 import {FormsModule} from "@angular/forms";
 import {ConfirmDialogComponent, ConfirmDialogModel} from "../confirm-dialog/confirm-dialog.component";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {MatDatepickerModule} from "@angular/material/datepicker";
+import {Eligibility} from "../eligibility";
 
 
 @Component({
-  selector: 'app-experiment-list',
-  templateUrl: './experiment-list.component.html',
-  styleUrls: ['./experiment-list.component.css']
+  selector: 'app-eligibility-list',
+  templateUrl: './eligibility-list.component.html',
+  styleUrls: ['./eligibility-list.component.css']
 })
-export class ExperimentListComponent implements AfterViewInit{
+export class EligibilityListComponent implements AfterViewInit{
 
   constructor(public dialog: MatDialog) {
-    this.apiService.getExperiments(this.activeOnly).subscribe( experiments =>
-        this.dataSource.data = experiments);
+    this.apiService.getEligibilities(this.activeOnly).subscribe( eligibilities =>
+        this.dataSource.data = eligibilities);
 
-    this.newExperiment = this.getNewExperiment();
+    this.newEligibility = this.getNewEligibility();
   }
 
   apiService: ApiService = inject(ApiService);
 
   displayedColumns: string[] = ['id', 'name','description','active','actions'];
-  dataSource = new MatTableDataSource<Experiment>([]);
+  dataSource = new MatTableDataSource<Eligibility>([]);
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  newExperiment: Experiment;
+  newEligibility: Eligibility;
   activeOnly: false;
 
-  getNewExperiment(): Experiment
+  getNewEligibility(): Eligibility
   {
-    var e: Experiment = {
+    var e: Eligibility = {
       id: -1,
       name: '',
       description: '',
-      problem: '',
-      objective: '',
-      hypothesis: '',
-      outcome: '',
-      active: false,
       createDate: '',
       updateDate: '',
       startDate: '',
@@ -60,38 +55,38 @@ export class ExperimentListComponent implements AfterViewInit{
   toggleActiveOnly()
   {
     console.log("toggle");
-    this.apiService.getExperiments(this.activeOnly).subscribe( experiments =>
-        this.dataSource.data = experiments);
+    this.apiService.getEligibilities(this.activeOnly).subscribe( eligibilities =>
+        this.dataSource.data = eligibilities);
   }
 
-  deleteExperiment(exp: Experiment)
+  deleteEligibility(exp: Eligibility)
   {
-    this.apiService.deleteExperiment(exp).subscribe( experiments =>
-        this.dataSource.data = experiments);
+    this.apiService.deleteEligibility(exp).subscribe( eligibilities =>
+        this.dataSource.data = eligibilities);
   }
-  openNewExperimentDialog() {
+  openNewEligibilityDialog() {
     const dialogRef =
-        this.dialog.open(DialogExperiment,{
+        this.dialog.open(DialogEligibility,{
           width:'80%',
-          data: this.newExperiment
+          data: this.newEligibility
         });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
       if(result != null)
       {
-          console.log("Call createExperiment");
-          this.apiService.createExperiment(result).subscribe( experiments =>
-            this.dataSource.data = experiments);
+        console.log("Call createEligibility");
+        this.apiService.createEligibility(result).subscribe( eligibilities =>
+            this.dataSource.data = eligibilities);
 
-        this.newExperiment = this.getNewExperiment();
+        this.newEligibility = this.getNewEligibility();
       }
     });
   }
 
-  openEditExperimentDialog(exp: Experiment): void {
+  openEditEligibilityDialog(exp: Eligibility): void {
     const dialogRef =
-        this.dialog.open(DialogExperiment,{
+        this.dialog.open(DialogEligibility,{
           width:'80%',
           data: exp
         });
@@ -100,11 +95,11 @@ export class ExperimentListComponent implements AfterViewInit{
       console.log(result);
       if(result != null)
       {
-        console.log("Call saveExperiment");
-        this.apiService.saveExperiment(result).subscribe( experiments =>
-            this.dataSource.data = experiments);
+        console.log("Call saveEligibility");
+        this.apiService.saveEligibility(result).subscribe( eligibilities =>
+            this.dataSource.data = eligibilities);
 
-        this.newExperiment = this.getNewExperiment();
+        this.newEligibility = this.getNewEligibility();
       }
     });
   }
@@ -123,8 +118,8 @@ export class ExperimentListComponent implements AfterViewInit{
   }
 
   // Confirmation dialog for deletes
-  confirmDialog(exp: Experiment): void {
-    const message = `Are you sure you want to delete experiment ` + exp.name + ' ?';
+  confirmDialog(exp: Eligibility): void {
+    const message = `Are you sure you want to delete eligibility ` + exp.name + ' ?';
     const dialogData = new ConfirmDialogModel("Confirm delete", message);
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       maxWidth: "600px",
@@ -134,28 +129,28 @@ export class ExperimentListComponent implements AfterViewInit{
     dialogRef.afterClosed().subscribe(dialogResult => {
       console.log('after close: ' + dialogResult);
       if (dialogResult) {
-        this.deleteExperiment(exp);
+        this.deleteEligibility(exp);
       }
     });
   }
 }
 
 // ------------------------------------------------
-// DialogExperiment Component
+// DialogEligibility Component
 // ------------------------------------------------
 @Component({
-  selector: 'dialog-experiment',
-  templateUrl: 'dialog-experiment.html',
-  styleUrls: ['./experiment-list.component.css'],
+  selector: 'dialog-eligibility',
+  templateUrl: 'dialog-eligibility.html',
+  styleUrls: ['./eligibility-list.component.css'],
   standalone: true,
   imports: [MatDialogModule, MatButtonModule, MatInputModule, MatIconModule, MatCardModule, FormsModule, MatSlideToggleModule, MatDatepickerModule],
 
 })
-export class DialogExperiment {
+export class DialogEligibility {
 
   constructor(
-      public dialogRef: MatDialogRef<DialogExperiment>,
-      @Inject(MAT_DIALOG_DATA) public data: Experiment,
+      public dialogRef: MatDialogRef<DialogEligibility>,
+      @Inject(MAT_DIALOG_DATA) public data: Eligibility,
   ) {
     console.log(data);
   }

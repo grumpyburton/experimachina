@@ -13,6 +13,7 @@ public class ControlGroup {
     private Long id;
     private String name;
     private String description;
+    private boolean active;
     private java.util.Date createDate;
     private java.util.Date expireDate;
 
@@ -54,5 +55,13 @@ public class ControlGroup {
 
     public void setExpireDate(Date expireDate) {
         this.expireDate = expireDate;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

@@ -1,0 +1,37 @@
+<mat-dialog-content class="mat-typography">
+<mat-card>
+    <mat-card-header>
+        <mat-card-title  class="pad-top-bottom">Customer</mat-card-title>
+        <mat-card-subtitle class="pad-top-bottom">
+            <mat-slide-toggle class="pad-left" [(ngModel)]="data.active" value="primary" name="active">Active</mat-slide-toggle>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <p>
+            <mat-form-field appearance="outline" class="example-full-width">
+                <mat-label>First name</mat-label>
+                <input matInput [(ngModel)]="data.firstName" placeholder="Firstname">
+                <mat-hint>What do you want to call the experiment?</mat-hint>
+            </mat-form-field>
+        </p>
+        <p>
+            <mat-form-field appearance="outline" class="example-full-width">
+                <mat-label>Surname</mat-label>
+                <input matInput [(ngModel)]="data.surname" placeholder="surname">
+                <mat-hint>What do you want to call the experiment?</mat-hint>
+            </mat-form-field>
+        </p>
+    </mat-card-content>
+
+</mat-card>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button [mat-dialog-close]="">Cancel</button>
+    <button  mat-flat-button color="primary" [mat-dialog-close]="data" cdkFocusInitial>Save</button>
+</mat-dialog-actions>
+
+
+
+
+

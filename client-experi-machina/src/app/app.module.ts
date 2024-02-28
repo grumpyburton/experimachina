@@ -23,6 +23,7 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {FormsModule} from "@angular/forms";
 import {MatNativeDateModule} from "@angular/material/core";
+import { EligibilityListComponent } from './eligibility-list/eligibility-list.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import {MatNativeDateModule} from "@angular/material/core";
     ControlListComponent,
     SurveyListComponent,
     HomeComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    EligibilityListComponent
   ],
     imports: [
         BrowserModule,

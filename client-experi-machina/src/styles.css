@@ -1,4 +1,27 @@
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
-body { margin: 10px; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {
+    margin: 10px;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+
+.example-full-width {
+    width: 100%;
+}
+
+.filter {
+    width: 200px;
+    font-size: 12px;
+    padding-left: 10px;
+}
+
+.pad-left {
+    padding-left: 10px;
+}
+
+.pad-top-bottom {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}

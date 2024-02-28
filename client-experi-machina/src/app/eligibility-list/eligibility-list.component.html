@@ -1,8 +1,8 @@
-<h1>Segments</h1>
+<h1>Eligibilities</h1>
 <p>
-    <button mat-flat-button color="primary" (click)="openNewSegmentDialog()">Add Segment</button>
+    <button mat-flat-button color="primary" (click)="openNewEligibilityDialog()">Add Eligibility</button>
     <mat-form-field appearance="outline" class="filter">
-        <input matInput (keyup)="applyFilter($event)" placeholder="Filter segments...">
+        <input matInput (keyup)="applyFilter($event)" placeholder="Filter eligibility...">
     </mat-form-field>
     <mat-slide-toggle class="pad-left" ngModel (click)="toggleActiveOnly()" [(ngModel)]="activeOnly" name="activeOnly">Active Only</mat-slide-toggle>
 </p>
@@ -11,10 +11,6 @@
     <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef>Id</th>
         <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-    </ng-container>
-    <ng-container matColumnDef="code">
-        <th mat-header-cell *matHeaderCellDef>Code</th>
-        <td mat-cell *matCellDef="let element">{{element.code}} </td>
     </ng-container>
     <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef>Name</th>
@@ -31,7 +27,7 @@
     <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef>Actions</th>
         <td mat-cell *matCellDef="let element">
-            <button mat-icon-button color="primary" (click)="openEditSegmentDialog(element)">
+            <button mat-icon-button color="primary" (click)="openEditEligibilityDialog(element)">
                 <mat-icon>edit_note</mat-icon>
             </button>
             <button mat-icon-button color="warn" (click)="confirmDialog(element)">

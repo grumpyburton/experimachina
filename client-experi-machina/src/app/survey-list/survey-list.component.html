@@ -1,1 +1,48 @@
-<p>survey-list works!</p>
+<h1>Surveys</h1>
+<p>
+    <button mat-flat-button color="primary" (click)="openNewSurveyDialog()">Add Survey</button>
+    <mat-form-field appearance="outline" class="filter">
+        <input matInput (keyup)="applyFilter($event)" placeholder="Filter surveys...">
+    </mat-form-field>
+    <mat-slide-toggle class="pad-left" ngModel (click)="toggleActiveOnly()" [(ngModel)]="activeOnly" name="activeOnly">Active Only</mat-slide-toggle>
+</p>
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>Id</th>
+        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+    <ng-container matColumnDef="code">
+        <th mat-header-cell *matHeaderCellDef>Code</th>
+        <td mat-cell *matCellDef="let element">{{element.code}} </td>
+    </ng-container>
+    <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let element">{{element.name}} </td>
+    </ng-container>
+    <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef>Description</th>
+        <td mat-cell *matCellDef="let element">{{element.description}} </td>
+    </ng-container>
+    <ng-container matColumnDef="active">
+        <th mat-header-cell *matHeaderCellDef>Active</th>
+        <td mat-cell *matCellDef="let element">{{element.active}} </td>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let element">
+            <button mat-icon-button color="primary" (click)="openEditSurveyDialog(element)">
+                <mat-icon>edit_note</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="confirmDialog(element)">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<mat-paginator [length]="dataSource.data.length"
+               [pageSize]="5"
+               [pageSizeOptions]="[5, 10, 25, 100]"
+               aria-label="Select page of feedback"></mat-paginator>

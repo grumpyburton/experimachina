@@ -1,12 +1,8 @@
-export interface Experiment {
+export interface Control {
   id: number;
   name: string;
-  description: string;
-  problem: string;
-  objective: string;
-  hypothesis: string;
-  outcome: string;
   active: boolean;
+  description: string;
   createDate: string;
   updateDate: string;
   startDate: string;

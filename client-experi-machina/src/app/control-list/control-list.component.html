@@ -1,1 +1,44 @@
-<p>control-list works!</p>
+<h1>Control Groups</h1>
+<p>
+    <button mat-flat-button color="primary" (click)="openNewControlDialog()">Add Control Group</button>
+    <mat-form-field appearance="outline" class="filter">
+        <input matInput (keyup)="applyFilter($event)" placeholder="Filter control groups...">
+    </mat-form-field>
+    <mat-slide-toggle class="pad-left" ngModel (click)="toggleActiveOnly()" [(ngModel)]="activeOnly" name="activeOnly">Active Only</mat-slide-toggle>
+</p>
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>Id</th>
+        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+    <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let element">{{element.name}} </td>
+    </ng-container>
+    <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef>Description</th>
+        <td mat-cell *matCellDef="let element">{{element.description}} </td>
+    </ng-container>
+    <ng-container matColumnDef="active">
+        <th mat-header-cell *matHeaderCellDef>Active</th>
+        <td mat-cell *matCellDef="let element">{{element.active}} </td>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let element">
+            <button mat-icon-button color="primary" (click)="openEditControlDialog(element)">
+                <mat-icon>edit_note</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="confirmDialog(element)">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<mat-paginator [length]="dataSource.data.length"
+               [pageSize]="5"
+               [pageSizeOptions]="[5, 10, 25, 100]"
+               aria-label="Select page of feedback"></mat-paginator>

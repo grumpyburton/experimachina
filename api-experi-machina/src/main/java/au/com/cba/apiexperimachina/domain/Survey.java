@@ -13,8 +13,13 @@ public class Survey {
     private Long id;
     private String name;
     private String description;
-    private Date createDate;
-    private Date expireDate;
+
+    private boolean active;
+    private java.util.Date createDate;
+    private java.util.Date updateDate;
+    private java.util.Date startDate;
+    private java.util.Date endDate;
+    private java.util.Date expireDate;
 
     public Long getId() {
         return id;
@@ -54,5 +59,37 @@ public class Survey {
 
     public void setExpireDate(Date expireDate) {
         this.expireDate = expireDate;
+    }
+
+    public Date getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }
