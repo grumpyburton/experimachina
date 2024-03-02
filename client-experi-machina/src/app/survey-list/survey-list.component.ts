@@ -203,7 +203,24 @@ export class DialogSurveyEligibility {
     this.dataSourceEligibilityTo.data = data.eligibilities;
 
     this.apiService.getEligibilities(this.activeOnly).subscribe( eligibilities =>
-        this.dataSourceEligibilityFrom.data = eligibilities);
+    {
+      this.dataSourceEligibilityFrom.data = eligibilities;
+      // remove the already selected ones
+      var arrayLength = this.dataSourceEligibilityFrom.data.length;
+      for (var i = 0; i < arrayLength; i++) {
+        //this.removeItem(this.dataSourceEligibilityFrom, data.eligibilities[i]);
+        for (var j = 0; j < this.dataSourceEligibilityTo.data.length; j++) {
+          if(this.dataSourceEligibilityFrom.data[i].id == this.dataSourceEligibilityTo.data[j].id)
+          {
+            console.log("match - remove");
+            this.dataSourceEligibilityFrom.data.splice(i, 1);
+            this.dataSourceEligibilityFrom._updateChangeSubscription();
+
+          }
+        }
+      }
+
+    });
 
     console.log(data);
     console.log(this.dataSourceEligibilityFrom.data);
