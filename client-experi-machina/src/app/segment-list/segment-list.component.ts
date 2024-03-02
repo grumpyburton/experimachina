@@ -30,7 +30,7 @@ export class SegmentListComponent implements AfterViewInit{
 
   apiService: ApiService = inject(ApiService);
 
-  displayedColumns: string[] = ['id','code', 'name','description','active','actions'];
+  displayedColumns: string[] = ['id','code','count', 'name','description','active','actions'];
   dataSource = new MatTableDataSource<Segment>([]);
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -49,9 +49,21 @@ export class SegmentListComponent implements AfterViewInit{
       updateDate: '',
       startDate: '',
       endDate: '',
-      expireDate: ''
+      expireDate: '',
+      customers: []
     };
     return  e;
+  }
+
+  getSize(segment: Segment) : number
+  {
+    if(segment != null && segment.customers != null)
+    {
+      return segment.customers.length;
+    }
+    else {
+      return 0;
+    }
   }
 
   toggleActiveOnly()

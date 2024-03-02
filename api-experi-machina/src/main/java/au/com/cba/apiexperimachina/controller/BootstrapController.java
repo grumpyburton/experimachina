@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
+import java.util.List;
 
 @RestController
 public class BootstrapController {
@@ -51,7 +52,7 @@ public class BootstrapController {
 
     public void createCustomers()
     {
-        int j = 1000;
+        int j = 100;
         for(int i=0; i < j; i++)
         {
             Faker faker = new Faker();
@@ -84,13 +85,25 @@ public class BootstrapController {
         e.setName("Over18");
         e.setDescription("Customer is over 18");
         e.setCreateDate(new Date(System.currentTimeMillis()));
+        e.setActive(true);
         this.eligibilityRepo.save(e);
 
         e = new Eligibility();
         e.setName("Product1");
         e.setDescription("Customer has product 1");
         e.setCreateDate(new Date(System.currentTimeMillis()));
+        e.setActive(true);
         this.eligibilityRepo.save(e);
+
+        for(int i=0; i<100; i++)
+        {
+            e = new Eligibility();
+            e.setName("Eligibility " + i);
+            e.setDescription("Eligibility description " + i);
+            e.setCreateDate(new Date(System.currentTimeMillis()));
+            e.setActive(true);
+            this.eligibilityRepo.save(e);
+        }
     }
 
     public void createExperiments()
@@ -160,6 +173,8 @@ public class BootstrapController {
     
     public void createSegments()
     {
+        List<Customer> customersList = this.customerRepo.findAll();
+
         Segment s = new Segment();
         s.setName("isRBSCustomer");
         s.setDescription("Is a RBS segment customer");
@@ -167,6 +182,7 @@ public class BootstrapController {
         s.setCreateDate(new Date(System.currentTimeMillis()));
         s.setActive(true);
         s.setCode("SEG_RBS");
+        s.setCustomers(customersList);
         this.segmentRepo.save(s);
 
         s = new Segment();
@@ -176,6 +192,7 @@ public class BootstrapController {
         s.setCreateDate(new Date(System.currentTimeMillis()));
         s.setActive(true);
         s.setCode("SEG_BB");
+        s.setCustomers(customersList);
         this.segmentRepo.save(s);
 
         s = new Segment();
@@ -185,6 +202,7 @@ public class BootstrapController {
         s.setCreateDate(new Date(System.currentTimeMillis()));
         s.setActive(true);
         s.setCode("SEG_IBM");
+        s.setCustomers(customersList);
         this.segmentRepo.save(s);
 
         s = new Segment();
@@ -194,6 +212,7 @@ public class BootstrapController {
         s.setCreateDate(new Date(System.currentTimeMillis()));
         s.setActive(true);
         s.setCode("SEG_20TO30");
+        s.setCustomers(customersList);
         this.segmentRepo.save(s);
 
         s = new Segment();
@@ -203,6 +222,7 @@ public class BootstrapController {
         s.setCreateDate(new Date(System.currentTimeMillis()));
         s.setActive(false);
         s.setCode("SEG_MKT");
+        s.setCustomers(customersList);
         this.segmentRepo.save(s);
     }
 }

@@ -1,10 +1,10 @@
 package au.com.cba.apiexperimachina.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Segment {
@@ -19,6 +19,8 @@ public class Segment {
     private java.util.Date createDate;
     private java.util.Date updateDate;
     private java.util.Date expireDate;
+    @ManyToMany
+    private List<Customer> customers = new ArrayList<Customer>();
 
     public Long getId() {
         return id;
@@ -90,5 +92,13 @@ public class Segment {
 
     public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
+    }
+
+    public List<Customer> getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(List<Customer> customers) {
+        this.customers = customers;
     }
 }

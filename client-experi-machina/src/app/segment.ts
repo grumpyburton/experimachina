@@ -9,5 +9,6 @@ export interface Segment {
   startDate: string;
   endDate: string;
   expireDate: string;
+  customers: []
 }
 

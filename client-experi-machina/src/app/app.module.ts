@@ -24,6 +24,7 @@ import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {FormsModule} from "@angular/forms";
 import {MatNativeDateModule} from "@angular/material/core";
 import { EligibilityListComponent } from './eligibility-list/eligibility-list.component';
+import {MatGridListModule} from "@angular/material/grid-list";
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { EligibilityListComponent } from './eligibility-list/eligibility-list.co
         MatInputModule,
         MatSlideToggleModule,
         FormsModule,
-        MatNativeDateModule
+        MatNativeDateModule,
+        MatGridListModule
     ],
   providers: [],
   bootstrap: [AppComponent]

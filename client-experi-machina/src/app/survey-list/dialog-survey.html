@@ -1,7 +1,7 @@
 <mat-dialog-content class="mat-typography">
 <mat-card>
     <mat-card-header>
-        <mat-card-title  class="pad-top-bottom">Survey</mat-card-title>
+        <mat-card-title  class="pad-top-bottom">Survey: {{data.name}}</mat-card-title>
         <mat-card-subtitle class="pad-top-bottom">
             <mat-form-field class="pad-left">
                 <mat-label>Start / end date range</mat-label>
@@ -37,6 +37,9 @@
                 <textarea matInput [(ngModel)]="data.description"  placeholder="Description"></textarea>
                 <mat-hint>What is the Description?</mat-hint>
             </mat-form-field>
+        </p>
+        <p>
+
         </p>
     </mat-card-content>
 

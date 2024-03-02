@@ -1,3 +1,5 @@
+import {Eligibility} from "./eligibility";
+
 export interface Survey {
   id: number;
   name: string;
@@ -9,5 +11,6 @@ export interface Survey {
   startDate: string;
   endDate: string;
   expireDate: string;
+  eligibilities : Eligibility[];
 }
 

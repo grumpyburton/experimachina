@@ -33,6 +33,13 @@
         </p>
         <p>
             <mat-form-field appearance="outline" class="example-full-width">
+                <mat-label>Code</mat-label>
+                <input matInput [(ngModel)]="data.code" placeholder="Name">
+                <mat-hint>What is the code for the segment?</mat-hint>
+            </mat-form-field>
+        </p>
+        <p>
+            <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Description</mat-label>
                 <textarea matInput [(ngModel)]="data.description"  placeholder="Description"></textarea>
                 <mat-hint>What is the Description?</mat-hint>
