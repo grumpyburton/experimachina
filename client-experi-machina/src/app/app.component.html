@@ -4,13 +4,13 @@
       <mat-icon>menu</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-      <a routerLink="home"><button mat-menu-item>Home</button></a>
-      <a routerLink="customers"><button mat-menu-item>Customers</button></a>
-      <a routerLink="segments"><button mat-menu-item>Segments</button></a>
-      <a routerLink="eligibilies"><button mat-menu-item>Eligibilies</button></a>
-      <a routerLink="controls"><button mat-menu-item>Control Groups</button></a>
-      <a routerLink="experiments"><button mat-menu-item>Experiments</button></a>
-      <a routerLink="surveys"><button mat-menu-item>Surveys</button></a>
+      <button mat-menu-item routerLink="/home"><mat-icon>home</mat-icon>Home</button>
+      <button mat-menu-item routerLink="/customers"><mat-icon>patient_list</mat-icon>Customer</button>
+      <button mat-menu-item routerLink="/segments"><mat-icon>segment</mat-icon>Segments</button>
+      <button mat-menu-item routerLink="/eligibilies"><mat-icon>patient_list</mat-icon>Eligibilies</button>
+      <button mat-menu-item routerLink="/controls"><mat-icon>patient_list</mat-icon>Control Groups</button>
+      <button mat-menu-item routerLink="/experiments"><mat-icon>patient_list</mat-icon>Experiments</button>
+      <button mat-menu-item routerLink="/surveys"><mat-icon class="">question_exchange</mat-icon>Surveys</button>
     </mat-menu>
     <span>Experi Machina - Experiment Management System</span>
   </mat-toolbar>

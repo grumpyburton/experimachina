@@ -215,11 +215,9 @@ export class DialogSurveyEligibility {
             console.log("match - remove");
             this.dataSourceEligibilityFrom.data.splice(i, 1);
             this.dataSourceEligibilityFrom._updateChangeSubscription();
-
           }
         }
       }
-
     });
 
     console.log(data);
