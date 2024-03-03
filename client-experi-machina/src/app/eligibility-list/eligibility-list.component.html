@@ -1,5 +1,10 @@
 <h1>Eligibilities</h1>
 <p>
+    Eligibilities allow you to group required <a routerLink="/segments">Segments</a> together. The eligibility can then
+    be applied to a <a routerLink="/controls">Control Group</a>, <a routerLink="/experiments">Experiment</a>,
+    <a routerLink="/features">Feature</a> or <a routerLink="/surveys">Survey</a>
+</p>
+<p>
     <button mat-flat-button color="primary" (click)="openNewEligibilityDialog()">Add Eligibility</button>
     <mat-form-field appearance="outline" class="filter">
         <input matInput (keyup)="applyFilter($event)" placeholder="Filter eligibility...">
@@ -27,6 +32,9 @@
     <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef>Actions</th>
         <td mat-cell *matCellDef="let element">
+            <button mat-icon-button color="primary" (click)="openEditEligibilitySegmentDialog(element)">
+                <mat-icon>exposure</mat-icon>
+            </button>
             <button mat-icon-button color="primary" (click)="openEditEligibilityDialog(element)">
                 <mat-icon>edit_note</mat-icon>
             </button>

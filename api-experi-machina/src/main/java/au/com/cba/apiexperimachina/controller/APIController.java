@@ -23,15 +23,17 @@ public class APIController {
     private final CustomerRepo customerRepo;
     private final EligibilityRepo eligibilityRepo;
     private final ExperimentRepo experimentRepo;
+    private final FeatureRepo featureRepo;
     private final OutcomeRepo outcomeRepo;
     private final SegmentRepo segmentRepo;
     private final SurveyRepo surveyRepo;
 
-    public APIController(ControlGroupRepo controlGroupRepo, CustomerRepo customerRepo, EligibilityRepo eligibilityRepo, ExperimentRepo experimentRepo, OutcomeRepo outcomeRepo, SegmentRepo segmentRepo, SurveyRepo surveyRepo) {
+    public APIController(ControlGroupRepo controlGroupRepo, CustomerRepo customerRepo, EligibilityRepo eligibilityRepo, ExperimentRepo experimentRepo, FeatureRepo featureRepo, OutcomeRepo outcomeRepo, SegmentRepo segmentRepo, SurveyRepo surveyRepo) {
         this.controlGroupRepo = controlGroupRepo;
         this.customerRepo = customerRepo;
         this.eligibilityRepo = eligibilityRepo;
         this.experimentRepo = experimentRepo;
+        this.featureRepo = featureRepo;
         this.outcomeRepo = outcomeRepo;
         this.segmentRepo = segmentRepo;
         this.surveyRepo = surveyRepo;
@@ -223,6 +225,65 @@ public class APIController {
     public List<Outcome> getOutcomes()
     {
         return outcomeRepo.findAll();
+    }
+
+
+    // feature
+    // ---------------
+    @GetMapping("/features")
+    public List<Feature> getFeatures(@RequestParam(required = false) Boolean activeOnly)
+    {
+        logger.debug("activeOnly: "+ activeOnly);
+        if(activeOnly != null && activeOnly.booleanValue())
+        {
+            return featureRepo.findAllByActive(true);
+        }
+        else {
+            return featureRepo.findAll();
+        }
+    }
+
+    @PostMapping("/feature")
+    public List<Feature> createFeature(@RequestBody Feature feature)
+    {
+        feature.setCreateDate(new Date(System.currentTimeMillis()));
+        feature.setUpdateDate(new Date(System.currentTimeMillis()));
+        this.featureRepo.save(feature);
+        return featureRepo.findAll();
+    }
+
+    @PutMapping(path = "/feature/{id}")
+    public List<Feature> saveFeature(@PathVariable Integer id, @RequestBody Feature feature){
+        //logger.debug("save feature ----------------");
+        feature.setUpdateDate(new Date(System.currentTimeMillis()));
+        featureRepo.save(feature);
+        return (List<Feature>) featureRepo.findAll();
+    }
+
+    @DeleteMapping(path = "/feature/{id}")
+    public List<Feature> deleteFeature(@PathVariable Long id){
+        Optional<Feature> feature = featureRepo.findById(id);
+        if(feature.isPresent())
+        {
+            featureRepo.delete(feature.get());
+        }
+        return (List<Feature>) featureRepo.findAll();
+    }
+
+    @GetMapping("/features/count")
+    public long getFeaturesCount()
+    {
+        return featureRepo.count();
+    }
+
+    @GetMapping("/featuresPage")
+    public Page getFeaturesPage(@RequestParam("pageNumber") int pageNumber,
+                                 @RequestParam("pageSize") int pageSize,
+                                 @RequestParam("sortBy") String sortBy)
+    {
+        Pageable sortedByName = PageRequest.of(pageNumber, pageSize, Sort.by(sortBy));
+        Page p = featureRepo.findAll(sortedByName);
+        return p;
     }
     
     // SEGMENTS ------------

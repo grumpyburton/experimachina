@@ -5,12 +5,15 @@
     </button>
     <mat-menu #menu="matMenu">
       <button mat-menu-item routerLink="/home"><mat-icon>home</mat-icon>Home</button>
-      <button mat-menu-item routerLink="/customers"><mat-icon>patient_list</mat-icon>Customer</button>
+      <mat-divider></mat-divider>
+      <button mat-menu-item routerLink="/customers"><mat-icon class="material-symbols-outlined">groups</mat-icon>Customers</button>
       <button mat-menu-item routerLink="/segments"><mat-icon>segment</mat-icon>Segments</button>
-      <button mat-menu-item routerLink="/eligibilies"><mat-icon>patient_list</mat-icon>Eligibilies</button>
-      <button mat-menu-item routerLink="/controls"><mat-icon>patient_list</mat-icon>Control Groups</button>
-      <button mat-menu-item routerLink="/experiments"><mat-icon>patient_list</mat-icon>Experiments</button>
-      <button mat-menu-item routerLink="/surveys"><mat-icon class="">question_exchange</mat-icon>Surveys</button>
+      <button mat-menu-item routerLink="/eligibilies"><mat-icon class="material-symbols-outlined">patient_list</mat-icon>Eligibilies</button>
+      <mat-divider></mat-divider>
+      <button mat-menu-item routerLink="/controls"><mat-icon class="material-symbols-outlined">sports_esports</mat-icon>Control Groups</button>
+      <button mat-menu-item routerLink="/experiments"><mat-icon class="material-symbols-outlined">experiment</mat-icon>Experiments</button>
+      <button mat-menu-item routerLink="/features"><mat-icon class="material-symbols-outlined">toggle_on</mat-icon>Features</button>
+      <button mat-menu-item routerLink="/surveys"><mat-icon class="material-symbols-outlined">question_exchange</mat-icon>Surveys</button>
     </mat-menu>
     <span>Experi Machina - Experiment Management System</span>
   </mat-toolbar>

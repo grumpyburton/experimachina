@@ -1,3 +1,5 @@
+import {Segment} from "./segment";
+
 export interface Eligibility {
   id: number;
   name: string;
@@ -7,5 +9,7 @@ export interface Eligibility {
   startDate: string;
   endDate: string;
   expireDate: string;
+  active: boolean;
+  segments: Segment[];
 }
 

@@ -10,17 +10,20 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-public class Eligibility {
+public class Feature {
     @Id
     @GeneratedValue
     private Long id;
     private String name;
     private String description;
-    private boolean active;
-    private java.util.Date createDate;
-    private java.util.Date expireDate;
     @ManyToMany
-    private List<Segment> segments = new ArrayList<Segment>();
+    private List<Eligibility> eligibilities = new ArrayList<Eligibility>();
+    private boolean active;
+    private Date createDate;
+    private Date updateDate;
+    private Date startDate;
+    private Date endDate;
+    private Date expireDate;
 
     public Long getId() {
         return id;
@@ -62,6 +65,30 @@ public class Eligibility {
         this.expireDate = expireDate;
     }
 
+    public Date getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
     public boolean isActive() {
         return active;
     }
@@ -70,11 +97,11 @@ public class Eligibility {
         this.active = active;
     }
 
-    public List<Segment> getSegments() {
-        return segments;
+    public List<Eligibility> getEligibilities() {
+        return eligibilities;
     }
 
-    public void setSegments(List<Segment> segments) {
-        this.segments = segments;
+    public void setEligibilities(List<Eligibility> eligibilities) {
+        this.eligibilities = eligibilities;
     }
 }

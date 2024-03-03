@@ -1,10 +1,10 @@
-import {AfterViewInit, Component, Inject, inject, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Inject, inject, Input, OnInit, ViewChild} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 import {MatButtonModule} from "@angular/material/button";
 import {MatInputModule} from "@angular/material/input";
 import {MatIconModule} from "@angular/material/icon";
 import {ApiService} from "../api.service";
-import {MatTableDataSource} from "@angular/material/table";
+import {MatTableDataSource, MatTableModule} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatCardModule} from "@angular/material/card";
 import {FormsModule} from "@angular/forms";
@@ -12,6 +12,10 @@ import {ConfirmDialogComponent, ConfirmDialogModel} from "../confirm-dialog/conf
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {Eligibility} from "../eligibility";
+import {SelectionModel} from "@angular/cdk/collections";
+import {MatGridListModule} from "@angular/material/grid-list";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {Survey} from "../survey";
 
 
 @Component({
@@ -47,7 +51,9 @@ export class EligibilityListComponent implements AfterViewInit{
       updateDate: '',
       startDate: '',
       endDate: '',
-      expireDate: ''
+      expireDate: '',
+      active: true,
+      segments: []
     };
     return  e;
   }
@@ -100,6 +106,26 @@ export class EligibilityListComponent implements AfterViewInit{
             this.dataSource.data = eligibilities);
 
         this.newEligibility = this.getNewEligibility();
+      }
+    });
+  }
+
+  openEditEligibilitySegmentDialog(eligibility: Eligibility): void {
+    const dialogRef =
+        this.dialog.open(DialogEligibilitySegment,{
+          width:'80%',
+          data: eligibility
+        });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      if(result != null)
+      {
+        console.log("Call saveEligibility");
+        this.apiService.saveEligibility(result).subscribe( eligibilities =>
+            this.dataSource.data = eligibilities);
+
+        //this.newSurvey = this.getNewSurvey();
       }
     });
   }
@@ -162,6 +188,145 @@ export class DialogEligibility {
   log(o:Object)
   {
     console.log(o);
+  }
+
+}
+
+// ------------------------------------------------
+// DialogEligibilitySegment Component
+// ------------------------------------------------
+// @ts-ignore
+@Component({
+  selector: 'dialog-eligibility-segment',
+  templateUrl: 'dialog-eligibility-segment.html',
+  styleUrls: ['./eligibility-list.component.css'],
+  standalone: true,
+  imports: [MatDialogModule, MatButtonModule, MatInputModule, MatIconModule, MatCardModule, FormsModule, MatSlideToggleModule, MatDatepickerModule, MatGridListModule, MatCheckboxModule, MatTableModule],
+
+})
+export class DialogEligibilitySegment {
+
+  apiService: ApiService = inject(ApiService);
+  activeOnly = true;
+
+  dataSourceEligibilityFrom = new MatTableDataSource<any>([]);
+  dataSourceEligibilityTo = new MatTableDataSource<any>([]);
+
+  // Inputs from the parent for the component
+  @Input()
+  fromTitle: string = 'from not set';
+  @Input()
+  fromArray: any[] = [];
+  @Input()
+  toTitle: string = 'to not set';
+  @Input()
+  toArray: any[] = [];
+
+  selectionFrom = new SelectionModel<any>(true, []);
+  selectionTo = new SelectionModel<any>(true, []);
+  displayedColumns: string[] = ['select', 'name'];
+
+  to: [];
+  from:[];
+
+  constructor(public dialogRef: MatDialogRef<DialogEligibility>,
+              @Inject(MAT_DIALOG_DATA) public data: Eligibility) {
+
+    this.dataSourceEligibilityTo.data = data.segments;
+
+    this.apiService.getSegments(this.activeOnly).subscribe( segments =>
+    {
+      this.dataSourceEligibilityFrom.data = segments;
+      // remove the already selected ones
+      var arrayLength = this.dataSourceEligibilityFrom.data.length;
+      for (var i = 0; i < arrayLength; i++) {
+        //this.removeItem(this.dataSourceEligibilityFrom, data.eligibilities[i]);
+        for (var j = 0; j < this.dataSourceEligibilityTo.data.length; j++) {
+          if(this.dataSourceEligibilityFrom.data[i] != null && this.dataSourceEligibilityTo.data[j] != null &&
+              this.dataSourceEligibilityFrom.data[i].id == this.dataSourceEligibilityTo.data[j].id)
+          {
+            console.log("match - remove");
+            this.dataSourceEligibilityFrom.data.splice(i, 1);
+            this.dataSourceEligibilityFrom._updateChangeSubscription();
+          }
+        }
+      }
+    });
+
+    console.log(data);
+    console.log(this.dataSourceEligibilityFrom.data);
+  }
+
+  /** The label for the checkbox on the passed row */
+  checkboxLabel(row?: any): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
+    }
+    return `${this.selectionFrom.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
+  }
+
+  removeTo(): void{
+    if(this.selectionTo.selected.length > 0) {
+      console.log(this.selectionTo.selected);
+      this.dataSourceEligibilityFrom.data = this.dataSourceEligibilityFrom.data.concat(this.selectionTo.selected);
+
+      var arrayLength = this.selectionTo.selected.length;
+      for (var i = 0; i < arrayLength; i++) {
+        this.removeItem(this.dataSourceEligibilityTo, this.selectionTo.selected[i]);
+      }
+
+      this.selectionTo.clear();
+    }
+  }
+
+  addFrom(): void{
+    if(this.selectionFrom.selected.length > 0) {
+      console.log(this.selectionFrom.selected);
+      this.dataSourceEligibilityTo.data = this.dataSourceEligibilityTo.data.concat(this.selectionFrom.selected);
+
+      var arrayLength = this.selectionFrom.selected.length;
+      for (var i = 0; i < arrayLength; i++) {
+        this.removeItem(this.dataSourceEligibilityFrom, this.selectionFrom.selected[i]);
+      }
+
+      this.selectionFrom.clear();
+    }
+  }
+
+  removeItem(dataSource: MatTableDataSource<any>, item: any): MatTableDataSource<any> {
+    if (item) {
+      const index = dataSource.data.indexOf(item);
+      dataSource.data.splice(index, 1);
+      dataSource._updateChangeSubscription();
+    }
+    return dataSource;
+  }
+
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    const numSelected = this.selectionFrom.selected.length;
+    const numRows = this.dataSourceEligibilityFrom.data.length;
+    return numSelected === numRows;
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  log(o:Object)
+  {
+    console.log(o);
+  }
+
+  saveAndClose()
+  {
+    console.log("save and close");
+    this.data.segments = this.dataSourceEligibilityTo.data;
+    this.apiService.saveEligibility(this.data).subscribe(
+        // do nothing
+    );
+    console.log(this.data);
+    this.dialogRef.close();
   }
 
 }

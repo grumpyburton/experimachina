@@ -210,7 +210,8 @@ export class DialogSurveyEligibility {
       for (var i = 0; i < arrayLength; i++) {
         //this.removeItem(this.dataSourceEligibilityFrom, data.eligibilities[i]);
         for (var j = 0; j < this.dataSourceEligibilityTo.data.length; j++) {
-          if(this.dataSourceEligibilityFrom.data[i].id == this.dataSourceEligibilityTo.data[j].id)
+          if(this.dataSourceEligibilityFrom.data[i] != null && this.dataSourceEligibilityTo.data[j] != null &&
+              this.dataSourceEligibilityFrom.data[i].id == this.dataSourceEligibilityTo.data[j].id)
           {
             console.log("match - remove");
             this.dataSourceEligibilityFrom.data.splice(i, 1);
