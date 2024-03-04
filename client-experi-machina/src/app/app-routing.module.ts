@@ -7,12 +7,14 @@ import {ControlListComponent} from "./control-list/control-list.component";
 import {SurveyListComponent} from "./survey-list/survey-list.component";
 import {HomeComponent} from "./home/home.component";
 import {EligibilityListComponent} from "./eligibility-list/eligibility-list.component";
+import {FeatureListComponent} from "./feature-list/feature-list.component";
 
 const routes: Routes = [
   { path: 'controls', component: ControlListComponent },
   { path: 'customers', component: CustomerListComponent },
   { path: 'experiments', component: ExperimentListComponent },
   { path: 'eligibilies', component: EligibilityListComponent },
+  { path: 'features', component: FeatureListComponent },
   { path: 'home', component: HomeComponent },
   { path: 'segments', component: SegmentListComponent },
   { path: 'surveys', component: SurveyListComponent },

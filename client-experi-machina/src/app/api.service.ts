@@ -10,6 +10,7 @@ import {Segment} from "./segment";
 import {Survey} from "./survey";
 import {Eligibility} from "./eligibility";
 import {Control} from "./control";
+import {Feature} from "./feature";
 
 @Injectable({
   providedIn: 'root'
@@ -162,6 +163,44 @@ export class ApiService {
       return r;
     }
   }
+
+  // ---------------------
+  // Features
+  // ---------------------
+  createFeature(feature: Feature): Observable<Feature[]> {
+    var r = this.http.post<Feature[]>(`/api/feature`, feature,
+        AppSetting.httpOptions);
+    return r;
+  }
+
+  saveFeature(feature: Feature): Observable<Feature[]> {
+    var r = this.http.put<Feature[]>(`/api/feature/` + feature.id, feature,
+        AppSetting.httpOptions);
+    return r;
+  }
+
+  deleteFeature(feature: Feature): Observable<Feature[]> {
+    var r = this.http.delete<Feature[]>(`/api/feature/` + feature.id,
+        AppSetting.httpOptions);
+    return r;
+  }
+
+  getFeatures(activeOnly: boolean): Observable<Feature[]> {
+    if (activeOnly == true) {
+      console.log("active");
+      var r = this.http.get<Feature[]>("/api/features?activeOnly=true",
+          AppSetting.httpOptions);
+      return r;
+    }
+    else {
+      console.log("all");
+      var r = this.http.get<Feature[]>("/api/features",
+          AppSetting.httpOptions);
+      return r;
+    }
+  }
+  
+  //
 
   getAllCustomersPage(): Observable<Paging> {
     var r = this.http.get<Paging>("/api/customersPage?pageNumber=0&pageSize=5&sortBy=id",

@@ -26,6 +26,7 @@ import {MatNativeDateModule} from "@angular/material/core";
 import { EligibilityListComponent } from './eligibility-list/eligibility-list.component';
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatDividerModule} from "@angular/material/divider";
+import { FeatureListComponent } from './feature-list/feature-list.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import {MatDividerModule} from "@angular/material/divider";
     SurveyListComponent,
     HomeComponent,
     ConfirmDialogComponent,
-    EligibilityListComponent
+    EligibilityListComponent,
+    FeatureListComponent
   ],
     imports: [
         BrowserModule,
