@@ -390,6 +390,7 @@ public class APIController {
         s.setSurveys(surveyRepo.count());
         s.setExperiments(experimentRepo.count());
         s.setEligibilities(eligibilityRepo.count());
+        s.setFeatures(featureRepo.count());
         return s;
     }
 

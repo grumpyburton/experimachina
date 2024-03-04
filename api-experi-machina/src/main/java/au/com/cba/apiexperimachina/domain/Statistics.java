@@ -6,8 +6,8 @@ public class Statistics {
     private long experiments;
     private long surveys;
     private long controls;
-
     private long eligibilities;
+    private long features;
 
     public long getCustomers() {
         return customers;
@@ -55,5 +55,13 @@ public class Statistics {
 
     public void setEligibilities(long eligibilities) {
         this.eligibilities = eligibilities;
+    }
+
+    public long getFeatures() {
+        return features;
+    }
+
+    public void setFeatures(long features) {
+        this.features = features;
     }
 }

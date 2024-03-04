@@ -1,6 +1,9 @@
-<p>Customers: {{statistics.customers}}</p>
-<p>Segments: {{statistics.segments}}</p>
-<p>Eligibilities: {{statistics.eligibilities}}</p>
-<p>Control Groups: {{statistics.controls}}</p>
-<p>Experiments: {{statistics.experiments}}</p>
-<p>Surveys: {{statistics.surveys}}</p>
+<mat-grid-list cols="4">
+    <mat-grid-tile><mat-icon class="material-symbols-outlined">groups</mat-icon> Customers: {{statistics.customers}}</mat-grid-tile>
+    <mat-grid-tile><mat-icon>segment</mat-icon> Segments: {{statistics.segments}}</mat-grid-tile>
+    <mat-grid-tile><mat-icon class="material-symbols-outlined">patient_list</mat-icon> Eligibilities: {{statistics.eligibilities}}</mat-grid-tile>
+    <mat-grid-tile><mat-icon class="material-symbols-outlined">sports_esports</mat-icon> Control Groups: {{statistics.controls}}</mat-grid-tile>
+    <mat-grid-tile><mat-icon class="material-symbols-outlined">experiment</mat-icon> Experiments: {{statistics.experiments}}</mat-grid-tile>
+    <mat-grid-tile><mat-icon class="material-symbols-outlined">question_exchange</mat-icon> Surveys: {{statistics.surveys}}</mat-grid-tile>
+    <mat-grid-tile><mat-icon class="material-symbols-outlined">toggle_on</mat-icon> Features: {{statistics.features}}</mat-grid-tile>
+</mat-grid-list>

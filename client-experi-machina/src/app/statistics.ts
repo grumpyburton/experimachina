@@ -5,4 +5,5 @@ export interface Statistics {
   surveys: number;
   segments: number;
   eligibilities: number;
+  features: number;
 }
