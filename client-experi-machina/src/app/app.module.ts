@@ -19,14 +19,15 @@ import { HomeComponent } from './home/home.component';
 import {MatDialog, MatDialogModule} from "@angular/material/dialog";
 import {MatButtonModule} from "@angular/material/button";
 import {MatInputModule} from "@angular/material/input";
-import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import {ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {FormsModule} from "@angular/forms";
 import {MatNativeDateModule} from "@angular/material/core";
-import { EligibilityListComponent } from './eligibility-list/eligibility-list.component';
+import {EligibilityListComponent } from './eligibility-list/eligibility-list.component';
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatDividerModule} from "@angular/material/divider";
-import { FeatureListComponent } from './feature-list/feature-list.component';
+import {FeatureListComponent } from './feature-list/feature-list.component';
+import {MatProgressBarModule} from "@angular/material/progress-bar";
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { FeatureListComponent } from './feature-list/feature-list.component';
         FormsModule,
         MatNativeDateModule,
         MatGridListModule,
-        MatDividerModule
+        MatDividerModule,
+        MatProgressBarModule
     ],
   providers: [],
   bootstrap: [AppComponent]

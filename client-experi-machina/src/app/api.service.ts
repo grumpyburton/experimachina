@@ -11,6 +11,7 @@ import {Survey} from "./survey";
 import {Eligibility} from "./eligibility";
 import {Control} from "./control";
 import {Feature} from "./feature";
+import {FileDetails} from "./file-details";
 
 @Injectable({
   providedIn: 'root'
@@ -198,6 +199,21 @@ export class ApiService {
           AppSetting.httpOptions);
       return r;
     }
+  }
+
+  // ---------------------
+  // Files
+  // ---------------------
+  deleteFile(file: FileDetails): Observable<FileDetails[]> {
+    var r = this.http.delete<FileDetails[]>(`/api/file/` + file.id,
+        AppSetting.httpOptions);
+    return r;
+  }
+
+  getFiles(): Observable<FileDetails[]> {
+      var r = this.http.get<FileDetails[]>("/api/files",
+          AppSetting.httpOptions);
+      return r;
   }
   
   //

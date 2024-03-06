@@ -2,6 +2,8 @@ package au.com.cba.apiexperimachina.controller;
 
 import au.com.cba.apiexperimachina.domain.*;
 import au.com.cba.apiexperimachina.repo.*;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -9,7 +11,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
+import org.apache.commons.csv.CSVParser;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -28,7 +35,9 @@ public class APIController {
     private final SegmentRepo segmentRepo;
     private final SurveyRepo surveyRepo;
 
-    public APIController(ControlGroupRepo controlGroupRepo, CustomerRepo customerRepo, EligibilityRepo eligibilityRepo, ExperimentRepo experimentRepo, FeatureRepo featureRepo, OutcomeRepo outcomeRepo, SegmentRepo segmentRepo, SurveyRepo surveyRepo) {
+    private final FileRepo fileRepo;
+
+    public APIController(ControlGroupRepo controlGroupRepo, CustomerRepo customerRepo, EligibilityRepo eligibilityRepo, ExperimentRepo experimentRepo, FeatureRepo featureRepo, OutcomeRepo outcomeRepo, SegmentRepo segmentRepo, SurveyRepo surveyRepo, FileRepo fileRepo) {
         this.controlGroupRepo = controlGroupRepo;
         this.customerRepo = customerRepo;
         this.eligibilityRepo = eligibilityRepo;
@@ -37,7 +46,81 @@ public class APIController {
         this.outcomeRepo = outcomeRepo;
         this.segmentRepo = segmentRepo;
         this.surveyRepo = surveyRepo;
+        this.fileRepo = fileRepo;
     }
+
+    // file handling
+    // ----------------------------------
+    @PostMapping("/uploadFile")
+    public String saveFile(@RequestParam("file") MultipartFile file){
+        try {
+            logger.debug("saveFile");
+            String fileName = file.getOriginalFilename();
+            String contentType = file.getContentType();
+            byte[] fileContent = file.getBytes();
+            File savefile = new File(fileName, contentType, fileContent);
+            savefile.setSize(fileContent.length);
+            fileRepo.save(savefile);
+            return "File saved successfully";
+        }
+        catch(Exception e) {
+            logger.error(e.toString());
+            return "File not saved";
+        }
+    }
+
+    @GetMapping("/files")
+    public List<File> getFiles(@RequestParam(required = false) Boolean activeOnly)
+    {
+        logger.debug("activeOnly: "+ activeOnly);
+        if(activeOnly != null && activeOnly.booleanValue())
+        {
+            return fileRepo.findAll();
+        }
+        else {
+            return fileRepo.findAll();
+        }
+    }
+
+    @GetMapping("/file/{id}/import")
+    public void processFile(@PathVariable Long id) throws Exception
+    {
+        Optional<File> file = fileRepo.findById(id);
+        if(file.isPresent())
+        {
+           File f = file.get();
+
+            String[] HEADERS = { "Customer", "Segment"};
+
+            InputStream in = new ByteArrayInputStream(f.getData());
+
+            CSVFormat csvFormat = CSVFormat.DEFAULT.builder()
+                    .setHeader(HEADERS)
+                    .setSkipHeaderRecord(true)
+                    .build();
+
+            Iterable<CSVRecord> records = csvFormat.parse(new InputStreamReader(in));
+            for (CSVRecord record : records) {
+                String custIdStr = record.get("Customer");
+                String segment_code = record.get("Segment");
+                long custId = Long.getLong(custIdStr);
+
+                logger.debug("record: " + record);
+            }
+        }
+    }
+
+    @DeleteMapping(path = "/file/{id}")
+    public List<File> deleteFile(@PathVariable Long id){
+        Optional<File> file = fileRepo.findById(id);
+        if(file.isPresent())
+        {
+            fileRepo.delete(file.get());
+        }
+        return (List<File>) fileRepo.findAll();
+    }
+
+
 
     // control groups
     // -------------

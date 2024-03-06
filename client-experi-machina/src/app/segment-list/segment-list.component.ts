@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, inject, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Inject, inject, Input, ViewChild} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 import {ApiService} from "../api.service";
 import {MatTableDataSource} from "@angular/material/table";
@@ -12,6 +12,11 @@ import {FormsModule} from "@angular/forms";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {Segment} from "../segment";
+import {HttpClient, HttpEventType} from "@angular/common/http";
+import {finalize, Subscription} from "rxjs";
+import {MatProgressBar} from "@angular/material/progress-bar";
+import {FileDetails} from "../file-details";
+import {FileUploadService} from "../file-upload.service";
 
 
 @Component({
@@ -21,18 +26,26 @@ import {Segment} from "../segment";
 })
 export class SegmentListComponent implements AfterViewInit{
 
-  constructor(public dialog: MatDialog) {
+  constructor(public dialog: MatDialog, private http: HttpClient) {
     this.apiService.getSegments(this.activeOnly).subscribe( segments =>
         this.dataSource.data = segments);
 
+    this.apiService.getFiles().subscribe( files =>
+        this.dataSourceFiles.data = files);
     this.newSegment = this.getNewSegment();
   }
 
+  fileUploadService: FileUploadService = inject(FileUploadService);
   apiService: ApiService = inject(ApiService);
 
   displayedColumns: string[] = ['id','code','count', 'name','description','active','actions'];
   dataSource = new MatTableDataSource<Segment>([]);
+  displayedColumnsFile: string[] = ['id','name','size','active','actions'];
+  dataSourceFiles = new MatTableDataSource<FileDetails>([]);
   @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  @Input()
+  requiredFileType:string;
 
   newSegment: Segment;
   activeOnly: false;
@@ -54,6 +67,33 @@ export class SegmentListComponent implements AfterViewInit{
     };
     return  e;
   }
+
+  // start upload
+
+  file!: File;
+  fileDetails!: FileDetails;
+  fileUris: Array<string> = [];
+
+  selectFile(event: any) {
+    this.file = event.target.files.item(0);
+  }
+
+  uploadFile() {
+    this.fileUploadService.upload(this.file).subscribe({
+      next: (data) => {
+        this.fileDetails = data;
+        this.fileUris.push(this.fileDetails.fileUri);
+        alert("File Uploaded Successfully")
+
+        this.apiService.getFiles().subscribe( files =>
+            this.dataSourceFiles.data = files);
+      },
+      error: (e) => {
+        console.log(e);
+      }
+    });
+  }
+  // end upload
 
   getSize(segment: Segment) : number
   {
@@ -144,6 +184,23 @@ export class SegmentListComponent implements AfterViewInit{
       console.log('after close: ' + dialogResult);
       if (dialogResult) {
         this.deleteSegment(exp);
+      }
+    });
+  }
+
+  confirmDialogFile(fileDetails: FileDetails): void {
+    const message = `Are you sure you want to delete file ` + fileDetails.name + ' ?';
+    const dialogData = new ConfirmDialogModel("Confirm delete", message);
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      maxWidth: "600px",
+      data: dialogData
+    });
+
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      console.log('after close: ' + dialogResult);
+      if (dialogResult) {
+        this.apiService.deleteFile(fileDetails).subscribe( files =>
+            this.dataSourceFiles.data = files);
       }
     });
   }
