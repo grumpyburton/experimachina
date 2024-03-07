@@ -188,6 +188,24 @@ export class SegmentListComponent implements AfterViewInit{
     });
   }
 
+  // confirmDialogImportFile
+  confirmDialogImportFile(fileDetails: FileDetails): void {
+    const message = `Are you sure you want to import file ` + fileDetails.name + ' ?';
+    const dialogData = new ConfirmDialogModel("Confirm import", message);
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      maxWidth: "600px",
+      data: dialogData
+    });
+
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      console.log('after close import: ' + dialogResult);
+      if (dialogResult) {
+        this.apiService.importFile(fileDetails).subscribe( files =>
+            this.dataSourceFiles.data = files);
+      }
+    });
+  }
+
   confirmDialogFile(fileDetails: FileDetails): void {
     const message = `Are you sure you want to delete file ` + fileDetails.name + ' ?';
     const dialogData = new ConfirmDialogModel("Confirm delete", message);

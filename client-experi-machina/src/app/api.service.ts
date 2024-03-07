@@ -215,7 +215,13 @@ export class ApiService {
           AppSetting.httpOptions);
       return r;
   }
-  
+
+  importFile(file: FileDetails): Observable<FileDetails[]> {
+    var r = this.http.get<FileDetails[]>("/api/file/" + file.id + "/import",
+        AppSetting.httpOptions);
+    return r;
+  }
+
   //
 
   getAllCustomersPage(): Observable<Paging> {

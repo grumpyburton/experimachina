@@ -101,4 +101,13 @@ public class Segment {
     public void setCustomers(List<Customer> customers) {
         this.customers = customers;
     }
+
+    public void addCustomer(Customer c)
+    {
+        if(this.customers == null)
+        {
+            this.customers = new ArrayList<Customer>();
+        }
+        this.customers.add(c);
+    }
 }

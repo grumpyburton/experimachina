@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface SegmentRepo extends JpaRepository<Segment, Long> {
     public List<Segment> findAllByActive(boolean active);
+    public Segment findSegmentByCode(String code);
 }

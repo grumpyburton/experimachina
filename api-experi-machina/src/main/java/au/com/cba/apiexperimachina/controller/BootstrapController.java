@@ -217,7 +217,7 @@ public class BootstrapController {
 
         s = new Segment();
         s.setName("isMarketable");
-        s.setDescription("Is a markting enabled segment customer");
+        s.setDescription("Is a marketing enabled segment customer");
         s.setShared(true);
         s.setCreateDate(new Date(System.currentTimeMillis()));
         s.setActive(false);

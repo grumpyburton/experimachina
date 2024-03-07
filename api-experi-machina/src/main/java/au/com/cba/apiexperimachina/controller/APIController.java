@@ -83,7 +83,7 @@ public class APIController {
     }
 
     @GetMapping("/file/{id}/import")
-    public void processFile(@PathVariable Long id) throws Exception
+    public String processFile(@PathVariable Long id) throws Exception
     {
         Optional<File> file = fileRepo.findById(id);
         if(file.isPresent())
@@ -101,13 +101,27 @@ public class APIController {
 
             Iterable<CSVRecord> records = csvFormat.parse(new InputStreamReader(in));
             for (CSVRecord record : records) {
-                String custIdStr = record.get("Customer");
-                String segment_code = record.get("Segment");
-                long custId = Long.getLong(custIdStr);
 
                 logger.debug("record: " + record);
+
+                String custIdStr = record.get("Customer");
+                String segment_code = record.get("Segment");
+                logger.debug(custIdStr);
+                if(custIdStr != null && !custIdStr.trim().isEmpty())
+                {
+                    long custId = Long.parseLong(custIdStr);
+                    Customer c = this.customerRepo.getReferenceById(custId);
+                    Segment s = this.segmentRepo.findSegmentByCode(segment_code);
+                    s.addCustomer(c);
+                    this.segmentRepo.save(s);
+                }
+                else {
+                    logger.debug("custIdStr is null");
+                }
             }
+            return "done";
         }
+        return "file not found";
     }
 
     @DeleteMapping(path = "/file/{id}")
