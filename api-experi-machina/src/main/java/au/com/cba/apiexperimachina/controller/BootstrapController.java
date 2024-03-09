@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 public class BootstrapController {
@@ -56,10 +57,13 @@ public class BootstrapController {
         for(int i=0; i < j; i++)
         {
             Faker faker = new Faker();
+
+
             Customer c = new Customer();
             c.setFirstName(faker.name().firstName());
             c.setSurname(faker.name().lastName());
             c.setActive(true);
+            c.setKey(UUID.randomUUID().toString());
             this.customerRepo.save(c);
         }
     }

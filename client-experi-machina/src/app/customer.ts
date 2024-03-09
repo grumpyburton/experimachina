@@ -1,5 +1,6 @@
 export interface Customer {
   id: number;
+  key: string;
   firstName: string;
   surname: string;
   active: boolean;

@@ -30,7 +30,7 @@ export class CustomerListComponent implements AfterViewInit{
 
   apiService: ApiService = inject(ApiService);
 
-  displayedColumns: string[] = ['id', 'firstName','surname','active','actions'];
+  displayedColumns: string[] = ['id','key', 'firstName','surname','active','actions'];
   dataSource = new MatTableDataSource<Customer>([]);
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -48,7 +48,8 @@ export class CustomerListComponent implements AfterViewInit{
       updateDate: '',
       startDate: '',
       endDate: '',
-      expireDate: ''
+      expireDate: '',
+      key:''
     };
     return  e;
   }

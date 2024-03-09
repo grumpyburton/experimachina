@@ -2,8 +2,8 @@
 <p>
     Segments are applied to <a routerLink="/customers">customers</a>. They must be calculated outside of the system and loaded mapped to the respective <a routerLink="/customers">customers</a>.<br>
     <br>
-    They are the building blocks of mapping <a routerLink="/customers">customers</a> to <a routerLink="/eligibilies">eligibility</a> to
-    The <a routerLink="/eligibilies">eligibility</a> can then be applied to a <a routerLink="/controls">Control Group</a>, <a routerLink="/experiments">Experiment</a>,
+    They are the building blocks of mapping <a routerLink="/customers">customers</a> to <a routerLink="/eligibilities">eligibility</a> to
+    The <a routerLink="/eligibilities">eligibility</a> can then be applied to a <a routerLink="/controls">Control Group</a>, <a routerLink="/experiments">Experiment</a>,
     <a routerLink="/features">Feature</a> or <a routerLink="/surveys">Survey</a>
 </p>
 <p>
@@ -58,7 +58,8 @@
                [pageSizeOptions]="[5, 10, 25, 100]"
                aria-label="Select page of feedback"></mat-paginator>
 
-
+<h2>Customer to Segment Import</h2>
+<p>Upload a CSV file with a 'Customer' and 'Segment' header file</p>
 <!-- File upload below -->
 <div class="container d-flex justify-content-center">
     <div class="mt-5 row justify-content-center">

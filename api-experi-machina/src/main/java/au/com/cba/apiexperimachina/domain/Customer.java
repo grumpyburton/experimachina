@@ -11,6 +11,7 @@ public class Customer {
     @Id
     @GeneratedValue
     private Long id;
+    private String key;
     private String firstName;
     private String surname;
     private boolean active;
@@ -63,5 +64,13 @@ public class Customer {
 
     public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 }

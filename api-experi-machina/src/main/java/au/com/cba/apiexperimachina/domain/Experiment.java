@@ -7,12 +7,8 @@ import jakarta.persistence.Id;
 import java.util.Date;
 
 @Entity
-public class Experiment {
-    @Id
-    @GeneratedValue
-    private Long id;
-    private String name;
-    private String description;
+public class Experiment extends BaseGroup {
+
     private String problem;
     private String outcome;
     private String objective;
@@ -23,30 +19,6 @@ public class Experiment {
     private java.util.Date endDate;
     private java.util.Date expireDate;
     private boolean active;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     public Date getCreateDate() {
         return createDate;

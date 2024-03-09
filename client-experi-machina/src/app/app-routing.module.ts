@@ -8,12 +8,14 @@ import {SurveyListComponent} from "./survey-list/survey-list.component";
 import {HomeComponent} from "./home/home.component";
 import {EligibilityListComponent} from "./eligibility-list/eligibility-list.component";
 import {FeatureListComponent} from "./feature-list/feature-list.component";
+import {AudienceFinderComponent} from "./audience-finder/audience-finder.component";
 
 const routes: Routes = [
+  { path: 'audience', component: AudienceFinderComponent },
   { path: 'controls', component: ControlListComponent },
   { path: 'customers', component: CustomerListComponent },
   { path: 'experiments', component: ExperimentListComponent },
-  { path: 'eligibilies', component: EligibilityListComponent },
+  { path: 'eligibilities', component: EligibilityListComponent },
   { path: 'features', component: FeatureListComponent },
   { path: 'home', component: HomeComponent },
   { path: 'segments', component: SegmentListComponent },

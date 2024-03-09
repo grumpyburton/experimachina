@@ -28,6 +28,9 @@ import {MatGridListModule} from "@angular/material/grid-list";
 import {MatDividerModule} from "@angular/material/divider";
 import {FeatureListComponent } from './feature-list/feature-list.component';
 import {MatProgressBarModule} from "@angular/material/progress-bar";
+import { AudienceFinderComponent } from './audience-finder/audience-finder.component';
+import {MatRadioModule} from "@angular/material/radio";
+import {MatSelectModule} from "@angular/material/select";
 
 @NgModule({
   declarations: [
@@ -40,7 +43,8 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
     HomeComponent,
     ConfirmDialogComponent,
     EligibilityListComponent,
-    FeatureListComponent
+    FeatureListComponent,
+    AudienceFinderComponent
   ],
     imports: [
         BrowserModule,
@@ -60,7 +64,9 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
         MatNativeDateModule,
         MatGridListModule,
         MatDividerModule,
-        MatProgressBarModule
+        MatProgressBarModule,
+        MatRadioModule,
+        MatSelectModule
     ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,9 +1,9 @@
 <mat-grid-list cols="4">
-    <mat-grid-tile><mat-icon class="material-symbols-outlined">groups</mat-icon> Customers: {{statistics.customers}}</mat-grid-tile>
-    <mat-grid-tile><mat-icon>segment</mat-icon> Segments: {{statistics.segments}}</mat-grid-tile>
-    <mat-grid-tile><mat-icon class="material-symbols-outlined">patient_list</mat-icon> Eligibilities: {{statistics.eligibilities}}</mat-grid-tile>
-    <mat-grid-tile><mat-icon class="material-symbols-outlined">sports_esports</mat-icon> Control Groups: {{statistics.controls}}</mat-grid-tile>
-    <mat-grid-tile><mat-icon class="material-symbols-outlined">experiment</mat-icon> Experiments: {{statistics.experiments}}</mat-grid-tile>
-    <mat-grid-tile><mat-icon class="material-symbols-outlined">question_exchange</mat-icon> Surveys: {{statistics.surveys}}</mat-grid-tile>
-    <mat-grid-tile><mat-icon class="material-symbols-outlined">toggle_on</mat-icon> Features: {{statistics.features}}</mat-grid-tile>
+    <mat-grid-tile><mat-icon class="material-symbols-outlined">groups</mat-icon> <a routerLink="/customers">Customers</a>: {{statistics.customers}}</mat-grid-tile>
+    <mat-grid-tile><mat-icon>segment</mat-icon> <a routerLink="/segments">Segments</a>: {{statistics.segments}}</mat-grid-tile>
+    <mat-grid-tile><mat-icon class="material-symbols-outlined">patient_list</mat-icon> <a routerLink="/eligibilities">Eligibilities</a>: {{statistics.eligibilities}}</mat-grid-tile>
+    <mat-grid-tile><mat-icon class="material-symbols-outlined">sports_esports</mat-icon> <a routerLink="/controls">Control Groups</a>: {{statistics.controls}}</mat-grid-tile>
+    <mat-grid-tile><mat-icon class="material-symbols-outlined">experiment</mat-icon> <a routerLink="/experiments">Experiments</a>: {{statistics.experiments}}</mat-grid-tile>
+    <mat-grid-tile><mat-icon class="material-symbols-outlined">question_exchange</mat-icon> <a routerLink="/surveys">Surveys</a>: {{statistics.surveys}}</mat-grid-tile>
+    <mat-grid-tile><mat-icon class="material-symbols-outlined">toggle_on</mat-icon> <a routerLink="/features">Features</a>: {{statistics.features}}</mat-grid-tile>
 </mat-grid-list>
