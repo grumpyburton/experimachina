@@ -52,7 +52,8 @@ export class ExperimentListComponent implements AfterViewInit{
       updateDate: '',
       startDate: '',
       endDate: '',
-      expireDate: ''
+      expireDate: '',
+      eligibilities:[]
     };
     return  e;
   }

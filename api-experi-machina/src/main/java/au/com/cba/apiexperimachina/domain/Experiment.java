@@ -3,8 +3,11 @@ package au.com.cba.apiexperimachina.domain;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Experiment extends BaseGroup {
@@ -13,28 +16,9 @@ public class Experiment extends BaseGroup {
     private String outcome;
     private String objective;
     private String hypothesis;
-    private java.util.Date createDate;
     private java.util.Date updateDate;
     private java.util.Date startDate;
     private java.util.Date endDate;
-    private java.util.Date expireDate;
-    private boolean active;
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-
-    public Date getExpireDate() {
-        return expireDate;
-    }
-
-    public void setExpireDate(Date expireDate) {
-        this.expireDate = expireDate;
-    }
 
     public String getProblem() {
         return problem;
@@ -76,14 +60,6 @@ public class Experiment extends BaseGroup {
         this.updateDate = updateDate;
     }
 
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
     public Date getStartDate() {
         return startDate;
     }
@@ -99,4 +75,5 @@ public class Experiment extends BaseGroup {
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
+
 }

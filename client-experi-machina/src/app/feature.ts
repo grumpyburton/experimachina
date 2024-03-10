@@ -1,3 +1,5 @@
+import {Eligibility} from "./eligibility";
+
 export interface Feature {
   id: number;
   name: string;
@@ -8,5 +10,6 @@ export interface Feature {
   startDate: string;
   endDate: string;
   expireDate: string;
+  eligibilities : Eligibility[];
 }
 

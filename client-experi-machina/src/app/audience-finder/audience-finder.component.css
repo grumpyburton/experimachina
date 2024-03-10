@@ -1,0 +1,12 @@
+.rounded-container {
+
+    padding: 10px 20px; /* Adjust padding for text placement */
+    border-radius: 10px; /* Adjust corner roundness */
+    border-color: black;
+    border: black;
+    border-width: thin;
+}
+
+.rounded-container span {
+    display: block; /* Ensures text occupies full width */
+}

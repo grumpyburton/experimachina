@@ -21,7 +21,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatInputModule} from "@angular/material/input";
 import {ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatNativeDateModule} from "@angular/material/core";
 import {EligibilityListComponent } from './eligibility-list/eligibility-list.component';
 import {MatGridListModule} from "@angular/material/grid-list";
@@ -31,6 +31,7 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
 import { AudienceFinderComponent } from './audience-finder/audience-finder.component';
 import {MatRadioModule} from "@angular/material/radio";
 import {MatSelectModule} from "@angular/material/select";
+import {MatStepperModule} from "@angular/material/stepper";
 
 @NgModule({
   declarations: [
@@ -66,7 +67,9 @@ import {MatSelectModule} from "@angular/material/select";
         MatDividerModule,
         MatProgressBarModule,
         MatRadioModule,
-        MatSelectModule
+        MatSelectModule,
+        MatStepperModule,
+        ReactiveFormsModule
     ],
   providers: [],
   bootstrap: [AppComponent]

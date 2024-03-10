@@ -38,8 +38,6 @@ public class BootstrapController {
 
     public void init(){
         logger.info("start init");
-        logger.info("customer");
-        createCustomers();
         logger.info("segments");
         createSegments();
         createExperiments();
@@ -47,18 +45,17 @@ public class BootstrapController {
         createOutcomes();
         createEligibilities();
         createSurveys();
-        
+        logger.info("customer");
+        createCustomers();
         logger.info("end init");
     }
 
     public void createCustomers()
     {
-        int j = 100;
+        int j = 1000;
         for(int i=0; i < j; i++)
         {
             Faker faker = new Faker();
-
-
             Customer c = new Customer();
             c.setFirstName(faker.name().firstName());
             c.setSurname(faker.name().lastName());
@@ -74,12 +71,14 @@ public class BootstrapController {
         c.setName("Campaign1");
         c.setDescription("Marketing campaign 1");
         c.setCreateDate(new Date(System.currentTimeMillis()));
+        c.setActive(true);
         this.controlGroupRepo.save(c);
 
         c = new ControlGroup();
         c.setName("Campaign2");
         c.setDescription("Marketing campaign 2");
         c.setCreateDate(new Date(System.currentTimeMillis()));
+        c.setActive(true);
         this.controlGroupRepo.save(c);
     }
 
@@ -121,6 +120,7 @@ public class BootstrapController {
         e.setObjective("to prove once and for all what eye colour is the best");
         e.setOutcome("it's blue silly!");
         e.setProblem("eyes are all different colours");
+        e.setActive(true);
         this.experimentRepo.save(e);
 
         e = new Experiment();
@@ -132,6 +132,7 @@ public class BootstrapController {
         e.setObjective("to prove once and for all what fruit is the best");
         e.setOutcome("it's mango silly!");
         e.setProblem("comparing apples and oranges is hard");
+        e.setActive(true);
         this.experimentRepo.save(e);
 
         e = new Experiment();
@@ -153,6 +154,7 @@ public class BootstrapController {
             e.setDescription("description");
             e.setCreateDate(new Date(System.currentTimeMillis()));
             e.setUpdateDate(e.getCreateDate());
+            e.setActive(true);
             this.experimentRepo.save(e);
         }
     }
@@ -172,12 +174,13 @@ public class BootstrapController {
         o.setName("Green is best");
         o.setDescription("Customers liked green better than brown");
         o.setCreateDate(new Date(System.currentTimeMillis()));
+        o.setActive(true);
         this.surveyRepo.save(o);
     }
     
     public void createSegments()
     {
-        List<Customer> customersList = this.customerRepo.findAll();
+        //List<Customer> customersList = this.customerRepo.findAll();
 
         Segment s = new Segment();
         s.setName("isRBSCustomer");
@@ -186,7 +189,7 @@ public class BootstrapController {
         s.setCreateDate(new Date(System.currentTimeMillis()));
         s.setActive(true);
         s.setCode("SEG_RBS");
-        s.setCustomers(customersList);
+        //s.setCustomers(customersList);
         this.segmentRepo.save(s);
 
         s = new Segment();
@@ -196,7 +199,7 @@ public class BootstrapController {
         s.setCreateDate(new Date(System.currentTimeMillis()));
         s.setActive(true);
         s.setCode("SEG_BB");
-        s.setCustomers(customersList);
+        //s.setCustomers(customersList);
         this.segmentRepo.save(s);
 
         s = new Segment();
@@ -206,7 +209,7 @@ public class BootstrapController {
         s.setCreateDate(new Date(System.currentTimeMillis()));
         s.setActive(true);
         s.setCode("SEG_IBM");
-        s.setCustomers(customersList);
+        //s.setCustomers(customersList);
         this.segmentRepo.save(s);
 
         s = new Segment();
@@ -216,7 +219,7 @@ public class BootstrapController {
         s.setCreateDate(new Date(System.currentTimeMillis()));
         s.setActive(true);
         s.setCode("SEG_20TO30");
-        s.setCustomers(customersList);
+        //s.setCustomers(customersList);
         this.segmentRepo.save(s);
 
         s = new Segment();
@@ -226,7 +229,7 @@ public class BootstrapController {
         s.setCreateDate(new Date(System.currentTimeMillis()));
         s.setActive(false);
         s.setCode("SEG_MKT");
-        s.setCustomers(customersList);
+        //s.setCustomers(customersList);
         this.segmentRepo.save(s);
     }
 }

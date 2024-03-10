@@ -49,7 +49,8 @@ export class ControlListComponent implements AfterViewInit{
       updateDate: '',
       startDate: '',
       endDate: '',
-      expireDate: ''
+      expireDate: '',
+      eligibilities:[]
     };
     return  e;
   }

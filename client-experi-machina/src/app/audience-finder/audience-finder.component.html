@@ -1,36 +1,69 @@
 <h1>Audience Finder</h1>
-<p>
-    Select an audience for a
-    <mat-radio-group aria-label="Select an option"
-                     [(ngModel)]="selectedGroupType"
-                     (change)="loadGroupTypeList()"
-    >
-        <mat-radio-button value="control">Control Group</mat-radio-button>
-        <mat-radio-button value="experiment">Experiment</mat-radio-button>
-        <mat-radio-button value="feature">Feature</mat-radio-button>
-        <mat-radio-button value="survey">Survey</mat-radio-button>
-    </mat-radio-group>
-</p>
-<p>
-    <mat-form-field>
-        <mat-label>Choose an option</mat-label>
-        <mat-select >
-            <mat-option *ngFor="let g of groupList" [value]="g.id">{{g.name}}</mat-option>
-        </mat-select>
-    </mat-form-field>
-</p>
-<p>
-    <mat-form-field>
-        <mat-label>Audience Size</mat-label>
-        <mat-select >
-            <mat-option value="10">10</mat-option>
-            <mat-option value="100">100</mat-option>
-            <mat-option value="200">200</mat-option>
-            <mat-option value="500">500</mat-option>
-            <mat-option value="1000">1000</mat-option>
-            <mat-option value="10000">10000</mat-option>
-            <mat-option value="100000">100000</mat-option>
-            <mat-option value="1000000">1000000</mat-option>
-        </mat-select>
-    </mat-form-field>
-</p>
+<mat-stepper linear #stepper>
+    <mat-step [stepControl]="firstFormGroup" [editable]="isEditable">
+        <form [formGroup]="firstFormGroup">
+            <ng-template matStepLabel>What do you want an audience for</ng-template>
+
+            <mat-radio-group aria-label="Select an option"
+                             (change)="loadGroupTypeList()"
+                             formControlName="selectedGroupTypeCtrl">
+                <mat-radio-button value="control">Control Group</mat-radio-button>
+                <mat-radio-button value="experiment">Experiment</mat-radio-button>
+                <mat-radio-button value="feature">Feature</mat-radio-button>
+                <mat-radio-button value="survey">Survey</mat-radio-button>
+            </mat-radio-group>
+            <br>
+            <!--<mat-form-field *ngIf="selectedGroupType != '' && selectedGroupType != null" formControlName="selectedGroupCtrl">-->
+            <!--
+            <mat-form-field formControlName="selectedGroupCtrl">
+                <mat-label>Choose an option</mat-label>
+                <mat-select>
+                    <mat-option *ngFor="let g of groupList" [value]="g">{{g.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+-->
+            <div>
+                <button mat-button matStepperNext>Next</button>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup" [editable]="isEditable">
+        <form [formGroup]="secondFormGroup">
+            <ng-template matStepLabel>Fill out your address</ng-template>
+            <!--
+            <mat-form-field>
+                <mat-label>Audience Size</mat-label>
+                <mat-select >
+                    <mat-option value="10">10</mat-option>
+                    <mat-option value="100">100</mat-option>
+                    <mat-option value="200">200</mat-option>
+                    <mat-option value="500">500</mat-option>
+                    <mat-option value="1000">1000</mat-option>
+                    <mat-option value="10000">10000</mat-option>
+                    <mat-option value="100000">100000</mat-option>
+                    <mat-option value="1000000">1000000</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <div *ngIf="selectedGroupType != '' && selectedGroup != null">
+                Eligibility for: {{selectedGroup.name}}
+                <ul *ngFor="let e of selectedGroup.eligibilities">
+                    <li>{{e.name}}</li>
+                </ul>
+            </div>
+            -->
+            <div>
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button matStepperNext>Next</button>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
+        <p>You are now done.</p>
+        <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button (click)="stepper.reset()">Reset</button>
+        </div>
+    </mat-step>
+</mat-stepper>
+

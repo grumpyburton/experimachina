@@ -12,30 +12,10 @@ import java.util.List;
 @Entity
 public class Feature extends BaseGroup {
 
-    @ManyToMany
-    private List<Eligibility> eligibilities = new ArrayList<Eligibility>();
-    private boolean active;
-    private Date createDate;
     private Date updateDate;
     private Date startDate;
     private Date endDate;
-    private Date expireDate;
 
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-
-    public Date getExpireDate() {
-        return expireDate;
-    }
-
-    public void setExpireDate(Date expireDate) {
-        this.expireDate = expireDate;
-    }
 
     public Date getUpdateDate() {
         return updateDate;
@@ -59,21 +39,5 @@ public class Feature extends BaseGroup {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
-    public List<Eligibility> getEligibilities() {
-        return eligibilities;
-    }
-
-    public void setEligibilities(List<Eligibility> eligibilities) {
-        this.eligibilities = eligibilities;
     }
 }

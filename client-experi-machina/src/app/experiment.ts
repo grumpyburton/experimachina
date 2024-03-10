@@ -1,3 +1,5 @@
+import {Eligibility} from "./eligibility";
+
 export interface Experiment {
   id: number;
   name: string;
@@ -12,5 +14,6 @@ export interface Experiment {
   startDate: string;
   endDate: string;
   expireDate: string;
+  eligibilities : Eligibility[];
 }
 

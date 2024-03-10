@@ -1,3 +1,5 @@
+import {Eligibility} from "./eligibility";
+
 export interface Control {
   id: number;
   name: string;
@@ -8,5 +10,6 @@ export interface Control {
   startDate: string;
   endDate: string;
   expireDate: string;
+  eligibilities : Eligibility[];
 }
 
