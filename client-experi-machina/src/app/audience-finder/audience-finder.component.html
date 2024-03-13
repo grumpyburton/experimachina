@@ -13,15 +13,14 @@
                 <mat-radio-button value="survey">Survey</mat-radio-button>
             </mat-radio-group>
             <br>
-            <!--<mat-form-field *ngIf="selectedGroupType != '' && selectedGroupType != null" formControlName="selectedGroupCtrl">-->
-            <!--
-            <mat-form-field formControlName="selectedGroupCtrl">
+            <mat-form-field *ngIf="firstFormGroup.controls.selectedGroupTypeCtrl.value != '' &&
+                            firstFormGroup.controls.selectedGroupTypeCtrl.value != null"
+                            >
                 <mat-label>Choose an option</mat-label>
-                <mat-select>
+                <mat-select formControlName="selectedGroupCtrl">
                     <mat-option *ngFor="let g of groupList" [value]="g">{{g.name}}</mat-option>
                 </mat-select>
             </mat-form-field>
--->
             <div>
                 <button mat-button matStepperNext>Next</button>
             </div>

@@ -21,6 +21,7 @@ export class AudienceFinderComponent {
 
   firstFormGroup = this._formBuilder.group({
     selectedGroupTypeCtrl: ['', Validators.required],
+    selectedGroupCtrl: ['', Validators.required],
   });
   secondFormGroup = this._formBuilder.group({
     secondCtrl: ['', Validators.required]
@@ -37,22 +38,26 @@ export class AudienceFinderComponent {
     console.log("change");
     console.log(this.groupList);
     console.log(this.selectedGroupType);
-    if(this.selectedGroupType != null && this.selectedGroupType == "survey")
+    if(this.firstFormGroup.controls.selectedGroupTypeCtrl.value != null &&
+        this.firstFormGroup.controls.selectedGroupTypeCtrl.value == "survey")
     {
       this.apiService.getSurveys(true).subscribe( list =>
           this.groupList = list);
     }
-    if(this.selectedGroupType != null && this.selectedGroupType == "control")
+    if(this.firstFormGroup.controls.selectedGroupTypeCtrl.value != null &&
+        this.firstFormGroup.controls.selectedGroupTypeCtrl.value == "control")
     {
       this.apiService.getControls(true).subscribe( list =>
           this.groupList = list);
     }
-    if(this.selectedGroupType != null && this.selectedGroupType == "experiment")
+    if(this.firstFormGroup.controls.selectedGroupTypeCtrl.value != null &&
+        this.firstFormGroup.controls.selectedGroupTypeCtrl.value == "experiment")
     {
       this.apiService.getExperiments(true).subscribe( list =>
           this.groupList = list);
     }
-    if(this.selectedGroupType != null && this.selectedGroupType == "feature")
+    if(this.firstFormGroup.controls.selectedGroupTypeCtrl.value != null &&
+        this.firstFormGroup.controls.selectedGroupTypeCtrl.value == "feature")
     {
       this.apiService.getFeatures(true).subscribe( list =>
           this.groupList = list);
