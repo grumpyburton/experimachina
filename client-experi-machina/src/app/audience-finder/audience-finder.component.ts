@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {AfterViewInit, Component, inject} from '@angular/core';
 import {ApiService} from "../api.service";
 import {Survey} from "../survey";
 import {Feature} from "../feature";
@@ -11,7 +11,7 @@ import {FormBuilder, Validators} from "@angular/forms";
   templateUrl: './audience-finder.component.html',
   styleUrls: ['./audience-finder.component.css']
 })
-export class AudienceFinderComponent {
+export class AudienceFinderComponent implements AfterViewInit {
 
   apiService: ApiService = inject(ApiService);
 
@@ -37,17 +37,11 @@ export class AudienceFinderComponent {
 
   loadSelectedGroup()
   {
-    console.log("loadSelectedGroup");
-    console.log(this.firstFormGroup.controls.selectedGroupCtrl);
-    console.log(this.firstFormGroup.controls.selectedGroupCtrl.value);
   }
 
   loadGroupTypeList()
   {
     this.selectedGroup = null;
-    console.log("change");
-    console.log(this.groupList);
-    console.log(this.selectedGroupType);
     if(this.firstFormGroup.controls.selectedGroupTypeCtrl.value != null &&
         this.firstFormGroup.controls.selectedGroupTypeCtrl.value == "survey")
     {
@@ -72,6 +66,18 @@ export class AudienceFinderComponent {
       this.apiService.getFeatures(true).subscribe( list =>
           this.groupList = list);
     }
+  }
+
+  ngAfterViewInit(): void {
+    this.firstFormGroup.controls.selectedGroupTypeCtrl.valueChanges.subscribe(val => {
+          const formattedMessage = `selectedGroupTypeCtrl is ${val}.`;
+          console.log(formattedMessage);
+    });
+
+    this.firstFormGroup.controls.selectedGroupCtrl.valueChanges.subscribe(val => {
+      console.log(val);
+      this.selectedGroup = val as Survey | Feature | Experiment | Control | null;
+    });
 
   }
 

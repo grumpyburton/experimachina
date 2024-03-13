@@ -43,10 +43,10 @@
                     <mat-option value="1000000">1000000</mat-option>
                 </mat-select>
             </mat-form-field>
-            <mat-slide-toggle class="pad-left" value="primary" name="active">Active</mat-slide-toggle>
+            <mat-slide-toggle class="pad-left" value="primary" name="active">Exclude anything?</mat-slide-toggle>
 
 
-            <div *ngIf="selectedGroupType != '' && selectedGroup != null">
+            <div *ngIf="selectedGroup != null">
                 Eligibility for: {{selectedGroup.name}}
                 <ul *ngFor="let e of selectedGroup.eligibilities">
                     <li>{{e.name}}</li>

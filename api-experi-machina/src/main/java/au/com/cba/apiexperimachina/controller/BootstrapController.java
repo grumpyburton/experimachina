@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -47,8 +48,11 @@ public class BootstrapController {
         createSurveys();
         logger.info("customer");
         createCustomers();
+        testJPA();
         logger.info("end init");
     }
+
+
 
     public void createCustomers()
     {
@@ -232,4 +236,39 @@ public class BootstrapController {
         //s.setCustomers(customersList);
         this.segmentRepo.save(s);
     }
+
+    public void testJPA()
+    {
+
+        List<Segment> segs = new ArrayList<>();
+
+        Segment s = new Segment();
+        s.setName("test segements");
+        s.setDescription("Is a RBS segment customer");
+        s.setShared(true);
+        s.setCreateDate(new Date(System.currentTimeMillis()));
+        s.setActive(true);
+        s.setCode("SEG_RBS");
+        //s.setCustomers(customersList);
+        this.segmentRepo.save(s);
+
+        segs.add(s);
+
+        Faker faker = new Faker();
+        Customer c = new Customer();
+        c.setFirstName(faker.name().firstName());
+        c.setSurname(faker.name().lastName());
+        c.setActive(true);
+        c.setKey(UUID.randomUUID().toString());
+        c.getSegments().add(s);
+        this.customerRepo.save(c);
+
+
+
+        List<Customer> cs = this.customerRepo.findAllBySegments(segs);
+        logger.debug("cs length: " + cs.size());
+
+
+    }
+
 }

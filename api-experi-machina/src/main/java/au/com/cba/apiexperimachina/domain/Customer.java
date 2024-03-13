@@ -3,8 +3,11 @@ package au.com.cba.apiexperimachina.domain;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Customer {
@@ -17,6 +20,8 @@ public class Customer {
     private boolean active;
     private java.util.Date createDate;
     private java.util.Date updateDate;
+    @ManyToMany
+    private List<Segment> segments = new ArrayList<Segment>();
 
     public void setId(Long id) {
         this.id = id;
@@ -72,5 +77,13 @@ public class Customer {
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    public List<Segment> getSegments() {
+        return segments;
+    }
+
+    public void setSegments(List<Segment> segments) {
+        this.segments = segments;
     }
 }
