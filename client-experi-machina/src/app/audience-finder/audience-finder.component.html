@@ -17,7 +17,7 @@
                             firstFormGroup.controls.selectedGroupTypeCtrl.value != null"
                             >
                 <mat-label>Choose an option</mat-label>
-                <mat-select formControlName="selectedGroupCtrl">
+                <mat-select formControlName="selectedGroupCtrl" (selectionchange)="loadSelectedGroup()">
                     <mat-option *ngFor="let g of groupList" [value]="g">{{g.name}}</mat-option>
                 </mat-select>
             </mat-form-field>
@@ -28,8 +28,8 @@
     </mat-step>
     <mat-step [stepControl]="secondFormGroup" [editable]="isEditable">
         <form [formGroup]="secondFormGroup">
-            <ng-template matStepLabel>Fill out your address</ng-template>
-            <!--
+            <ng-template matStepLabel>Selection criteria</ng-template>
+
             <mat-form-field>
                 <mat-label>Audience Size</mat-label>
                 <mat-select >
@@ -43,13 +43,15 @@
                     <mat-option value="1000000">1000000</mat-option>
                 </mat-select>
             </mat-form-field>
+            <mat-slide-toggle class="pad-left" value="primary" name="active">Active</mat-slide-toggle>
+
+
             <div *ngIf="selectedGroupType != '' && selectedGroup != null">
                 Eligibility for: {{selectedGroup.name}}
                 <ul *ngFor="let e of selectedGroup.eligibilities">
                     <li>{{e.name}}</li>
                 </ul>
             </div>
-            -->
             <div>
                 <button mat-button matStepperPrevious>Back</button>
                 <button mat-button matStepperNext>Next</button>

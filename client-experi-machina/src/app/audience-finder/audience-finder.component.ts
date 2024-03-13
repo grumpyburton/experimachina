@@ -30,7 +30,17 @@ export class AudienceFinderComponent {
 
   isEditable = true;
 
-  constructor(private _formBuilder: FormBuilder) {}
+  constructor(private _formBuilder: FormBuilder) {
+
+
+  }
+
+  loadSelectedGroup()
+  {
+    console.log("loadSelectedGroup");
+    console.log(this.firstFormGroup.controls.selectedGroupCtrl);
+    console.log(this.firstFormGroup.controls.selectedGroupCtrl.value);
+  }
 
   loadGroupTypeList()
   {
