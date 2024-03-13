@@ -255,17 +255,17 @@ public class BootstrapController {
 
         segs.add(s);
 
-        s = new Segment();
-        s.setName("test segements2");
-        s.setDescription("Is a RBS segment customer");
-        s.setShared(true);
-        s.setCreateDate(new Date(System.currentTimeMillis()));
-        s.setActive(true);
-        s.setCode("SEG_RBS");
+        Segment s2 = new Segment();
+        s2.setName("test segements2");
+        s2.setDescription("Is a RBS segment customer");
+        s2.setShared(true);
+        s2.setCreateDate(new Date(System.currentTimeMillis()));
+        s2.setActive(true);
+        s2.setCode("SEG_RBS");
         //s.setCustomers(customersList);
-        this.segmentRepo.save(s);
+        this.segmentRepo.save(s2);
 
-        segs.add(s);
+        segs.add(s2);
 
         Faker faker = new Faker();
         Customer c = new Customer();
@@ -281,19 +281,42 @@ public class BootstrapController {
         c.setSurname(faker.name().lastName());
         c.setActive(true);
         c.setKey(UUID.randomUUID().toString());
-        //c.getSegments().add(s);
+        c.getSegments().add(s2);
         this.customerRepo.save(c);
+
+
+        c = new Customer();
+        c.setFirstName(faker.name().firstName());
+        c.setSurname(faker.name().lastName());
+        c.setActive(true);
+        c.setKey(UUID.randomUUID().toString());
+        c.setSegments(segs);
+        this.customerRepo.save(c);
+
+        logger.debug("segs length: " + segs.size());
 
         if(segs != null && segs.size() > 0) {
             logger.debug("we have {} segements", segs.size());
             //TODO : work out how to do this as a query with ALL segments
             // Get the list of customer with the first segment
-            List<Customer> firstSegList = this.customerRepo.findAllBySegments(segs.get(0));
+            List<Customer> firstSegList = this.customerRepo.findAllBySegments(s2);
+            logger.debug("cs length with first seg only: " + firstSegList.size());
+
+            // now loop through the rest of the segments and filter out customers who arent' in them
+            for(Customer customer : firstSegList) {
+                logger.debug(".");
+                if(customer != null && customer.getSegments() != null && !customer.getSegments().containsAll(segs)) {
+                    logger.debug("remove");
+                    firstSegList.remove(customer);
+                }
+                logger.debug("cs length current" + firstSegList.size());
+            }
+            logger.debug("cs length: " + firstSegList.size());
         }
 
         //List<Customer> cs = this.customerRepo.findCustomerBySegmentsContaining(segs);
-        logger.debug("segs length: " + segs.size());
-       // logger.debug("cs length: " + cs.size());
+
+
 
     }
 

@@ -1,9 +1,6 @@
 package au.com.cba.apiexperimachina.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,7 +17,7 @@ public class Customer {
     private boolean active;
     private java.util.Date createDate;
     private java.util.Date updateDate;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Segment> segments = new ArrayList<Segment>();
 
     public void setId(Long id) {
