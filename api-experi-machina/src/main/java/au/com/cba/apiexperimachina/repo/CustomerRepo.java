@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface CustomerRepo extends JpaRepository<Customer, Long> {
     public List<Customer> findAllByActive(boolean active);
-    public List<Customer> findAllBySegments(List<Segment> segments);
+    public List<Customer> findAllBySegments(Segment segment);
 }

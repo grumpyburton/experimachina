@@ -5,6 +5,7 @@ import au.com.cba.apiexperimachina.repo.*;
 import com.github.javafaker.Faker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -56,7 +57,7 @@ public class BootstrapController {
 
     public void createCustomers()
     {
-        int j = 1000;
+        int j = 100;
         for(int i=0; i < j; i++)
         {
             Faker faker = new Faker();
@@ -254,6 +255,18 @@ public class BootstrapController {
 
         segs.add(s);
 
+        s = new Segment();
+        s.setName("test segements2");
+        s.setDescription("Is a RBS segment customer");
+        s.setShared(true);
+        s.setCreateDate(new Date(System.currentTimeMillis()));
+        s.setActive(true);
+        s.setCode("SEG_RBS");
+        //s.setCustomers(customersList);
+        this.segmentRepo.save(s);
+
+        segs.add(s);
+
         Faker faker = new Faker();
         Customer c = new Customer();
         c.setFirstName(faker.name().firstName());
@@ -263,11 +276,24 @@ public class BootstrapController {
         c.getSegments().add(s);
         this.customerRepo.save(c);
 
+        c = new Customer();
+        c.setFirstName(faker.name().firstName());
+        c.setSurname(faker.name().lastName());
+        c.setActive(true);
+        c.setKey(UUID.randomUUID().toString());
+        //c.getSegments().add(s);
+        this.customerRepo.save(c);
 
+        if(segs != null && segs.size() > 0) {
+            logger.debug("we have {} segements", segs.size());
+            //TODO : work out how to do this as a query with ALL segments
+            // Get the list of customer with the first segment
+            List<Customer> firstSegList = this.customerRepo.findAllBySegments(segs.get(0));
+        }
 
-        List<Customer> cs = this.customerRepo.findAllBySegments(segs);
-        logger.debug("cs length: " + cs.size());
-
+        //List<Customer> cs = this.customerRepo.findCustomerBySegmentsContaining(segs);
+        logger.debug("segs length: " + segs.size());
+       // logger.debug("cs length: " + cs.size());
 
     }
 
