@@ -57,7 +57,7 @@ public class BootstrapController {
 
     public void createCustomers()
     {
-        int j = 100;
+        int j = 10;
         for(int i=0; i < j; i++)
         {
             Faker faker = new Faker();
@@ -103,7 +103,7 @@ public class BootstrapController {
         e.setActive(true);
         this.eligibilityRepo.save(e);
 
-        for(int i=0; i<100; i++)
+        for(int i=0; i<10; i++)
         {
             e = new Eligibility();
             e.setName("Eligibility " + i);
@@ -152,7 +152,7 @@ public class BootstrapController {
         e.setActive(true);
         this.experimentRepo.save(e);
 
-        for(int i=4; i<100; i++)
+        for(int i=4; i<10; i++)
         {
             e = new Experiment();
             e.setName("Experiment" + i);

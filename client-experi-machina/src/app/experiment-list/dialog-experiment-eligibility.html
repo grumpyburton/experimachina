@@ -1,0 +1,74 @@
+<mat-dialog-content>
+    <mat-card class="matCard">
+        <mat-card-header>
+            <mat-card-title>Experiment: {{data.name}}</mat-card-title>
+            <mat-card-subtitle>
+            </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content >
+            <mat-grid-list [cols]="2" rowHeight="300px">
+                <mat-grid-tile>
+                    <mat-grid-tile-header>Selected Eligibility</mat-grid-tile-header>
+                        <!-- scrollable content -->
+                        <div class="scrollable-table">
+                            <table mat-table [dataSource]="dataSourceEligibilityTo">
+                                <ng-container matColumnDef="select">
+                                    <th mat-header-cell *matHeaderCellDef>Select</th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <mat-checkbox (click)="$event.stopPropagation()"
+                                                      (change)="$event ? selectionTo.toggle(element) : null"
+                                                      [checked]="selectionTo.isSelected(element)"
+                                                      [aria-label]="checkboxLabel(element)">
+                                        </mat-checkbox>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="name">
+                                    <th mat-header-cell *matHeaderCellDef>Name</th>
+                                    <td mat-cell *matCellDef="let element">{{element.name}} </td>
+                                </ng-container>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                            </table>
+                        </div>
+                    <mat-grid-tile-footer>
+                        <button mat-raised-button (click)="removeTo()" color="primary">Remove</button>
+                    </mat-grid-tile-footer>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-grid-tile-header>Available Eligibility</mat-grid-tile-header>
+                    <!-- scrollable content -->
+                    <div class="scrollable-table">
+                        <table mat-table [dataSource]="dataSourceEligibilityFrom">
+                            <ng-container matColumnDef="select">
+                                <th mat-header-cell *matHeaderCellDef>Select</th>
+                                <td mat-cell *matCellDef="let element">
+                                    <mat-checkbox (click)="$event.stopPropagation()"
+                                                  (change)="$event ? selectionFrom.toggle(element) : null"
+                                                  [checked]="selectionFrom.isSelected(element)"
+                                                  [aria-label]="checkboxLabel(element)">
+                                    </mat-checkbox>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="name">
+                                <th mat-header-cell *matHeaderCellDef>Name</th>
+                                <td mat-cell *matCellDef="let element">{{element.name}} </td>
+                            </ng-container>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                        </table>
+                    </div>
+
+                    <mat-grid-tile-footer>
+                        <button mat-raised-button (click)="addFrom()" color="primary">Add</button>
+                    </mat-grid-tile-footer>
+                </mat-grid-tile>
+            </mat-grid-list>
+        </mat-card-content>
+        <mat-card-actions align="end">
+            <button mat-button [mat-dialog-close]="">Cancel</button>
+            <button  mat-flat-button color="primary" (click)="saveAndClose()" cdkFocusInitial>Save</button>
+        </mat-card-actions>
+    </mat-card>
+</mat-dialog-content>
+
+
+
+

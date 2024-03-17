@@ -12,6 +12,8 @@ import {ConfirmDialogComponent, ConfirmDialogModel} from "../confirm-dialog/conf
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {Control} from "../control";
+import {Survey} from "../survey";
+import {DialogSurveyEligibility} from "../survey-list/survey-list.component";
 
 
 
@@ -81,6 +83,26 @@ export class ControlListComponent implements AfterViewInit{
         console.log("Call createControl");
         this.apiService.createControl(result).subscribe( controls =>
             this.dataSource.data = controls);
+
+        this.newControl = this.getNewControl();
+      }
+    });
+  }
+
+  openEditControlEligibilityDialog(exp: Survey): void {
+    const dialogRef =
+        this.dialog.open(DialogSurveyEligibility,{
+          width:'80%',
+          data: exp
+        });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      if(result != null)
+      {
+        console.log("Call saveSurvey");
+        this.apiService.saveSurvey(result).subscribe( surveys =>
+            this.dataSource.data = surveys);
 
         this.newControl = this.getNewControl();
       }
