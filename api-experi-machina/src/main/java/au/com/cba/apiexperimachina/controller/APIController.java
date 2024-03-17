@@ -17,6 +17,7 @@ import org.apache.commons.csv.CSVParser;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -190,6 +191,43 @@ public class APIController {
         else {
             return customerRepo.findAll();
         }
+    }
+
+    @GetMapping("/customers/segments")
+    public List<Customer> getCustomersBySegments(@RequestParam List<Long> ids)
+    {
+        logger.debug("getCustomersBySegments()");
+
+        List <Segment> segs = new ArrayList<Segment>();
+        for(Long id : ids)
+        {
+            Optional<Segment> o = this.segmentRepo.findById(id);
+            if(o.isPresent()) {
+                segs.add(o.get());
+            }
+        }
+
+        List<Customer> firstSegList = new ArrayList<Customer>();
+
+        if(segs != null && segs.size() > 0) {
+            logger.debug("we have {} segements", segs.size());
+            //TODO : work out how to do this as a query with ALL segments
+            // Get the list of customer with the first segment
+            firstSegList = this.customerRepo.findAllBySegments(segs.getFirst());
+            logger.debug("cs length with first seg only: " + firstSegList.size());
+
+            // now loop through the rest of the segments and filter out customers who arent' in them
+            for(Customer customer : firstSegList) {
+                logger.debug(".");
+                if(customer != null && customer.getSegments() != null && !customer.getSegments().containsAll(segs)) {
+                    logger.debug("remove");
+                    firstSegList.remove(customer);
+                }
+                logger.debug("cs length current" + firstSegList.size());
+            }
+            logger.debug("customers with all segments: " + firstSegList.size());
+        }
+        return firstSegList;
     }
 
     @PostMapping("/customer")

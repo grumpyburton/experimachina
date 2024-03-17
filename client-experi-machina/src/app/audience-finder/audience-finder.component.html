@@ -22,7 +22,7 @@
                 </mat-select>
             </mat-form-field>
             <div>
-                <button mat-button matStepperNext>Next</button>
+                <button mat-button matStepperNext (click)="loadCustomerCountBySegments()">Next</button>
             </div>
         </form>
     </mat-step>
@@ -47,9 +47,16 @@
 
 
             <div *ngIf="selectedGroup != null">
-                Eligibility for: {{selectedGroup.name}}
+                <p>
+                    {{selectedGroup.name}} has a maximum of {{customersAvailable}} based on the eligibility criteria.
+                </p>
+                Eligibility for:
                 <ul *ngFor="let e of selectedGroup.eligibilities">
-                    <li>{{e.name}}</li>
+                    <li>{{e.name}}
+                        <ul *ngFor="let s of e.segments">
+                            <li>{{s.name}}</li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
             <div>

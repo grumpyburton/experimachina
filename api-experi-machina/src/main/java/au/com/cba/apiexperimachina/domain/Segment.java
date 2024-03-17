@@ -110,4 +110,17 @@ public class Segment {
         }
         this.customers.add(c);
     }
+
+    @Override
+    public boolean equals(Object object)
+    {
+        boolean sameSame = false;
+
+        if (object != null && object instanceof Segment)
+        {
+            sameSame = this.id == ((Segment) object).id;
+        }
+
+        return sameSame;
+    }
 }

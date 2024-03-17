@@ -44,13 +44,13 @@ export class ApiService {
 
   getControls(activeOnly: boolean): Observable<Control[]> {
     if (activeOnly == true) {
-      console.log("active");
+      //console.log("active");
       var r = this.http.get<Control[]>("/api/controls?activeOnly=true",
           AppSetting.httpOptions);
       return r;
     }
     else {
-      console.log("all");
+      //console.log("all");
       var r = this.http.get<Control[]>("/api/controls",
           AppSetting.httpOptions);
       return r;
@@ -90,6 +90,30 @@ export class ApiService {
           AppSetting.httpOptions);
       return r;
     }
+  }
+
+  getCustomersBySegments(segs: Segment[]): Observable<Customer[]> {
+
+    var url = "/api/customers/segments?";
+    //segs.forEach(seg => url += "id=" + seg.id)
+    for(var i=0; i<segs.length; i++)
+    {
+      if(i==0)
+      {
+          url += "ids=";
+      }
+      url += segs[i].id;
+      if((i+1) < segs.length)
+      {
+        url += ",";
+      }
+    }
+
+    //console.log(url);
+
+    var r = this.http.get<Customer[]>(url, AppSetting.httpOptions);
+    //console.log(r);
+    return r;
   }
 
   // ------------------
