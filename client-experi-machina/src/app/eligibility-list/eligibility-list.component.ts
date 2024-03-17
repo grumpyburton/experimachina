@@ -15,8 +15,6 @@ import {Eligibility} from "../eligibility";
 import {SelectionModel} from "@angular/cdk/collections";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatCheckboxModule} from "@angular/material/checkbox";
-import {Survey} from "../survey";
-
 
 @Component({
   selector: 'app-eligibility-list',

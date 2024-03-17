@@ -1,14 +1,14 @@
 <mat-dialog-content>
     <mat-card class="matCard">
         <mat-card-header>
-            <mat-card-title>Control Group: {{data.name}}</mat-card-title>
+            <mat-card-title>Customer: {{data.firstName}}</mat-card-title>
             <mat-card-subtitle>
             </mat-card-subtitle>
         </mat-card-header>
         <mat-card-content >
             <mat-grid-list [cols]="2" rowHeight="300px">
                 <mat-grid-tile>
-                    <mat-grid-tile-header>Selected Eligibility</mat-grid-tile-header>
+                    <mat-grid-tile-header>Selected Segments</mat-grid-tile-header>
                         <!-- scrollable content -->
                         <div class="scrollable-table">
                             <table mat-table [dataSource]="dataSourceEligibilityTo">
@@ -34,7 +34,7 @@
                     </mat-grid-tile-footer>
                 </mat-grid-tile>
                 <mat-grid-tile>
-                    <mat-grid-tile-header>Available Eligibility</mat-grid-tile-header>
+                    <mat-grid-tile-header>Available Segments</mat-grid-tile-header>
                     <!-- scrollable content -->
                     <div class="scrollable-table">
                         <table mat-table [dataSource]="dataSourceEligibilityFrom">

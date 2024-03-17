@@ -1,3 +1,5 @@
+import {Segment} from "./segment";
+
 export interface Customer {
   id: number;
   key: string;
@@ -9,4 +11,5 @@ export interface Customer {
   startDate: string;
   endDate: string;
   expireDate: string;
+  segments: Segment[];
 }
