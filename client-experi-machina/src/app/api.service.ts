@@ -176,13 +176,13 @@ export class ApiService {
 
   getExperiments(activeOnly: boolean): Observable<Experiment[]> {
     if (activeOnly == true) {
-      console.log("active");
+      //console.log("active");
       var r = this.http.get<Experiment[]>("/api/experiments?activeOnly=true",
           AppSetting.httpOptions);
       return r;
     }
     else {
-      console.log("all");
+      //console.log("all");
       var r = this.http.get<Experiment[]>("/api/experiments",
           AppSetting.httpOptions);
       return r;
@@ -212,13 +212,13 @@ export class ApiService {
 
   getFeatures(activeOnly: boolean): Observable<Feature[]> {
     if (activeOnly == true) {
-      console.log("active");
+      //console.log("active");
       var r = this.http.get<Feature[]>("/api/features?activeOnly=true",
           AppSetting.httpOptions);
       return r;
     }
     else {
-      console.log("all");
+      //console.log("all");
       var r = this.http.get<Feature[]>("/api/features",
           AppSetting.httpOptions);
       return r;
@@ -275,13 +275,13 @@ export class ApiService {
 
   getSegments(activeOnly: boolean): Observable<Segment[]> {
     if (activeOnly == true) {
-      console.log("active");
+      //console.log("active");
       var r = this.http.get<Segment[]>("/api/segments?activeOnly=true",
           AppSetting.httpOptions);
       return r;
     }
     else {
-      console.log("all");
+      //console.log("all");
       var r = this.http.get<Segment[]>("/api/segments",
           AppSetting.httpOptions);
       return r;
@@ -309,13 +309,13 @@ export class ApiService {
 
   getSurveys(activeOnly: boolean): Observable<Survey[]> {
     if (activeOnly == true) {
-      console.log("active");
+      //console.log("active");
       var r = this.http.get<Survey[]>("/api/surveys?activeOnly=true",
           AppSetting.httpOptions);
       return r;
     }
     else {
-      console.log("all");
+      //console.log("all");
       var r = this.http.get<Survey[]>("/api/surveys",
           AppSetting.httpOptions);
       return r;

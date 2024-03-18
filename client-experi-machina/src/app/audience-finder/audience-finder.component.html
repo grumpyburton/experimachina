@@ -7,10 +7,10 @@
             <mat-radio-group aria-label="Select an option"
                              (change)="loadGroupTypeList()"
                              formControlName="selectedGroupTypeCtrl">
-                <mat-radio-button value="control">Control Group</mat-radio-button>
-                <mat-radio-button value="experiment">Experiment</mat-radio-button>
-                <mat-radio-button value="feature">Feature</mat-radio-button>
-                <mat-radio-button value="survey">Survey</mat-radio-button>
+                <mat-radio-button value="Control Group">Control Group</mat-radio-button>
+                <mat-radio-button value="Experiment">Experiment</mat-radio-button>
+                <mat-radio-button value="Feature">Feature</mat-radio-button>
+                <mat-radio-button value="Survey">Survey</mat-radio-button>
             </mat-radio-group>
             <br>
             <mat-form-field *ngIf="firstFormGroup.controls.selectedGroupTypeCtrl.value != '' &&
@@ -30,25 +30,39 @@
         <form [formGroup]="secondFormGroup">
             <ng-template matStepLabel>Selection criteria</ng-template>
 
-            <mat-form-field>
-                <mat-label>Audience Size</mat-label>
-                <mat-select >
-                    <mat-option value="10">10</mat-option>
-                    <mat-option value="100">100</mat-option>
-                    <mat-option value="200">200</mat-option>
-                    <mat-option value="500">500</mat-option>
-                    <mat-option value="1000">1000</mat-option>
-                    <mat-option value="10000">10000</mat-option>
-                    <mat-option value="100000">100000</mat-option>
-                    <mat-option value="1000000">1000000</mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-slide-toggle class="pad-left" value="primary" name="active">Exclude anything?</mat-slide-toggle>
+            <mat-slide-toggle class="pad-left"
+                              value="primary"
+                              formControlName="excludeActive">Exclude any customers in current audiences?
+            </mat-slide-toggle>
 
+            <div *ngIf="secondFormGroup.controls.excludeActive.value">
+                <ul class="ul-nude">
+                    <li><mat-checkbox>Control Group</mat-checkbox>
+                        <ul class="ul-nude" *ngFor="let o of controlList">
+                            <li><mat-checkbox>{{o.name}}</mat-checkbox></li>
+                        </ul>
+                    </li>
+                    <li><mat-checkbox>Experiment</mat-checkbox>
+                        <ul *ngFor="let o of experimentList">
+                            <li><mat-checkbox>{{o.name}}</mat-checkbox></li>
+                        </ul>
+                    </li>
+                    <li><mat-checkbox>Feature</mat-checkbox>
+                        <ul *ngFor="let o of featureList">
+                            <li><mat-checkbox>{{o.name}}</mat-checkbox></li>
+                        </ul>
+                    </li>
+                    <li><mat-checkbox>Survey</mat-checkbox>
+                        <ul *ngFor="let o of surveyList">
+                            <li><mat-checkbox>{{o.name}}</mat-checkbox></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
 
             <div *ngIf="selectedGroup != null">
                 <p>
-                    {{selectedGroup.name}} has a maximum of {{customersAvailable}} based on the eligibility criteria.
+                   {{selectedGroupType}} {{selectedGroup.name}} has a maximum of {{customersAvailable}} customers based on the eligibility criteria.
                 </p>
                 Eligibility for:
                 <ul *ngFor="let e of selectedGroup.eligibilities">
@@ -58,6 +72,7 @@
                         </ul>
                     </li>
                 </ul>
+
             </div>
             <div>
                 <button mat-button matStepperPrevious>Back</button>
@@ -66,8 +81,28 @@
         </form>
     </mat-step>
     <mat-step>
+        <ng-template matStepLabel>Size & Selection</ng-template>
+        <mat-form-field>
+            <mat-label>Audience Size</mat-label>
+            <mat-select >
+                <mat-option value="{{customersAvailable}}">{{customersAvailable}}</mat-option>
+                <mat-option  *ngIf="10 < customersAvailable" value="10">10</mat-option>
+                <mat-option  *ngIf="100 < customersAvailable" value="100">100</mat-option>
+                <mat-option  *ngIf="200 < customersAvailable" value="200">200</mat-option>
+                <mat-option  *ngIf="500 < customersAvailable "value="500">500</mat-option>
+                <mat-option  *ngIf="1000 < customersAvailable" value="1000">1000</mat-option>
+                <mat-option *ngIf="10000 < customersAvailable"value="10000">10000</mat-option>
+                <mat-option *ngIf="100000 < customersAvailable" value="10000">100000</mat-option>
+                <mat-option *ngIf="1000000 < customersAvailable" value="1000000">1000000</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+        </div>
+    </mat-step>
+    <mat-step>
         <ng-template matStepLabel>Done</ng-template>
-        <p>You are now done.</p>
         <div>
             <button mat-button matStepperPrevious>Back</button>
             <button mat-button (click)="stepper.reset()">Reset</button>

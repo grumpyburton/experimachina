@@ -18,7 +18,7 @@ export class AudienceFinderComponent implements AfterViewInit {
 
     apiService: ApiService = inject(ApiService);
 
-    selectedGroupType = "";
+    selectedGroupType: string | null = "";
     groupList: any[];
     selectedGroup: Survey | Feature | Experiment | Control | null;
     customersAvailable = 0;
@@ -27,19 +27,37 @@ export class AudienceFinderComponent implements AfterViewInit {
       controls: 0, customers: 0, eligibilities: 0, experiments: 0, features: 0, segments: 0, surveys: 0
     };
 
+    controlList: Control[] = [];
+    featureList: Feature[] = [];
+    experimentList: Experiment[] = [];
+    surveyList: Survey[] = [];
+
     firstFormGroup = this._formBuilder.group({
         selectedGroupTypeCtrl: ['', Validators.required],
         selectedGroupCtrl: ['', Validators.required],
     });
     secondFormGroup = this._formBuilder.group({
-        secondCtrl: ['', Validators.required]
-    });
+      excludeActive: ['', Validators.required]
+    } );
 
     isEditable = true;
 
     constructor(private _formBuilder: FormBuilder) {
+      // TODO: we're assuming no one is making changes here at the moment
+      //       so loading all the lists once and using them for performance
+      //       reasons - need to look at this in the long run
+      // Get stats
       this.apiService.getStatistics().subscribe(statistics =>
           this.statistics = statistics);
+      // Get each of the controls, experiments, features and survey lists for exclusions
+      this.apiService.getFeatures(true).subscribe(list =>
+          this.featureList = list);
+      this.apiService.getExperiments(true).subscribe(list =>
+          this.experimentList = list);
+      this.apiService.getControls(true).subscribe(list =>
+          this.controlList = list);
+      this.apiService.getSurveys(true).subscribe(list =>
+          this.surveyList = list);
     }
 
     loadSelectedGroup() {
@@ -76,24 +94,25 @@ export class AudienceFinderComponent implements AfterViewInit {
     }
 
     loadGroupTypeList() {
+        this.selectedGroupType = this.firstFormGroup.controls.selectedGroupTypeCtrl.value;
         this.selectedGroup = null;
         if (this.firstFormGroup.controls.selectedGroupTypeCtrl.value != null &&
-            this.firstFormGroup.controls.selectedGroupTypeCtrl.value == "survey") {
+            this.firstFormGroup.controls.selectedGroupTypeCtrl.value == "Survey") {
             this.apiService.getSurveys(true).subscribe(list =>
                 this.groupList = list);
         }
         if (this.firstFormGroup.controls.selectedGroupTypeCtrl.value != null &&
-            this.firstFormGroup.controls.selectedGroupTypeCtrl.value == "control") {
+            this.firstFormGroup.controls.selectedGroupTypeCtrl.value == "Control Group") {
             this.apiService.getControls(true).subscribe(list =>
                 this.groupList = list);
         }
         if (this.firstFormGroup.controls.selectedGroupTypeCtrl.value != null &&
-            this.firstFormGroup.controls.selectedGroupTypeCtrl.value == "experiment") {
+            this.firstFormGroup.controls.selectedGroupTypeCtrl.value == "Experiment") {
             this.apiService.getExperiments(true).subscribe(list =>
                 this.groupList = list);
         }
         if (this.firstFormGroup.controls.selectedGroupTypeCtrl.value != null &&
-            this.firstFormGroup.controls.selectedGroupTypeCtrl.value == "feature") {
+            this.firstFormGroup.controls.selectedGroupTypeCtrl.value == "Feature") {
             this.apiService.getFeatures(true).subscribe(list =>
                 this.groupList = list);
         }

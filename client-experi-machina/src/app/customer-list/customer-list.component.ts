@@ -199,7 +199,7 @@ export class DialogCustomer {
 @Component({
   selector: 'dialog-customer-segment',
   templateUrl: 'dialog-customer-segment.html',
-  styleUrls: ['./eligibility-list.component.css'],
+  styleUrls: ['./customer-list.component.css'],
   standalone: true,
   imports: [MatDialogModule, MatButtonModule, MatInputModule, MatIconModule, MatCardModule,
     FormsModule, MatSlideToggleModule, MatDatepickerModule, MatGridListModule,

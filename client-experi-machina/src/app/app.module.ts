@@ -32,6 +32,7 @@ import { AudienceFinderComponent } from './audience-finder/audience-finder.compo
 import {MatRadioModule} from "@angular/material/radio";
 import {MatSelectModule} from "@angular/material/select";
 import {MatStepperModule} from "@angular/material/stepper";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @NgModule({
   declarations: [
@@ -69,7 +70,8 @@ import {MatStepperModule} from "@angular/material/stepper";
         MatRadioModule,
         MatSelectModule,
         MatStepperModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        MatCheckboxModule
     ],
   providers: [],
   bootstrap: [AppComponent]
