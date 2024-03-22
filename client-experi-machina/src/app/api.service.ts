@@ -12,6 +12,7 @@ import {Eligibility} from "./eligibility";
 import {Control} from "./control";
 import {Feature} from "./feature";
 import {FileDetails} from "./file-details";
+import {Audience} from "./audience";
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,43 @@ export class ApiService {
   constructor(private http: HttpClient) { }
 
 
+  // ------------------
+  // Audience
+  // ------------------
+
+  createAudience(audience: Audience): Observable<Audience[]> {
+    var r = this.http.post<Audience[]>(`/api/audience`, audience,
+        AppSetting.httpOptions);
+    return r;
+  }
+
+  saveAudience(audience: Audience): Observable<Audience[]> {
+    var r = this.http.put<Audience[]>(`/api/audience/` + audience.id, audience,
+        AppSetting.httpOptions);
+    return r;
+  }
+
+  deleteAudience(audience: Audience): Observable<Audience[]> {
+    var r = this.http.delete<Audience[]>(`/api/audience/` + audience.id,
+        AppSetting.httpOptions);
+    return r;
+  }
+
+  getAudiences(activeOnly: boolean): Observable<Audience[]> {
+    if (activeOnly == true) {
+      //console.log("active");
+      var r = this.http.get<Audience[]>("/api/audiences?activeOnly=true",
+          AppSetting.httpOptions);
+      return r;
+    }
+    else {
+      //console.log("all");
+      var r = this.http.get<Audience[]>("/api/audiences",
+          AppSetting.httpOptions);
+      return r;
+    }
+  }
+  
   // ---------------------
   // Controls
   // ---------------------

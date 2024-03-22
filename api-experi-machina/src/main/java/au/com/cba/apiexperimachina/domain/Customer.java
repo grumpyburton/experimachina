@@ -83,4 +83,13 @@ public class Customer {
     public void setSegments(List<Segment> segments) {
         this.segments = segments;
     }
+
+    public void addSegment(Segment s)
+    {
+        if(this.segments == null)
+        {
+            this.segments = new ArrayList<Segment>();
+        }
+        this.segments.add(s);
+    }
 }

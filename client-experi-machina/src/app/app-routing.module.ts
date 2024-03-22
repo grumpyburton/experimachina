@@ -9,9 +9,11 @@ import {HomeComponent} from "./home/home.component";
 import {EligibilityListComponent} from "./eligibility-list/eligibility-list.component";
 import {FeatureListComponent} from "./feature-list/feature-list.component";
 import {AudienceFinderComponent} from "./audience-finder/audience-finder.component";
+import {AudienceListComponent} from "./audience-list/audience-list.component";
 
 const routes: Routes = [
-  { path: 'audience', component: AudienceFinderComponent },
+  { path: 'audienceFinder', component: AudienceFinderComponent },
+  { path: 'audience', component: AudienceListComponent },
   { path: 'controls', component: ControlListComponent },
   { path: 'customers', component: CustomerListComponent },
   { path: 'experiments', component: ExperimentListComponent },

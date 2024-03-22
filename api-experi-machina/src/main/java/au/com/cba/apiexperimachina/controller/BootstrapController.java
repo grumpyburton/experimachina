@@ -43,21 +43,26 @@ public class BootstrapController {
         logger.info("segments");
         createSegments();
         createExperiments();
+
+        createEligibilitiesWithSegments();
+
         createControlGroups();
         createOutcomes();
-        createEligibilities();
         createSurveys();
         logger.info("customer");
         createCustomers();
-        testJPA();
+        //testJPA();
         logger.info("end init");
     }
 
-
-
     public void createCustomers()
     {
-        int j = 10;
+        Segment sSEG_20TO30 = this.segmentRepo.findSegmentByCode("SEG_20TO30");
+        Segment sSEG_RBS = this.segmentRepo.findSegmentByCode("SEG_RBS");
+        Segment sSEG_MKT = this.segmentRepo.findSegmentByCode("SEG_MKT");
+        Segment sSEG_P1 = this.segmentRepo.findSegmentByCode("SEG_P1");
+
+        int j = 1000;
         for(int i=0; i < j; i++)
         {
             Faker faker = new Faker();
@@ -65,6 +70,10 @@ public class BootstrapController {
             c.setFirstName(faker.name().firstName());
             c.setSurname(faker.name().lastName());
             c.setActive(true);
+            c.addSegment(sSEG_MKT);
+            c.addSegment(sSEG_20TO30);
+            c.addSegment(sSEG_P1);
+            c.addSegment(sSEG_RBS);
             c.setKey(UUID.randomUUID().toString());
             this.customerRepo.save(c);
         }
@@ -72,11 +81,14 @@ public class BootstrapController {
 
     public void createControlGroups()
     {
+        Eligibility e = this.eligibilityRepo.findByName("Over18");
+
         ControlGroup c = new ControlGroup();
         c.setName("Campaign1");
         c.setDescription("Marketing campaign 1");
         c.setCreateDate(new Date(System.currentTimeMillis()));
         c.setActive(true);
+        c.addEligilbity(e);
         this.controlGroupRepo.save(c);
 
         c = new ControlGroup();
@@ -85,15 +97,86 @@ public class BootstrapController {
         c.setCreateDate(new Date(System.currentTimeMillis()));
         c.setActive(true);
         this.controlGroupRepo.save(c);
+
+        c = new ControlGroup();
+        c.setName("No eligibility set control group");
+        c.setDescription("No eligibility set control group");
+        c.setCreateDate(new Date(System.currentTimeMillis()));
+        c.setActive(true);
+        this.controlGroupRepo.save(c);
+
     }
 
-    public void createEligibilities()
+    public void createEligibilitiesWithSegments()
     {
+        Segment sRBS = new Segment();
+        sRBS.setName("isRBSCustomer");
+        sRBS.setDescription("Is a RBS segment customer");
+        sRBS.setShared(true);
+        sRBS.setCreateDate(new Date(System.currentTimeMillis()));
+        sRBS.setActive(true);
+        sRBS.setCode("SEG_RBS");
+        //s.setCustomers(customersList);
+        this.segmentRepo.save(sRBS);
+
+        Segment sBB = new Segment();
+        sBB.setName("isBBCustomer");
+        sBB.setDescription("Is a BB segment customer");
+        sBB.setShared(true);
+        sBB.setCreateDate(new Date(System.currentTimeMillis()));
+        sBB.setActive(true);
+        sBB.setCode("SEG_BB");
+        //s.setCustomers(customersList);
+        this.segmentRepo.save(sBB);
+
+        Segment sIBM = new Segment();
+        sIBM.setName("isIBMCustomer");
+        sIBM.setDescription("Is a IBM segment customer");
+        sIBM.setShared(true);
+        sIBM.setCreateDate(new Date(System.currentTimeMillis()));
+        sIBM.setActive(true);
+        sIBM.setCode("SEG_IBM");
+        //s.setCustomers(customersList);
+        this.segmentRepo.save(sIBM);
+
+        Segment s2030 = new Segment();
+        s2030.setName("is20-30yo");
+        s2030.setDescription("Is a in the age range of 20-30 year old customer");
+        s2030.setShared(true);
+        s2030.setCreateDate(new Date(System.currentTimeMillis()));
+        s2030.setActive(true);
+        s2030.setCode("SEG_20TO30");
+        //s.setCustomers(customersList);
+        this.segmentRepo.save(s2030);
+
+        Segment sMkt = new Segment();
+        sMkt.setName("isMarketable");
+        sMkt.setDescription("Is a marketing enabled segment customer");
+        sMkt.setShared(true);
+        sMkt.setCreateDate(new Date(System.currentTimeMillis()));
+        sMkt.setActive(true);
+        sMkt.setCode("SEG_MKT");
+        //s.setCustomers(customersList);
+        this.segmentRepo.save(sMkt);
+
+        Segment sP1 = new Segment();
+        sP1.setName("has P1");
+        sP1.setDescription("Customer has Product 1");
+        sP1.setShared(true);
+        sP1.setCreateDate(new Date(System.currentTimeMillis()));
+        sP1.setActive(true);
+        sP1.setCode("SEG_P1");
+        //s.setCustomers(customersList);
+        this.segmentRepo.save(sP1);
+
+        // elgibigilities
+
         Eligibility e = new Eligibility();
         e.setName("Over18");
         e.setDescription("Customer is over 18");
         e.setCreateDate(new Date(System.currentTimeMillis()));
         e.setActive(true);
+        e.addSegment(s2030);
         this.eligibilityRepo.save(e);
 
         e = new Eligibility();
@@ -101,6 +184,18 @@ public class BootstrapController {
         e.setDescription("Customer has product 1");
         e.setCreateDate(new Date(System.currentTimeMillis()));
         e.setActive(true);
+        e.addSegment(sRBS);
+        e.addSegment(sMkt);
+        e.addSegment(sP1);
+        this.eligibilityRepo.save(e);
+
+        e = new Eligibility();
+        e.setName("Is Marketable");
+        e.setDescription("Customer is marketable. Miust have marketing flag and be over 18");
+        e.setCreateDate(new Date(System.currentTimeMillis()));
+        e.setActive(true);
+        e.addSegment(s2030);
+        e.addSegment(sMkt);
         this.eligibilityRepo.save(e);
 
         for(int i=0; i<10; i++)
@@ -110,6 +205,8 @@ public class BootstrapController {
             e.setDescription("Eligibility description " + i);
             e.setCreateDate(new Date(System.currentTimeMillis()));
             e.setActive(true);
+            e.addSegment(sRBS);
+            e.addSegment(sMkt);
             this.eligibilityRepo.save(e);
         }
     }
@@ -187,55 +284,7 @@ public class BootstrapController {
     {
         //List<Customer> customersList = this.customerRepo.findAll();
 
-        Segment s = new Segment();
-        s.setName("isRBSCustomer");
-        s.setDescription("Is a RBS segment customer");
-        s.setShared(true);
-        s.setCreateDate(new Date(System.currentTimeMillis()));
-        s.setActive(true);
-        s.setCode("SEG_RBS");
-        //s.setCustomers(customersList);
-        this.segmentRepo.save(s);
 
-        s = new Segment();
-        s.setName("isBBCustomer");
-        s.setDescription("Is a BB segment customer");
-        s.setShared(true);
-        s.setCreateDate(new Date(System.currentTimeMillis()));
-        s.setActive(true);
-        s.setCode("SEG_BB");
-        //s.setCustomers(customersList);
-        this.segmentRepo.save(s);
-
-        s = new Segment();
-        s.setName("isIBMCustomer");
-        s.setDescription("Is a IBM segment customer");
-        s.setShared(true);
-        s.setCreateDate(new Date(System.currentTimeMillis()));
-        s.setActive(true);
-        s.setCode("SEG_IBM");
-        //s.setCustomers(customersList);
-        this.segmentRepo.save(s);
-
-        s = new Segment();
-        s.setName("is20-30yo");
-        s.setDescription("Is a in the age range of 20-30 year old customer");
-        s.setShared(true);
-        s.setCreateDate(new Date(System.currentTimeMillis()));
-        s.setActive(true);
-        s.setCode("SEG_20TO30");
-        //s.setCustomers(customersList);
-        this.segmentRepo.save(s);
-
-        s = new Segment();
-        s.setName("isMarketable");
-        s.setDescription("Is a marketing enabled segment customer");
-        s.setShared(true);
-        s.setCreateDate(new Date(System.currentTimeMillis()));
-        s.setActive(false);
-        s.setCode("SEG_MKT");
-        //s.setCustomers(customersList);
-        this.segmentRepo.save(s);
     }
 
     public void testJPA()

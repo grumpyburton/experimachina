@@ -12,7 +12,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
-import org.apache.commons.csv.CSVParser;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -27,6 +26,7 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class APIController {
     private static final Logger logger = LoggerFactory.getLogger(APIController.class);
+    private final AudienceRepo audienceRepo;
     private final ControlGroupRepo controlGroupRepo;
     private final CustomerRepo customerRepo;
     private final EligibilityRepo eligibilityRepo;
@@ -35,10 +35,13 @@ public class APIController {
     private final OutcomeRepo outcomeRepo;
     private final SegmentRepo segmentRepo;
     private final SurveyRepo surveyRepo;
-
     private final FileRepo fileRepo;
 
-    public APIController(ControlGroupRepo controlGroupRepo, CustomerRepo customerRepo, EligibilityRepo eligibilityRepo, ExperimentRepo experimentRepo, FeatureRepo featureRepo, OutcomeRepo outcomeRepo, SegmentRepo segmentRepo, SurveyRepo surveyRepo, FileRepo fileRepo) {
+    public APIController(AudienceRepo audienceRepo, ControlGroupRepo controlGroupRepo, CustomerRepo customerRepo,
+                         EligibilityRepo eligibilityRepo, ExperimentRepo experimentRepo, FeatureRepo featureRepo,
+                         OutcomeRepo outcomeRepo, SegmentRepo segmentRepo, SurveyRepo surveyRepo,
+                         FileRepo fileRepo) {
+        this.audienceRepo = audienceRepo;
         this.controlGroupRepo = controlGroupRepo;
         this.customerRepo = customerRepo;
         this.eligibilityRepo = eligibilityRepo;
@@ -50,6 +53,39 @@ public class APIController {
         this.fileRepo = fileRepo;
     }
 
+    // AUDIENCE
+    // --------------
+    @GetMapping("/audiences")
+    public List<Audience> getAudiences()
+    {
+        return audienceRepo.findAll();
+    }
+
+    @PostMapping("/audience")
+    public List<Audience> createAudience(@RequestBody Audience audience)
+    {
+        audience.setCreateDate(new Date(System.currentTimeMillis()));
+        this.audienceRepo.save(audience);
+        return audienceRepo.findAll();
+    }
+
+    @PutMapping(path = "/audience/{id}")
+    public List<Audience> saveAudience(@PathVariable Integer id, @RequestBody Audience audience){
+        //logger.debug("save audience ----------------");
+        audienceRepo.save(audience);
+        return (List<Audience>) audienceRepo.findAll();
+    }
+
+    @DeleteMapping(path = "/audience/{id}")
+    public List<Audience> deleteAudience(@PathVariable Long id){
+        Optional<Audience> audience = audienceRepo.findById(id);
+        if(audience.isPresent())
+        {
+            audienceRepo.delete(audience.get());
+        }
+        return (List<Audience>) audienceRepo.findAll();
+    }
+    
     // file handling
     // ----------------------------------
     @PostMapping("/uploadFile")

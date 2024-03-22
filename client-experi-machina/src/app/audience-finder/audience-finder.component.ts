@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, inject} from '@angular/core';
+import {AfterViewInit, Component, inject, ViewChild} from '@angular/core';
 import {ApiService} from "../api.service";
 import {Survey} from "../survey";
 import {Feature} from "../feature";
@@ -8,6 +8,10 @@ import {FormBuilder, Validators} from "@angular/forms";
 import {Statistics} from "../statistics";
 import {Segment} from "../segment";
 import {Customer} from "../customer";
+import {MatTableDataSource} from "@angular/material/table";
+import {MatPaginator} from "@angular/material/paginator";
+import {Audience} from "../audience";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-audience-finder',
@@ -22,6 +26,9 @@ export class AudienceFinderComponent implements AfterViewInit {
     groupList: any[];
     selectedGroup: Survey | Feature | Experiment | Control | null;
     customersAvailable = 0;
+    dataSource = new MatTableDataSource<Customer>([]);
+    displayedColumns: string[] = ['actions','id','key', 'firstName','surname'];
+    @ViewChild(MatPaginator) paginator: MatPaginator;
 
     statistics: Statistics = {
       controls: 0, customers: 0, eligibilities: 0, experiments: 0, features: 0, segments: 0, surveys: 0
@@ -37,12 +44,19 @@ export class AudienceFinderComponent implements AfterViewInit {
         selectedGroupCtrl: ['', Validators.required],
     });
     secondFormGroup = this._formBuilder.group({
-      excludeActive: ['', Validators.required]
+      excludeActive: ['']
+    } );
+    thirdFormGroup = this._formBuilder.group({
+        audienceSize: ['', Validators.required]
+    } );
+    fourthFormGroup = this._formBuilder.group({
+        name: ['', Validators.required],
+        description: ['']
     } );
 
     isEditable = true;
 
-    constructor(private _formBuilder: FormBuilder) {
+    constructor(private _formBuilder: FormBuilder, private router: Router) {
       // TODO: we're assuming no one is making changes here at the moment
       //       so loading all the lists once and using them for performance
       //       reasons - need to look at this in the long run
@@ -61,6 +75,48 @@ export class AudienceFinderComponent implements AfterViewInit {
     }
 
     loadSelectedGroup() {
+    }
+
+    selectRandomCustomers()
+    {
+        console.log("selecting "+this.thirdFormGroup.controls.audienceSize.value+" customers from "+this.customersAvailable ,);
+        var selectedCustomers = this.dataSource.data;
+        var size: number = Number(this.thirdFormGroup.controls.audienceSize.value);
+        selectedCustomers = selectedCustomers.sort((a, b) => 0.5 - Math.random());
+        selectedCustomers = selectedCustomers.splice(0, size);
+        console.log(selectedCustomers);
+        this.dataSource.data = selectedCustomers;
+    }
+
+    saveAudience()
+    {
+        console.log("saveAudience");
+        if(this.fourthFormGroup.valid)
+        {
+            var audience:Audience = {
+                active: true,
+                createDate: "",
+                customers: this.dataSource.data,
+                description: this.fourthFormGroup.controls.description.value,
+                endDate: "",
+                expireDate: "",
+                id: 0,
+                name: this.fourthFormGroup.controls.name.value,
+                startDate: "",
+                updateDate: ""
+            };
+
+            console.log(audience);
+
+            this.apiService.saveAudience(audience).subscribe(list =>
+            {
+                console.log(list);
+                this.router.navigateByUrl("/audience");
+            });
+        }
+        else {
+            console.log("form not valid");
+        }
     }
 
     loadCustomerCountBySegments() {
@@ -86,6 +142,7 @@ export class AudienceFinderComponent implements AfterViewInit {
                 {
                   //customerList = cList;
                   this.customersAvailable = cList.length;
+                  this.dataSource.data = cList;
                   //console.log(cList);
                 }
               );
@@ -119,9 +176,10 @@ export class AudienceFinderComponent implements AfterViewInit {
     }
 
     ngAfterViewInit(): void {
+        this.dataSource.paginator = this.paginator;
+
         this.firstFormGroup.controls.selectedGroupTypeCtrl.valueChanges.subscribe(val => {
             const formattedMessage = `selectedGroupTypeCtrl is ${val}.`;
-            //console.log(formattedMessage);
         });
 
         this.firstFormGroup.controls.selectedGroupCtrl.valueChanges.subscribe(val => {

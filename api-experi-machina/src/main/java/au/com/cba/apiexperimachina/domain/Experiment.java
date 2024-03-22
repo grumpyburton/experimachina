@@ -12,6 +12,13 @@ import java.util.List;
 @Entity
 public class Experiment extends BaseGroup {
 
+    private String name;
+    private String description;
+    private boolean active;
+    private java.util.Date createDate;
+    private java.util.Date expireDate;
+    @ManyToMany
+    private List<Eligibility> eligibilities = new ArrayList<Eligibility>();
     private String problem;
     private String outcome;
     private String objective;
@@ -19,6 +26,54 @@ public class Experiment extends BaseGroup {
     private java.util.Date updateDate;
     private java.util.Date startDate;
     private java.util.Date endDate;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public Date getExpireDate() {
+        return expireDate;
+    }
+
+    public void setExpireDate(Date expireDate) {
+        this.expireDate = expireDate;
+    }
+
+    public List<Eligibility> getEligibilities() {
+        return eligibilities;
+    }
+
+    public void setEligibilities(List<Eligibility> eligibilities) {
+        this.eligibilities = eligibilities;
+    }
 
     public String getProblem() {
         return problem;
@@ -75,5 +130,4 @@ public class Experiment extends BaseGroup {
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
-
 }

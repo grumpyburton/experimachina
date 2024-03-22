@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface EligibilityRepo extends JpaRepository<Eligibility, Long> {
     public List<Eligibility> findAllByActive(boolean active);
+
+    public Eligibility findByName(String name);
 }

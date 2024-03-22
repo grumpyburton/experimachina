@@ -33,6 +33,7 @@ import {MatRadioModule} from "@angular/material/radio";
 import {MatSelectModule} from "@angular/material/select";
 import {MatStepperModule} from "@angular/material/stepper";
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import { AudienceListComponent } from './audience-list/audience-list.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     ConfirmDialogComponent,
     EligibilityListComponent,
     FeatureListComponent,
-    AudienceFinderComponent
+    AudienceFinderComponent,
+    AudienceListComponent
   ],
     imports: [
         BrowserModule,
