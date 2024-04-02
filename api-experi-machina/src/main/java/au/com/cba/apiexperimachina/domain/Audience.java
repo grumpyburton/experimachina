@@ -28,6 +28,9 @@ public class Audience {
     private java.util.Date createDate;
     private java.util.Date updateDate;
 
+    private java.util.Date startDate;
+    private java.util.Date endDate;
+
    // private BaseGroup audienceFor;
 
     public Long getId() {
@@ -116,5 +119,21 @@ public class Audience {
 
     public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 }

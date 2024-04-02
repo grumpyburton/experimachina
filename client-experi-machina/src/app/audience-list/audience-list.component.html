@@ -9,13 +9,28 @@
         <th mat-header-cell *matHeaderCellDef>Name</th>
         <td mat-cell *matCellDef="let element">{{element.name}} </td>
     </ng-container>
+    <ng-container matColumnDef="type">
+        <th mat-header-cell *matHeaderCellDef>Type</th>
+        <td mat-cell *matCellDef="let element">{{element.type}} </td>
+    </ng-container>
+    <ng-container matColumnDef="size">
+        <th mat-header-cell *matHeaderCellDef>Size</th>
+        <td mat-cell *matCellDef="let element">{{getSize(element.customers)}} </td>
+    </ng-container>
     <ng-container matColumnDef="active">
         <th mat-header-cell *matHeaderCellDef>Active</th>
         <td mat-cell *matCellDef="let element">{{element.active}} </td>
     </ng-container>
+    <ng-container matColumnDef="startEndDate">
+        <th mat-header-cell *matHeaderCellDef>Start End Date</th>
+        <td mat-cell *matCellDef="let element">{{element.startDate}} {{element.endDate}}</td>
+    </ng-container>
     <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef>Actions</th>
         <td mat-cell *matCellDef="let element">
+            <button mat-icon-button color="primary" (click)="confirmDialog(element)">
+                <mat-icon>download</mat-icon>
+            </button>
             <button mat-icon-button color="warn" (click)="confirmDialog(element)">
                 <mat-icon>delete</mat-icon>
             </button>

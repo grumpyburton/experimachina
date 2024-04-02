@@ -34,6 +34,8 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatStepperModule} from "@angular/material/stepper";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import { AudienceListComponent } from './audience-list/audience-list.component';
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatExpansionModule} from "@angular/material/expansion";
 
 @NgModule({
   declarations: [
@@ -73,7 +75,9 @@ import { AudienceListComponent } from './audience-list/audience-list.component';
         MatSelectModule,
         MatStepperModule,
         ReactiveFormsModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        MatDatepickerModule,
+        MatExpansionModule
     ],
   providers: [],
   bootstrap: [AppComponent]

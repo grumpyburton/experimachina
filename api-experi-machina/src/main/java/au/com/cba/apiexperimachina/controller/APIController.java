@@ -65,6 +65,7 @@ public class APIController {
     public List<Audience> createAudience(@RequestBody Audience audience)
     {
         audience.setCreateDate(new Date(System.currentTimeMillis()));
+        audience.setUpdateDate(new Date(System.currentTimeMillis()));
         this.audienceRepo.save(audience);
         return audienceRepo.findAll();
     }
@@ -72,6 +73,7 @@ public class APIController {
     @PutMapping(path = "/audience/{id}")
     public List<Audience> saveAudience(@PathVariable Integer id, @RequestBody Audience audience){
         //logger.debug("save audience ----------------");
+        audience.setUpdateDate(new Date(System.currentTimeMillis()));
         audienceRepo.save(audience);
         return (List<Audience>) audienceRepo.findAll();
     }
@@ -246,7 +248,7 @@ public class APIController {
         List<Customer> firstSegList = new ArrayList<Customer>();
 
         if(segs != null && segs.size() > 0) {
-            logger.debug("we have {} segements", segs.size());
+            logger.debug("we have {} segments", segs.size());
             //TODO : work out how to do this as a query with ALL segments
             // Get the list of customer with the first segment
             firstSegList = this.customerRepo.findAllBySegments(segs.getFirst());
@@ -262,6 +264,10 @@ public class APIController {
                 logger.debug("cs length current" + firstSegList.size());
             }
             logger.debug("customers with all segments: " + firstSegList.size());
+        }
+        else {
+            logger.info("getCustomersBySegments had no segments, so return full list");
+            return this.customerRepo.findAll();
         }
         return firstSegList;
     }

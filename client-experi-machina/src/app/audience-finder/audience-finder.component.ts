@@ -42,6 +42,9 @@ export class AudienceFinderComponent implements AfterViewInit {
     firstFormGroup = this._formBuilder.group({
         selectedGroupTypeCtrl: ['', Validators.required],
         selectedGroupCtrl: ['', Validators.required],
+        startDate: ['', Validators.required],
+        endDate: ['', Validators.required],
+
     });
     secondFormGroup = this._formBuilder.group({
       excludeActive: ['']
@@ -88,7 +91,7 @@ export class AudienceFinderComponent implements AfterViewInit {
         this.dataSource.data = selectedCustomers;
     }
 
-    saveAudience()
+    createAudience()
     {
         console.log("saveAudience");
         if(this.fourthFormGroup.valid)
@@ -98,17 +101,41 @@ export class AudienceFinderComponent implements AfterViewInit {
                 createDate: "",
                 customers: this.dataSource.data,
                 description: this.fourthFormGroup.controls.description.value,
-                endDate: "",
+                endDate: this.firstFormGroup.controls.endDate.value,
                 expireDate: "",
                 id: 0,
                 name: this.fourthFormGroup.controls.name.value,
-                startDate: "",
-                updateDate: ""
+                startDate: this.firstFormGroup.controls.startDate.value,
+                updateDate: "",
+                type: this.firstFormGroup.controls.selectedGroupTypeCtrl.value,
+                controlGroup: null,
+                experiment: null,
+                feature: null,
+                survey: null
             };
+
+            // TODO: can get rid of this is i can work out JPA and abstract classes...
+            switch(audience.type) {
+                case "Control Group":
+                    audience.controlGroup = this.firstFormGroup.controls.selectedGroupCtrl.value;
+                    break;
+                case "Experiment":
+                    audience.experiment = this.firstFormGroup.controls.selectedGroupCtrl.value;
+                    break;
+                case "Feature":
+                    audience.feature = this.firstFormGroup.controls.selectedGroupCtrl.value;
+                    break;
+                case "Survey":
+                    audience.survey = this.firstFormGroup.controls.selectedGroupCtrl.value;
+                    break;
+                default:
+                // this is an error as we should have set something
+                    console.log("error: type not set");
+            }
 
             console.log(audience);
 
-            this.apiService.saveAudience(audience).subscribe(list =>
+            this.apiService.createAudience(audience).subscribe(list =>
             {
                 console.log(list);
                 this.router.navigateByUrl("/audience");
@@ -126,7 +153,17 @@ export class AudienceFinderComponent implements AfterViewInit {
             if(this.selectedGroup.eligibilities == null || this.selectedGroup.eligibilities.length == 0)
             {
               console.log("No eligibility set - is this a mistake?");
-              this.customersAvailable = this.statistics.customers;
+
+                // get all customers
+                // TODO: will need to qualify this one they can select unused audiences
+                this.apiService.getCustomers(true).subscribe(cList =>
+                    {
+                        //customerList = cList;
+                        this.customersAvailable = cList.length;
+                        this.dataSource.data = cList;
+                        console.log(cList);
+                    }
+                );
             }
             else
             {
@@ -143,7 +180,7 @@ export class AudienceFinderComponent implements AfterViewInit {
                   //customerList = cList;
                   this.customersAvailable = cList.length;
                   this.dataSource.data = cList;
-                  //console.log(cList);
+                  console.log(cList);
                 }
               );
             }

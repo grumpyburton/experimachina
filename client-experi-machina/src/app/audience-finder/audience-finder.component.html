@@ -3,6 +3,22 @@
     <mat-step [stepControl]="firstFormGroup" [editable]="isEditable">
         <form [formGroup]="firstFormGroup">
             <ng-template matStepLabel>What do you want an audience for</ng-template>
+            <mat-expansion-panel hideToggle>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <mat-icon aria-hidden="false" aria-label="Help" fontIcon="info" color="accent"></mat-icon>
+                        <div class="pad-left">Click for instructions</div>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <ol>
+                    <li>Select the type of what you would like and audience for a <a routerLink="/controls">Control Group</a>, <a routerLink="/experiments">Experiment</a>,
+                        <a routerLink="/features">Feature</a> or <a routerLink="/surveys">Survey</a></li>
+                    <li>Select the actual option from the dropdown list after selecting the type</li>
+                    <li>Select the Start and End dates for the audience</li>
+                    <li>Click 'Next' button</li>
+                </ol>
+                <p>NOTE: The option needs to be 'Active' to appear in the list.</p>
+            </mat-expansion-panel>
 
             <mat-radio-group aria-label="Select an option"
                              (change)="loadGroupTypeList()"
@@ -21,6 +37,19 @@
                     <mat-option *ngFor="let g of groupList" [value]="g">{{g.name}}</mat-option>
                 </mat-select>
             </mat-form-field>
+
+            <mat-form-field class="pad-left" *ngIf="firstFormGroup.controls.selectedGroupTypeCtrl.value != '' &&
+                            firstFormGroup.controls.selectedGroupTypeCtrl.value != null">
+                <mat-label>Start / end date range</mat-label>
+                <mat-date-range-input [rangePicker]="picker">
+                    <input matStartDate placeholder="Start date" formControlName="startDate">
+                    <input matEndDate placeholder="End date" formControlName="endDate">
+                </mat-date-range-input>
+                <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+            </mat-form-field>
+
             <div>
                 <button mat-button matStepperNext (click)="loadCustomerCountBySegments()">Next</button>
             </div>
@@ -30,11 +59,24 @@
         <form [formGroup]="secondFormGroup">
             <ng-template matStepLabel>Selection criteria</ng-template>
 
-            <mat-slide-toggle class="pad-left"
-                              value="primary"
-                              formControlName="excludeActive">Exclude any customers in current audiences?
-            </mat-slide-toggle>
-
+            <mat-expansion-panel hideToggle>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <mat-icon aria-hidden="false" aria-label="Help" fontIcon="info" color="accent"></mat-icon>
+                        <div class="pad-left">Click for instructions</div>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <ol>
+                    <li>TODO</li>
+                    <li>Click 'Next' button</li>
+                </ol>
+            </mat-expansion-panel>
+            <p>
+                <mat-slide-toggle class="pad-left"
+                                  value="primary"
+                                  formControlName="excludeActive">Exclude any customers in current audiences?
+                </mat-slide-toggle>
+            </p>
             <div *ngIf="secondFormGroup.controls.excludeActive.value">
                 <ul class="ul-nude">
                     <li><mat-checkbox>Control Group</mat-checkbox>
@@ -84,6 +126,20 @@
     <mat-step  [stepControl]="thirdFormGroup" [editable]="isEditable">
         <form [formGroup]="thirdFormGroup">
         <ng-template matStepLabel>Size & Selection</ng-template>
+
+            <mat-expansion-panel hideToggle>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <mat-icon aria-hidden="false" aria-label="Help" fontIcon="info" color="accent"></mat-icon>
+                        <div class="pad-left">Click for instructions</div>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <ol>
+                    <li>TODO</li>
+                    <li>Click 'Next' button</li>
+                </ol>
+            </mat-expansion-panel>
+
         <div *ngIf="selectedGroup != null">
             <p>
                 {{selectedGroupType}} {{selectedGroup.name}} has a maximum of {{customersAvailable}} customers based on the eligibility criteria.
@@ -115,6 +171,20 @@
     <mat-step  [stepControl]="fourthFormGroup" [editable]="isEditable">
         <form [formGroup]="fourthFormGroup">
         <ng-template matStepLabel>Done</ng-template>
+
+            <mat-expansion-panel hideToggle>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <mat-icon aria-hidden="false" aria-label="Help" fontIcon="info" color="accent"></mat-icon>
+                        <div class="pad-left">Click for instructions</div>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <ol>
+                    <li>TODO</li>
+                    <li>Click 'Save' button to create the audience for the {{firstFormGroup.controls.selectedGroupTypeCtrl.value}}</li>
+                </ol>
+            </mat-expansion-panel>
+
         <p>
             <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Name</mat-label>
@@ -170,7 +240,7 @@
 
         <div>
             <button mat-button matStepperPrevious>Back</button>
-            <button mat-button color="primary" (click)="saveAudience()">Save</button>
+            <button mat-button color="primary" (click)="createAudience()">Save</button>
             <button mat-button (click)="stepper.reset()">Reset</button>
         </div>
         </form>

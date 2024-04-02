@@ -1,21 +1,11 @@
 import {AfterViewInit, Component, Inject, inject, Input, ViewChild} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 import {ApiService} from "../api.service";
-import {MatTableDataSource, MatTableModule} from "@angular/material/table";
-import {Customer} from "../customer";
+import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {ConfirmDialogComponent, ConfirmDialogModel} from "../confirm-dialog/confirm-dialog.component";
-import {MatButtonModule} from "@angular/material/button";
-import {MatInputModule} from "@angular/material/input";
-import {MatIconModule} from "@angular/material/icon";
-import {MatCardModule} from "@angular/material/card";
-import {FormsModule} from "@angular/forms";
-import {MatSlideToggleModule} from "@angular/material/slide-toggle";
-import {MatDatepickerModule} from "@angular/material/datepicker";
-import {MatGridListModule} from "@angular/material/grid-list";
-import {MatCheckboxModule} from "@angular/material/checkbox";
-import {SelectionModel} from "@angular/cdk/collections";
 import {Audience} from "../audience";
+import {Customer} from "../customer";
 
 @Component({
   selector: 'app-audience-list',
@@ -31,7 +21,7 @@ export class AudienceListComponent  implements AfterViewInit{
 
   apiService: ApiService = inject(ApiService);
 
-  displayedColumns: string[] = ['id','name','active','actions'];
+  displayedColumns: string[] = ['id','name','type','size','active','startEndDate','actions'];
   dataSource = new MatTableDataSource<Audience>([]);
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -56,6 +46,19 @@ export class AudienceListComponent  implements AfterViewInit{
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
+  }
+
+  getSize(customers: Customer[]) : number
+  {
+    if(customers != null)
+    {
+      return customers.length;
+    }
+    else
+    {
+      return 0;
+    }
+
   }
 
   // Confirmation dialog for deletes

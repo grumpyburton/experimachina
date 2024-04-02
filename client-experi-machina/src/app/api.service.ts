@@ -147,7 +147,7 @@ export class ApiService {
       }
     }
 
-    //console.log(url);
+    console.log(url);
 
     var r = this.http.get<Customer[]>(url, AppSetting.httpOptions);
     //console.log(r);
