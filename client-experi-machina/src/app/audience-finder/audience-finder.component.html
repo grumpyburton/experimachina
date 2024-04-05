@@ -74,9 +74,11 @@
             <p>
                 <mat-slide-toggle class="pad-left"
                                   value="primary"
+                                  (click)="toggleAudienceExclusion()"
                                   formControlName="excludeActive">Exclude any customers in current audiences?
                 </mat-slide-toggle>
             </p>
+            <!--
             <div *ngIf="secondFormGroup.controls.excludeActive.value">
                 <ul class="ul-nude">
                     <li><mat-checkbox>Control Group</mat-checkbox>
@@ -101,6 +103,7 @@
                     </li>
                 </ul>
             </div>
+            -->
 
             <div *ngIf="selectedGroup != null">
                 <p>

@@ -130,6 +130,13 @@ export class ApiService {
     }
   }
 
+  getCustomersNoAudience(): Observable<Customer[]> {
+
+      var r = this.http.get<Customer[]>("/api/customers/noa",
+          AppSetting.httpOptions);
+      return r;
+  }
+
   getCustomersBySegments(segs: Segment[]): Observable<Customer[]> {
 
     var url = "/api/customers/segments?";

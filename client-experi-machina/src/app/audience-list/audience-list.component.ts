@@ -6,6 +6,12 @@ import {MatPaginator} from "@angular/material/paginator";
 import {ConfirmDialogComponent, ConfirmDialogModel} from "../confirm-dialog/confirm-dialog.component";
 import {Audience} from "../audience";
 import {Customer} from "../customer";
+import {DatePipe} from "@angular/common";
+import {Control} from "../control";
+import {Experiment} from "../experiment";
+import {Feature} from "../feature";
+import {Survey} from "../survey";
+
 
 @Component({
   selector: 'app-audience-list',
@@ -14,25 +20,87 @@ import {Customer} from "../customer";
 })
 export class AudienceListComponent  implements AfterViewInit{
 
-  constructor(public dialog: MatDialog) {
+  constructor(public dialog: MatDialog, private datePipe: DatePipe) {
     this.apiService.getAudiences(true).subscribe( audiences =>
         this.dataSource.data = audiences);
   }
 
   apiService: ApiService = inject(ApiService);
 
-  displayedColumns: string[] = ['id','name','type','size','active','startEndDate','actions'];
+  displayedColumns: string[] = ['id','name','type','typeName','size','startEndDate','actions'];
   dataSource = new MatTableDataSource<Audience>([]);
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
 
+  formatDate(sDate: string) : string | null
+  {
+      if(sDate != null)
+      {
+        return this.datePipe.transform(sDate, 'dd-MMM-yyyy');
+      }
+      else
+      {
+        return "";
+      }
 
+  }
+
+  formatType(audience: Audience) : string
+  {
+    switch(audience.type) {
+      case "Control Group":
+          if(audience.controlGroup != null)
+          {
+            return (audience.controlGroup as Control).name;
+          }
+          else
+          {
+            return "";
+          }
+        break;
+      case "Experiment":
+        if(audience.experiment != null)
+        {
+          return (audience.experiment as Experiment).name;
+        }
+        else
+        {
+          return "";
+        }
+        break;
+      case "Feature":
+        if(audience.feature != null)
+        {
+          return (audience.feature as Feature).name;
+        }
+        else
+        {
+          return "";
+        }
+        break;
+      case "Survey":
+        if(audience.survey != null)
+        {
+          return (audience.survey as Survey).name;
+        }
+        else
+        {
+          return "";
+        }
+        break;
+      default:
+        // this is an error as we should have set something
+        console.log("error: type not set");
+        return "";
+    }
+  }
 
   deleteAudience(audience: Audience)
   {
     this.apiService.deleteAudience(audience).subscribe( audiences =>
         this.dataSource.data = audiences);
   }
+
 
 
   applyFilter(event: Event) {

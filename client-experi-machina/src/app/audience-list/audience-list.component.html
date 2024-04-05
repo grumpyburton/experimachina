@@ -1,5 +1,5 @@
 <h1>Audiences</h1>
-
+<p>This is the list of currently created Audiences. If you want to create a new Audience, then please use the <a href="audienceFinder">Audience Finder</a>.</p>
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef>Id</th>
@@ -17,13 +17,13 @@
         <th mat-header-cell *matHeaderCellDef>Size</th>
         <td mat-cell *matCellDef="let element">{{getSize(element.customers)}} </td>
     </ng-container>
-    <ng-container matColumnDef="active">
-        <th mat-header-cell *matHeaderCellDef>Active</th>
-        <td mat-cell *matCellDef="let element">{{element.active}} </td>
+    <ng-container matColumnDef="typeName">
+        <th mat-header-cell *matHeaderCellDef>Type Name</th>
+        <td mat-cell *matCellDef="let element">{{formatType(element)}} </td>
     </ng-container>
     <ng-container matColumnDef="startEndDate">
-        <th mat-header-cell *matHeaderCellDef>Start End Date</th>
-        <td mat-cell *matCellDef="let element">{{element.startDate}} {{element.endDate}}</td>
+        <th mat-header-cell *matHeaderCellDef>Start & End Date</th>
+        <td mat-cell *matCellDef="let element">{{formatDate(element.startDate)}} to {{formatDate(element.endDate)}}</td>
     </ng-container>
     <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef>Actions</th>

@@ -231,6 +231,28 @@ public class APIController {
         }
     }
 
+    @GetMapping("/customers/noa")
+    public List<Customer> getCustomersNoAudience()
+    {
+        logger.debug("customers/noa");
+        // TODO: work out if this can be done in the database....
+        List<Customer> allCustomers = customerRepo.findAll();
+        List<Audience> audiencesList = audienceRepo.findAll();
+
+        logger.debug("before all customers {}", allCustomers.size());
+
+        for(Audience a: audiencesList)
+        {
+            List<Customer> aCustomers = a.getCustomers();
+            // remove customers from allCustomers
+            allCustomers.removeAll(aCustomers);
+        }
+        logger.debug("after all customers {}", allCustomers.size());
+
+        return allCustomers;
+
+    }
+
     @GetMapping("/customers/segments")
     public List<Customer> getCustomersBySegments(@RequestParam List<Long> ids)
     {
@@ -568,6 +590,7 @@ public class APIController {
         s.setExperiments(experimentRepo.count());
         s.setEligibilities(eligibilityRepo.count());
         s.setFeatures(featureRepo.count());
+        s.setAudiences(audienceRepo.count());
         return s;
     }
 

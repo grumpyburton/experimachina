@@ -6,4 +6,5 @@ export interface Statistics {
   segments: number;
   eligibilities: number;
   features: number;
+  audiences: number;
 }

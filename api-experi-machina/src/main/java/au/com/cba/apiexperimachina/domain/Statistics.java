@@ -8,6 +8,7 @@ public class Statistics {
     private long controls;
     private long eligibilities;
     private long features;
+    private long audiences;
 
     public long getCustomers() {
         return customers;
@@ -63,5 +64,13 @@ public class Statistics {
 
     public void setFeatures(long features) {
         this.features = features;
+    }
+
+    public long getAudiences() {
+        return audiences;
+    }
+
+    public void setAudiences(long audiences) {
+        this.audiences = audiences;
     }
 }

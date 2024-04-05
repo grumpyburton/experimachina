@@ -31,7 +31,7 @@ export class AudienceFinderComponent implements AfterViewInit {
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
     statistics: Statistics = {
-      controls: 0, customers: 0, eligibilities: 0, experiments: 0, features: 0, segments: 0, surveys: 0
+      controls: 0, customers: 0, eligibilities: 0, experiments: 0, features: 0, segments: 0, surveys: 0, audiences: 0
     };
 
     controlList: Control[] = [];
@@ -82,13 +82,40 @@ export class AudienceFinderComponent implements AfterViewInit {
 
     selectRandomCustomers()
     {
-        console.log("selecting "+this.thirdFormGroup.controls.audienceSize.value+" customers from "+this.customersAvailable ,);
+        //console.log("selecting "+this.thirdFormGroup.controls.audienceSize.value+" customers from "+this.customersAvailable ,);
         var selectedCustomers = this.dataSource.data;
         var size: number = Number(this.thirdFormGroup.controls.audienceSize.value);
         selectedCustomers = selectedCustomers.sort((a, b) => 0.5 - Math.random());
         selectedCustomers = selectedCustomers.splice(0, size);
-        console.log(selectedCustomers);
+        //console.log(selectedCustomers);
         this.dataSource.data = selectedCustomers;
+    }
+
+    toggleAudienceExclusion()
+    {
+        console.log("change audience:" + this.secondFormGroup.controls.excludeActive.value);
+        if(this.secondFormGroup.controls.excludeActive.value){
+            this.apiService.getCustomersNoAudience().subscribe(cList =>
+                {
+                    //customerList = cList;
+                    this.customersAvailable = cList.length;
+                    this.dataSource.data = cList;
+                    console.log(cList);
+                }
+            );
+        }
+        else {
+            this.apiService.getCustomers(true).subscribe(cList =>
+                {
+                    //customerList = cList;
+                    this.customersAvailable = cList.length;
+                    this.dataSource.data = cList;
+                    console.log(cList);
+                }
+            );
+        }
+
+
     }
 
     createAudience()

@@ -23,7 +23,7 @@ export class HomeComponent{
 
   apiService: ApiService = inject(ApiService);
   statistics: Statistics = {
-    controls: 0, customers: 0, eligibilities: 0, experiments: 0, features: 0, segments: 0, surveys: 0
+    controls: 0, customers: 0, eligibilities: 0, experiments: 0, features: 0, segments: 0, surveys: 0, audiences: 0
   };
 
   constructor(private http: HttpClient) {

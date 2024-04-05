@@ -36,6 +36,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import { AudienceListComponent } from './audience-list/audience-list.component';
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatExpansionModule} from "@angular/material/expansion";
+import {DatePipe} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -79,7 +80,7 @@ import {MatExpansionModule} from "@angular/material/expansion";
         MatDatepickerModule,
         MatExpansionModule
     ],
-  providers: [],
+  providers: [ DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
