@@ -1,0 +1,1 @@
+web: java -jar api-experi-machina/target/api-experi-machina-0.0.1-SNAPSHOT.jar --server.port=$PORT --spring.profiles.active=$SPRING_BOOT_PROFILE
